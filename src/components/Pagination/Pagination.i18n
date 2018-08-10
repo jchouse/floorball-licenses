@@ -1,0 +1,14 @@
+const intl = {
+    'en': {
+        Pagination: {
+            pages: '{page} from {count}'
+        }
+    },
+    'uk': {
+        Pagination: {
+            pages: '{page} із {count}'
+        }
+    }
+};
+
+module.exports = intl;

@@ -1,0 +1,20 @@
+const intl = {
+    'en': {
+        Transfers: {
+            transfer: 'transfer',
+            loan: 'loan',
+            from: 'from',
+            to: 'to'
+        }
+    },
+    'uk': {
+        Transfers: {
+            transfer: 'трансфер',
+            loan: 'оренда',
+            from: 'c',
+            to: 'по'
+        }
+    }
+};
+
+module.exports = intl;

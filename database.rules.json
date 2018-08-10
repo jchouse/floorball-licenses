@@ -1,0 +1,37 @@
+{
+    "rules": {
+        ".read": false,
+        "clubs": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "counters": {
+            ".read": "root.child('users').child(auth.uid).child('role').val() == 99",
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "images": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "players": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "transfers": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "roles": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+        },
+        "users": {
+            "$user_id": {
+                ".read": true,
+                ".write": false
+            },
+            ".read": true,
+            ".write": false
+        }
+    }
+}

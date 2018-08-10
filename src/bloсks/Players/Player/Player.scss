@@ -1,0 +1,90 @@
+@import 'globals';
+
+.player-card
+{
+    margin-top: 40px;
+
+    &__info
+    {
+        margin-bottom: 20px;
+
+        &-text
+        {
+            &--label
+            {
+                margin-bottom: 5px;
+
+                color: $md-indigo-100;
+            }
+
+            &--main
+            {
+                margin-bottom: 5px;
+
+                font-size: 1.8em;
+            }
+
+            &--add
+            {
+                margin-bottom: 5px;
+
+                font-size: 1.2em;
+            }
+        }
+    }
+
+    &__main-logo
+    {
+        padding-right: 70px;
+
+        &-img
+        {
+            width: 100%;
+        }
+    }
+
+    &__club
+    {
+        display: flex;
+
+        margin-bottom: 15px;
+
+        color: #b3b3b3;
+
+        align-items: center;
+
+        &-logo
+        {
+            max-width: 40px;
+            max-height: 40px;
+            margin-right: 20px;
+
+            opacity: .6;
+        }
+
+        &:first-child
+        {
+            color: #000;
+
+            font-size: 1.2em;
+
+            .player-card__club-logo
+            {
+                max-width: 75px;
+                max-height: 75px;
+
+                opacity: 1;
+            }
+        }
+    }
+
+    &__clubs
+    {
+        display: flex;
+        flex-direction: column;
+
+        margin: 30px 0;
+
+        align-items: center;
+    }
+}

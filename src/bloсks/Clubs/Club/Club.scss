@@ -1,0 +1,40 @@
+.club-card
+{
+    margin-top: 40px;
+    &__main
+    {
+        &-logo
+        {
+            &-img
+            {
+                width: 100%;
+            }
+        }
+    }
+
+    &__info
+    {
+        margin-bottom: 20px;
+
+        &-text
+        {
+            &--label
+            {
+                color: lighten(#000, 70%);
+                margin-bottom: 5px;
+            }
+
+            &--main
+            {
+                font-size: 1.8em;
+                margin-bottom: 5px;
+            }
+
+            &--add
+            {
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

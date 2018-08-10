@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "local": "floorball-b5840",
+    "prod": "floorball-prod"
+  }
+}
