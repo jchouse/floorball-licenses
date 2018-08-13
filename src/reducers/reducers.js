@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../bloсks/Header/HeaderActions';
+import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../blocks/Header/HeaderActions';
 import { firebaseReducer } from 'react-redux-firebase';
 
 function user(state = {}, { type, user }) {

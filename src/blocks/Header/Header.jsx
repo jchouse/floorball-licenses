@@ -157,6 +157,7 @@ class Header extends Component {
                     const { accessToken } = credential;
 
                     cookies.set('accessToken', accessToken);
+                    this.saveUser(profile);
                 }
 
                 dispatch(login({
@@ -171,6 +172,29 @@ class Header extends Component {
                 cookies.remove('accessToken');
             });
     };
+
+    saveUser(profile) {
+        const { users, firebase: { update } } = this.props,
+            { email, displayName, uid, photoURL } = profile;
+
+        if (!users[uid]) {
+            update('users', {
+                ...users,
+                [uid]: {
+                    email,
+                    displayName,
+                    photoURL
+                }
+            });
+        } else {
+            update(`users/${uid}`, {
+                ...users.uid,
+                email,
+                displayName,
+                photoURL
+            });
+        }
+    }
 
     logOut = () => {
         const { firebase, dispatch, cookies } = this.props;
