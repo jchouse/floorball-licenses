@@ -2,7 +2,7 @@ import React from 'react';
 import { FontIcon, ListItem } from 'react-md';
 import { Link } from 'react-router';
 
-const NavItemLink = ({to, label, icon, onClick}) => {
+const NavItemLink = ({ to, label, icon, onClick }) => {
     let leftIcon;
 
     if (icon) {
