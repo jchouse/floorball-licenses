@@ -39,9 +39,8 @@ class Transfers extends React.Component {
 
         return [
             this.renderTransfersList(),
-            listSize > itemsOnPage && <div className={bem.elem('pager').cls()}>
+            listSize > itemsOnPage && <div key='transferpagination' className={bem.elem('pager').cls()}>
                 <Pagination
-                    key='transferpagiantion'
                     offset={offset}
                     size={Math.ceil(size)}
                     changePage={this.changePage.bind(this)}/>
@@ -75,10 +74,10 @@ class Transfers extends React.Component {
             fromClubPhoto,
             toClubPhoto;
 
-        if (isLoaded(imagesList) && player.photo) {
-            playerPhoto = imagesList[player.photo].downloadURL;
-            fromClubPhoto = imagesList[fromClub.photo].downloadURL;
-            toClubPhoto = imagesList[toClub.photo].downloadURL;
+        if (isLoaded(imagesList)) {
+            playerPhoto = player.photo && imagesList[player.photo].downloadURL;
+            fromClubPhoto = fromClub.photo && imagesList[fromClub.photo].downloadURL;
+            toClubPhoto = toClub.photo && imagesList[toClub.photo].downloadURL;
         }
 
         return <li key={key} className={bem.elem('list-item').cls()}>
@@ -116,7 +115,7 @@ class Transfers extends React.Component {
                 </div>}
             </div>
             <div className={bem.elem('card-item').mods('club-info').cls()}>
-                <Link to={`clubs/${transfer.toClub}`} target='_blank'>
+                <Link to={`clubs/${toClub.key}`} target='_blank'>
                     {toClubPhoto && <img
                         src={toClubPhoto}
                         alt={toClub.shortNameUA}

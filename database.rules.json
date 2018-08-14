@@ -28,10 +28,14 @@
         "users": {
             "$user_id": {
                 ".read": true,
-                ".write": false
+                ".write": true,
+                "role": {
+                    ".read": true,
+                    ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+                }
             },
             ".read": true,
-            ".write": false
+            ".write": true
         }
     }
 }
