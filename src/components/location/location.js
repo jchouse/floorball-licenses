@@ -6,7 +6,8 @@ const ROOT = '/',
         TRANSFERS: `${ROOT}transfers`,
         NEW_CLUB: `${ROOT}clubs/new/edit`,
         NEW_PLAYER: `${ROOT}players/new/edit`,
-        NEW_TRANSFER: `${ROOT}transfers/new/edit`
+        NEW_TRANSFER: `${ROOT}transfers/new/edit`,
+        YOUR_ACCOUNT: `${ROOT}your-account`
     };
 
 export { ROOT, pages };

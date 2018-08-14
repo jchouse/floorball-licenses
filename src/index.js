@@ -20,6 +20,7 @@ import EditPlayerCard from './blocks/Players/Player/Edit/Edit.jsx';
 import Transfers from './blocks/Transfers/Transfers.jsx';
 import TransfersEdit from './blocks/Transfers/Edit/TransfersEdit.jsx';
 import Info from './blocks/Info/Info.jsx';
+import Account from './blocks/Account/Account.jsx';
 import floorballApp from './reducers/reducers';
 import './index.css';
 import WebFontLoader from 'webfontloader';
@@ -72,6 +73,7 @@ render (
                         <IndexRoute component={Transfers}/>
                         <Route path=':id/edit' component={TransfersEdit}/>
                     </Route>
+                    <Route path='your-account' component={Account}/>
                 </Route>
                 <Route path='*' component={NotFound}/>
             </Router>

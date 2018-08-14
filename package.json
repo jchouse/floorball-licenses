@@ -25,10 +25,10 @@
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "start-js": "react-scripts start",
-        "start": "REACT_APP_FIREBASE_CONFIG=development npm-run-all -p watch-css start-js",
+        "start": "yarn translations && REACT_APP_FIREBASE_CONFIG=development npm-run-all -p watch-css start-js",
         "build-js": "react-scripts build",
-        "build": "REACT_APP_FIREBASE_CONFIG=production npm-run-all build-css build-js",
-        "build-dev": "REACT_APP_FIREBASE_CONFIG=development npm-run-all build-css build-js",
+        "build": "yarn translations && REACT_APP_FIREBASE_CONFIG=production npm-run-all build-css build-js",
+        "build-dev": "yarn translations && REACT_APP_FIREBASE_CONFIG=development npm-run-all build-css build-js",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
         "translations": "node ./translationRunner.js"

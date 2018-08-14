@@ -52,18 +52,29 @@ class Header extends Component {
         menuVisible: false
     };
 
-    componentWillMount() {
-        const { cookies, dispatch } = this.props,
+    constructor(props) {
+        super(props);
+
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.loginWithGoogle = this.loginWithGoogle;
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const { users, cookies, dispatch } = props,
             accessToken = cookies.get('accessToken'),
             locale = cookies.get('locale');
-
-        if (accessToken) {
-            this.setState({ accessToken }, this.loginWithGoogle);
-        }
 
         if (locale) {
             dispatch(changeLang(locale));
         }
+
+        if (!state.accessToken && users && accessToken) {
+            state.loginWithGoogle(accessToken);
+
+            return { accessToken };
+        }
+
+        return null;
     }
 
     render() {
@@ -134,9 +145,13 @@ class Header extends Component {
         dispatch(changeLang(locale));
     };
 
-    loginWithGoogle = () => {
-        const { firebase, dispatch, cookies } = this.props,
-            { accessToken } = this.state;
+    loginWithGoogle = token => {
+        const { firebase, cookies } = this.props;
+        let { accessToken } = this.state;
+
+        if (typeof token === 'string') {
+            accessToken = token;
+        }
 
         let credentials = {
             provider: 'google', type: 'popup'
@@ -151,21 +166,13 @@ class Header extends Component {
         firebase
             .login(credentials)
             .then(({ profile, credential }) => {
-                const { email, displayName, uid, photoURL } = profile;
-
                 if (!accessToken) {
                     const { accessToken } = credential;
 
                     cookies.set('accessToken', accessToken);
-                    this.saveUser(profile);
                 }
 
-                dispatch(login({
-                    uid,
-                    email,
-                    displayName,
-                    photoURL
-                }));
+                this.saveUser(profile);
             })
             .catch(e => {
                 console.error(e);
@@ -173,12 +180,12 @@ class Header extends Component {
             });
     };
 
-    saveUser(profile) {
-        const { users, firebase: { update } } = this.props,
+    async saveUser(profile) {
+        const { users, firebase: { update }, dispatch } = this.props,
             { email, displayName, uid, photoURL } = profile;
 
         if (!users[uid]) {
-            update('users', {
+            await update('users', {
                 ...users,
                 [uid]: {
                     email,
@@ -187,13 +194,15 @@ class Header extends Component {
                 }
             });
         } else {
-            update(`users/${uid}`, {
+            await update(`users/${uid}`, {
                 ...users.uid,
                 email,
                 displayName,
                 photoURL
             });
         }
+
+       return dispatch(login(users[uid]));
     }
 
     logOut = () => {
