@@ -22,3 +22,7 @@ yarn-error.log*
 
 # build artifacts
 src/**/*.css
+
+# dev
+.firebase
+.idea
