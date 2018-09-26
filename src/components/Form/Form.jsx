@@ -110,6 +110,9 @@ class Form extends React.Component {
             value = dataObject.valueOf();
         }
 
+        console.log('formData', formData);
+        console.log(id, group, type);
+
         if (!group) {
             formData[id] = value;
         } else {

@@ -45,39 +45,31 @@ class EditPlayer extends React.Component {
             license: '',
             licenseType: '',
             gender: '',
-            registrDate: new Date().valueOf(),
-            club: {
-                endDate: new Date(1538341200000).valueOf(),
-                startDate: new Date().valueOf(),
-                clubId: ''
-            }
+            club: '',
+            endActivationDate: new Date(1538341200000).valueOf(),
+            registrDate: new Date().valueOf()
         };
     }
 
     get playerEditSchema() {
         return [
             {
-                fieldset: {
-                    name: 'club',
-                    fields: [{
-                        id: 'endDate',
-                        label: 'License exp. date',
-                        type: 'date',
-                        required: true
-                    },
-                    {
-                        id: 'startDate',
-                        label: 'Start licence date SYSTEM',
-                        type: 'date',
-                        required: true
-                    },
-                    {
-                        id: 'clubId',
-                        type: 'select',
-                        label: 'Club',
-                        menuItems: []
-                    }]
-                }
+                id: 'endActivationDate',
+                label: 'License exp. date',
+                type: 'date',
+                required: true
+            },
+            {
+                id: 'registrDate',
+                label: 'Start licence date SYSTEM',
+                type: 'date',
+                required: true
+            },
+            {
+                id: 'club',
+                type: 'select',
+                label: 'Club',
+                menuItems: []
             },
             {
                 id: 'registrDate',
@@ -228,7 +220,7 @@ class EditPlayer extends React.Component {
                 photoUrl = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
 
             if (isLoaded(clubsList)) {
-                playerEditSchema[0].fieldset.fields[2].menuItems = this.updateClubsList();
+                playerEditSchema[2].menuItems = this.updateClubsList();
             }
 
             content = <Grid className={bem.elem('main').cls('row')}>
