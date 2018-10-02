@@ -31,7 +31,12 @@ const intl = {
                 header: 'Citizenship',
                 UA: 'Ukraine',
                 RU: 'Russia',
-                US: 'USA'
+                US: 'USA',
+                IL: 'Israel',
+                LV: 'Latvia',
+                SE: 'Sweden',
+                PL: 'Poland',
+                FI: 'Finland'
             },
             position: {
                 header: 'Position',
@@ -83,7 +88,12 @@ const intl = {
                 header: 'Громадянство',
                 UA: 'Україна',
                 RU: 'Росія',
-                US: 'США'
+                US: 'США',
+                IL: 'Ізраїль',
+                LV: 'Латвія',
+                SE: 'Швеція',
+                PL: 'Польща',
+                FI: 'Фінляндія'
             },
             position: {
                 header: 'Позиція',
