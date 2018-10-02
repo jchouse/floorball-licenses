@@ -28,7 +28,7 @@ class Club extends React.Component {
                     meta: [
                         { property: 'og:title', content: clubData.shortNameUA },
                         { property: 'og:url', content: document.location.href },
-                        { property: 'og:image', content: photo.key }
+                        { property: 'og:image', content: photo && photo.key }
                     ]
                 };
 
@@ -37,7 +37,7 @@ class Club extends React.Component {
                     <Helmet {...meta}/>
                     <Grid className={bem.elem('players').cls()}>
                         <Cell size={4} className={bem.elem('main-logo').cls()}>
-                            <img className={bem.elem('main-logo-img').cls()} src={photo.downloadURL} alt={clubData.shortNameUA}/>
+                            {photo && <img className={bem.elem('main-logo-img').cls()} src={photo.downloadURL} alt={clubData.shortNameUA}/>}
                         </Cell>
                         <Cell size={6} className={bem.elem('main-info').cls()}>
                             <div className={bem.elem('info').cls()}>
