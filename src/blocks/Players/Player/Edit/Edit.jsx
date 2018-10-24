@@ -46,7 +46,7 @@ class EditPlayer extends React.Component {
             licenseType: '',
             gender: '',
             club: '',
-            endActivationDate: new Date(1538341200000).valueOf(),
+            endActivationDate: new Date(1567209600000).valueOf(),
             registrDate: new Date().valueOf()
         };
     }
@@ -70,12 +70,6 @@ class EditPlayer extends React.Component {
                 type: 'select',
                 label: 'Club',
                 menuItems: []
-            },
-            {
-                id: 'registrDate',
-                label: 'Registration Date in system (plz change correctly)',
-                type: 'date',
-                required: true
             },
             {
                 id: 'lastNameUA',
@@ -249,7 +243,7 @@ class EditPlayer extends React.Component {
         });
     };
 
-    submit = data => {
+    submit = async data => {
         const { firebase: { push, update }, playersData, params: { id }, playersID } = this.props,
             { photo } = this.state,
             savedData = { ...playersData, ...data };
@@ -263,6 +257,7 @@ class EditPlayer extends React.Component {
 
             savedData.license = licenseNumber.toString().padStart(8, '0');
 
+            await update('counters', { playerID: licenseNumber });
             push('players', savedData).then(this.goToSavedData);
         } else {
             update(`players/${id}`, savedData).then(this.goToSavedData);
