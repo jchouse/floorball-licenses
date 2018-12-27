@@ -5,7 +5,6 @@ import BEM from '../../components/BEM/BEM';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { licenseRequest } from './ActionsRequests';
 import { withRouter } from 'react-router';
 
 class Requests extends Component {
