@@ -3,8 +3,8 @@ const intl = {
         Account: {
             title: 'Your account',
             guest: 'Your are the guest',
-            displayName: 'Display name: {displayName}',
-            email: 'E-mail: {email}',
+            displayName: 'Display name',
+            email: 'E-mail:',
             role: 'Role: ',
             base: 'base',
             clubAdmin: '{clubName}`s admin',
@@ -16,8 +16,8 @@ const intl = {
         Account: {
             title: 'Ваш аккаунт',
             guest: 'Ви тут гість',
-            displayName: 'Ім\'я яке відображається: {displayName}',
-            email: 'Електрона адреса: {email}',
+            displayName: 'Ім\'я яке відображається:',
+            email: 'Електрона адреса:',
             role: 'Роль: ',
             base: 'базова',
             clubAdmin: 'адмін клубу {clubName}',

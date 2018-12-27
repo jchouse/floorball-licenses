@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../blocks/Header/HeaderActions';
 import { firebaseReducer } from 'react-redux-firebase';
+import { CREATELICENSEREQUEST, ADDPLAYERTOREQUEST } from '../blocks/Requests/ActionsRequests';
 
 function user(state = {}, { type, user }) {
     switch (type) {
@@ -59,7 +60,7 @@ function transfersList(state = {}, action) {
     }
 }
 
-function photoStorage(state = {show: false}, action) {
+function photoStorage(state = { show: false }, action) {
     switch (action.type) {
         case 'SHOWPHOTOSTORAGE':
             return action.photoStorage;
@@ -79,6 +80,23 @@ function choosedPhotoUrl(state = '', action) {
     }
 }
 
+function licenseRequest(state = {}, action) {
+    switch (action.type) {
+        case CREATELICENSEREQUEST:
+            return action.newRequest;
+        case ADDPLAYERTOREQUEST: {
+            const { player } = action,
+                newState = {};
+
+            newState.playersList = { ...state.playersList, ...player };
+
+            return { ...state, ...newState };
+        }
+        default:
+            return state;
+    }
+}
+
 const floorballApp = combineReducers({
     firebase: firebaseReducer,
     user,
@@ -89,6 +107,7 @@ const floorballApp = combineReducers({
     choosedPhotoUrl,
     transfersList,
     imagesList,
+    licenseRequest,
     routing: routerReducer
 });
 

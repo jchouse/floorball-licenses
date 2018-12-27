@@ -7,7 +7,9 @@ const ROOT = '/',
         NEW_CLUB: `${ROOT}clubs/new/edit`,
         NEW_PLAYER: `${ROOT}players/new/edit`,
         NEW_TRANSFER: `${ROOT}transfers/new/edit`,
-        YOUR_ACCOUNT: `${ROOT}your-account`
+        YOUR_ACCOUNT: `${ROOT}your-account`,
+        REQUEST_NEW: `${ROOT}request/license/new`,
+        REQUEST_CONTINUE: `${ROOT}request/license/continue`
     };
 
 export { ROOT, pages };

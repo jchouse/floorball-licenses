@@ -60,12 +60,6 @@ class EditPlayer extends React.Component {
                 required: true
             },
             {
-                id: 'registrDate',
-                label: 'Start licence date SYSTEM',
-                type: 'date',
-                required: true
-            },
-            {
                 id: 'club',
                 type: 'select',
                 label: 'Club',

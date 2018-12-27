@@ -265,7 +265,7 @@ class PlayersList extends Component {
 
 const populates = [
     { child: 'photo', root: 'images' },
-    { child: 'club', root: 'clubs', keyProp: 'key' },
+    { child: 'club', root: 'clubs', keyProp: 'key' }
 ];
 
 function mapStateToProps(state) {

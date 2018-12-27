@@ -20,46 +20,38 @@ class Account extends Component {
                 <h4 className={bem.elem('account-header').cls('md-title')}>
                     <FormattedMessage id='Account.title'/>
                 </h4>
+                <article>
+                    {role ? this.renderUser() : this.renderGuest()}
+                </article>
             </Cell>
-            {role ? this.renderUser() : this.renderGuest()}
         </Grid>;
     }
 
     renderGuest() {
-        return <Cell>
-            <Grid>
-                <Cell size={12}>
-                    <FormattedMessage id='Account.guest'/>
-                </Cell>
-            </Grid>
-        </Cell>;
+        return <p>
+            <FormattedMessage id='Account.guest'/>
+        </p>;
     }
 
     renderUser() {
         const { user: { email, displayName } } = this.props;
 
-        return <Cell>
-            <Grid key='displayName'>
-                <Cell size={12}>
-                    <FormattedMessage
-                        id='Account.displayName'
-                        values={{ displayName }}/>
-                </Cell>
-            </Grid>
-            <Grid key='email'>
-                <Cell size={12}>
-                    <FormattedMessage
-                        id='Account.email'
-                        values={{ email }}/>
-                </Cell>
-            </Grid>
-            <Grid key='role'>
-                <Cell size={12}>
-                    <FormattedMessage id='Account.role'/>
-                    {this.renderRole()}
-                </Cell>
-            </Grid>
-        </Cell>;
+        return [
+            <p key='displayName'>
+                <FormattedMessage
+                    id='Account.displayName'/>
+                <b> {displayName}</b>
+            </p>,
+            <p key='email'>
+                <FormattedMessage
+                    id='Account.email'/>
+                <b> {email}</b>
+            </p>,
+            <p key='role'>
+                <FormattedMessage id='Account.role'/>
+                <b> {this.renderRole()}</b>
+            </p>
+        ];
     }
 
     renderRole() {

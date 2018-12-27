@@ -21,6 +21,8 @@ import Transfers from './blocks/Transfers/Transfers.jsx';
 import TransfersEdit from './blocks/Transfers/Edit/TransfersEdit.jsx';
 import Info from './blocks/Info/Info.jsx';
 import Account from './blocks/Account/Account.jsx';
+import Requests from './blocks/Requests/Requests.jsx';
+import NewRequest from './blocks/Requests/New/NewRequest.jsx';
 import floorballApp from './reducers/reducers';
 import './index.css';
 import WebFontLoader from 'webfontloader';
@@ -74,6 +76,10 @@ render (
                         <Route path=':id/edit' component={TransfersEdit}/>
                     </Route>
                     <Route path='your-account' component={Account}/>
+                    <Route path='requests'>
+                        <IndexRoute component={Requests}/>
+                        <Route path='new' component={NewRequest}/>
+                    </Route>
                 </Route>
                 <Route path='*' component={NotFound}/>
             </Router>

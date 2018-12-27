@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { withCookies } from 'react-cookie';
 import { Button, Drawer, Toolbar } from 'react-md';
 
@@ -52,26 +52,20 @@ class Header extends Component {
         menuVisible: false
     };
 
-    constructor(props) {
-        super(props);
-
-        // eslint-disable-next-line react/no-direct-mutation-state
-        this.state.loginWithGoogle = this.loginWithGoogle;
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        const { users, cookies, dispatch } = props,
-            accessToken = cookies.get('accessToken'),
+    static getDerivedStateFromProps(props) {
+        const { users, cookies, dispatch, user } = props,
             locale = cookies.get('locale');
 
         if (locale) {
             dispatch(changeLang(locale));
         }
 
-        if (!state.accessToken && users && accessToken) {
-            state.loginWithGoogle(accessToken);
-
-            return { accessToken };
+        if (isLoaded(users) && user && !user.displayName) {
+            props.firebase.auth().onAuthStateChanged(userData => {
+                if (userData) {
+                    dispatch(login(users[userData.uid]));
+                }
+            });
         }
 
         return null;
@@ -89,12 +83,22 @@ class Header extends Component {
             actionsItem.push({
                 label: <FormattedMessage id='Header.newClub'/>,
                 to: pages.NEW_CLUB
-            },{
+            }, {
                 label: <FormattedMessage id='Header.newPlayer'/>,
                 to: pages.NEW_PLAYER
-            },{
+            }, {
                 label: <FormattedMessage id='Header.newTransfer'/>,
                 to: pages.NEW_TRANSFER
+            });
+        }
+
+        if (user && user.role > 20 && user.role < 31 && user.clubId) {
+            actionsItem.push({
+                label: <FormattedMessage id='Header.startLicenses'/>,
+                to: pages.REQUEST_NEW
+            }, {
+                label: <FormattedMessage id='Header.continueLicenses'/>,
+                to: pages.REQUEST_CONTINUE
             });
         }
 
@@ -145,43 +149,21 @@ class Header extends Component {
         dispatch(changeLang(locale));
     };
 
-    loginWithGoogle = token => {
-        const { firebase, cookies } = this.props;
-        let { accessToken } = this.state;
-
-        if (typeof token === 'string') {
-            accessToken = token;
-        }
-
-        let credentials = {
-            provider: 'google', type: 'popup'
-        };
-
-        if (accessToken) {
-            credentials = {
-                credential: firebase.auth.GoogleAuthProvider.credential(null, accessToken)
-            };
-        }
+    loginWithGoogle = () => {
+        const { firebase, dispatch } = this.props,
+            provider = new firebase.auth.GoogleAuthProvider();
 
         firebase
-            .login(credentials)
-            .then(({ profile, credential }) => {
-                if (!accessToken) {
-                    const { accessToken } = credential;
-
-                    cookies.set('accessToken', accessToken);
-                }
-
-                this.saveUser(profile);
-            })
-            .catch(e => {
-                console.error(e);
-                cookies.remove('accessToken');
-            });
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => firebase.auth().signInWithPopup(provider))
+            .then(({ user }) => this.saveUser(user))
+            .then(user => dispatch(login(user)))
+            .catch(e => console.error(e));
     };
 
     async saveUser(profile) {
-        const { users, firebase: { update }, dispatch } = this.props,
+        const { users, firebase: { update } } = this.props,
             { email, displayName, uid, photoURL } = profile;
 
         if (!users[uid]) {
@@ -202,16 +184,16 @@ class Header extends Component {
             });
         }
 
-       return dispatch(login(users[uid]));
+       return users[uid];
     }
 
     logOut = () => {
-        const { firebase, dispatch, cookies } = this.props;
+        const { firebase, dispatch } = this.props;
 
         firebase
-            .logout()
+            .auth()
+            .signOut()
             .then(() => dispatch(logout()))
-            .then(() => cookies.remove('accessToken'))
             .then(() => location.href = '/');
     }
 }

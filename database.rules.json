@@ -17,6 +17,42 @@
             ".read": true,
             ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
         },
+        "requests": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+            "$request": {
+                "playersList": {
+                    ".read": true,
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+                    "$player": {
+                        "playerId": {
+                            ".read": true,
+                            ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                        },
+                        "docsChecked": {
+                            ".read": true,
+                            ".write": "root.child('users').child(auth.uid).child('role').val() > 51"
+                        },
+                        "paidChecked": {
+                            ".read": true,
+                            ".write": "root.child('users').child(auth.uid).child('role').val() > 51"
+                        }
+                    }
+                },
+                "manager": {
+                    ".read": true,
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                },
+                "continue": {
+                    ".read": true,
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                },
+                "resolved": {
+                    ".read": true,
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 51"
+                }
+            }
+        },
         "transfers": {
             ".read": true,
             ".write": "root.child('users').child(auth.uid).child('role').val() == 99"

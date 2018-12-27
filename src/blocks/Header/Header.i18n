@@ -9,9 +9,11 @@ const intl = {
             logout: 'Log out',
             locale: 'Українська',
             main: 'Main',
-            newClub: 'New Club',
-            newPlayer: 'New Player',
-            newTransfer: 'New Transfer'
+            newClub: 'NewRequest.jsx Club',
+            newPlayer: 'NewRequest.jsx Player',
+            newTransfer: 'NewRequest.jsx Transfer',
+            startLicenses: 'Start licenses',
+            continueLicenses: 'Continue licenses'
         }
     },
     'uk': {
@@ -26,7 +28,9 @@ const intl = {
             main: 'Головна',
             newClub: 'Новий клуб',
             newPlayer: 'Новий гравець',
-            newTransfer: 'Новий трансфер'
+            newTransfer: 'Новий трансфер',
+            startLicenses: 'Нові ліцензії',
+            continueLicenses: 'Продовжити ліцензії'
         }
     }
 };
