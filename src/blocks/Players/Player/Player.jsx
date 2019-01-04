@@ -7,6 +7,7 @@ import DateFormatter from '../../../components/DateFormatter/DateFormatter';
 import { compose } from 'redux';
 import { firebaseConnect, isLoaded, populate } from 'react-redux-firebase';
 import './Player.css';
+import Countries from '../../../components/Countries/Countries';
 
 /**
  * Player Card
@@ -19,7 +20,7 @@ class Player extends Component {
     state = {};
 
     render() {
-        const { bem, params: { id }, playerData, user: { role } } = this.props;
+        const { bem, params: { id }, playerData, user: { role }, locale } = this.props;
         let content = '';
 
         if (isLoaded(playerData)) {
@@ -65,7 +66,7 @@ class Player extends Component {
                             DateFormatter.dateForUi(born))}
                         {citizenship && this.renderRow(
                             <FormattedMessage id='Players.citizenship.header'/>,
-                            <FormattedMessage id={`Players.citizenship.${citizenship}`}/>)}
+                            Countries.getCountry(citizenship, locale))}
                         {(firstNameEN || lastNameEN) &&
                         this.renderRow(<FormattedMessage id='Players.nameEN'/>, `${firstNameEN} ${lastNameEN}`)}
                         {height && this.renderRow(
@@ -156,11 +157,12 @@ const populates = [
 ];
 
 function mapStateToProps(state, props) {
-    const { user,  firebase, firebase: { data: { images } } } = state,
+    const { user, locale, firebase, firebase: { data: { images } } } = state,
         popPlayers = populate(firebase, 'players', populates);
 
     return {
         user,
+        locale,
         images,
         playerData: popPlayers && popPlayers[props.params.id]
     };

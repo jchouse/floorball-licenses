@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { firebaseConnect, populate } from 'react-redux-firebase';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import { Autocomplete, Grid, Cell, Button } from 'react-md';
 import BEM from '../../../components/BEM/BEM';
 import { licenseRequest, addPlayerToRequest } from '../ActionsRequests';

@@ -78,6 +78,8 @@ class EditPlayer extends React.Component {
             {
                 id: 'citizenship',
                 label: 'Citizenship',
+                type: 'countries',
+                locale: this.props.locale,
                 placeholder: 'ISO ALPHA-2 Code',
                 required: true
             },
@@ -295,9 +297,10 @@ class EditPlayer extends React.Component {
 }
 
 function mapStateToProps(state, props) {
-    const { firebase: { data: { images, clubs, players, counters } } } = state;
+    const { locale, firebase: { data: { images, clubs, players, counters } } } = state;
 
     return {
+        locale,
         clubsList: clubs,
         imagesList: images,
         playersData: players && players[props.params.id],

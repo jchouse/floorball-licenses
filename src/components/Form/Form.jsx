@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TextField, DatePicker, SelectField, Button } from 'react-md';
 import BEM from '../BEM/BEM';
+import Countries from '../Countries/Countries.jsx';
 
 /**
  * Form
@@ -91,6 +92,12 @@ class Form extends React.Component {
                 value={dateValue}
                 firstDayOfWeek={1}
                 onChange={this.changeData(optionsData.id, group, type)}/>;
+        } else if (type === 'countries') {
+            elem = <Countries
+                key={index}
+                {...options}
+                defaultValue={value}
+                onSelect={this.changeData(options.id, group)}/>;
         } else {
             elem = <TextField
                 key={index}

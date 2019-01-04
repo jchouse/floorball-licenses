@@ -28,17 +28,6 @@ const intl = {
                 SENIOR: 'Senior',
                 JUNIOR: 'Junior'
             },
-            citizenship: {
-                header: 'Citizenship',
-                UA: 'Ukraine',
-                RU: 'Russia',
-                US: 'USA',
-                IL: 'Israel',
-                LV: 'Latvia',
-                SE: 'Sweden',
-                PL: 'Poland',
-                FI: 'Finland'
-            },
             position: {
                 header: 'Position',
                 FORWARD: 'Forward',
@@ -85,17 +74,6 @@ const intl = {
                 type: 'Тип ліцензії',
                 SENIOR: 'Доросла',
                 JUNIOR: 'Юніорська'
-            },
-            citizenship: {
-                header: 'Громадянство',
-                UA: 'Україна',
-                RU: 'Росія',
-                US: 'США',
-                IL: 'Ізраїль',
-                LV: 'Латвія',
-                SE: 'Швеція',
-                PL: 'Польща',
-                FI: 'Фінляндія'
             },
             position: {
                 header: 'Позиція',
