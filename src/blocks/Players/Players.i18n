@@ -43,7 +43,8 @@ const intl = {
                 header: 'Gender',
                 MALE: 'Male',
                 FEMALE: 'Female'
-            }
+            },
+            citizenship: 'Citizenship'
         }
     },
     'uk': {
@@ -90,7 +91,8 @@ const intl = {
                 header: 'Стать',
                 MALE: 'Чоловік',
                 FEMALE: 'Жінка'
-            }
+            },
+            citizenship: 'Громадянство'
         }
     }
 };

@@ -65,7 +65,7 @@ class Player extends Component {
                             <FormattedMessage id='Players.born'/>,
                             DateFormatter.dateForUi(born))}
                         {citizenship && this.renderRow(
-                            <FormattedMessage id='Players.citizenship.header'/>,
+                            <FormattedMessage id='Players.citizenship'/>,
                             Countries.getCountry(citizenship, locale))}
                         {(firstNameEN || lastNameEN) &&
                         this.renderRow(<FormattedMessage id='Players.nameEN'/>, `${firstNameEN} ${lastNameEN}`)}
