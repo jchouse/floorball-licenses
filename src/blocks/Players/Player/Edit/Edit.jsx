@@ -2,8 +2,9 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
+import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
-import { Grid, Cell } from 'react-md';
+import { Grid, Cell, Button } from 'react-md';
 import BEM from '../../../../components/BEM/BEM';
 import Form from '../../../../components/Form/Form.jsx';
 import PhotoControl from '../../../../components/Photo/Control/Control.jsx';
@@ -16,15 +17,6 @@ class EditPlayer extends React.Component {
     static defaultProps = {
         bem: new BEM('edit-player')
     };
-
-    constructor() {
-        super();
-
-        // eslint-disable-next-line
-        this.state.playersData = this.playersData;
-        // eslint-disable-next-line
-        this.state.playerEditSchema = this.playerEditSchema;
-    }
 
     state = {};
 
@@ -63,7 +55,7 @@ class EditPlayer extends React.Component {
                 id: 'club',
                 type: 'select',
                 label: 'Club',
-                menuItems: []
+                menuItems: this.updateClubsList()
             },
             {
                 id: 'lastNameUA',
@@ -185,38 +177,63 @@ class EditPlayer extends React.Component {
     updateClubsList() {
         const { clubsList } = this.props;
 
-        return Object.keys(clubsList).map(club => {
-            const _c = clubsList[club];
+        if (clubsList && Object.keys(clubsList).length) {
+            return Object.keys(clubsList).map(club => {
+                const _c = clubsList[club];
 
-            return {
-                value: club,
-                'data-icon': _c.logoUrl,
-                label: _c.shortNameUA
-            };
-        });
+                return {
+                    value: club,
+                    'data-icon': _c.logoUrl,
+                    label: _c.shortNameUA
+                };
+            });
+        } else {
+            return [];
+        }
     }
 
     render() {
-        const { bem, imagesList, playersData = this.playersData, clubsList } = this.props,
-            { playerEditSchema, logoUrl } = this.state;
+        const { bem, imagesList, playersData = this.playersData } = this.props,
+            playerEditSchema = this.playerEditSchema,
+            { logoUrl, clearPhoto } = this.state;
         let content = <Cell offset={5} size={1}>
             Loading...
         </Cell>;
 
         if (isLoaded(playersData)) {
-            const { photo } = playersData,
-                photoUrl = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
+            const { photo } = playersData;
+            let photoUrl = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
 
-            if (isLoaded(clubsList)) {
-                playerEditSchema[2].menuItems = this.updateClubsList();
+            if (clearPhoto) {
+                photoUrl = '';
             }
 
             content = <Grid className={bem.elem('main').cls('row')}>
-                <Cell offset={2} size={3}>
-                    <img className={bem.elem('main-logo').cls()} src={logoUrl || photoUrl} alt={photo}/>
-                    <PhotoControl
-                        alt={playersData.lastNameEN}
-                        uploadPhotoHandler={this.uploadPhotoHandler}/>
+                <Cell
+                    offset={2}
+                    size={3}
+                    className={bem.elem('main-logo').cls()}>
+                    <div className={bem.elem('main-logo-wrapper').cls()}>
+                        <img className={bem.elem('main-logo-img').cls()} src={logoUrl || photoUrl} alt=''/>
+                    </div>
+                    <div className={bem.elem('main-logo-controls').cls()}>
+                        <Button
+                            flat
+                            secondary
+                            swapTheming
+                            onClick={this.removePhoto}>
+                            <FormattedMessage id='Players.removePhoto'/>
+                        </Button>
+                    </div>
+                    <div className={bem.elem('main-logo-controls').cls()}>
+                        <PhotoControl
+                            alt={playersData.lastNameEN}
+                            maxSize={512}
+                            maxHeight={500}
+                            maxWidth={500}
+                            uploadPhotoHandler={this.uploadPhotoHandler}
+                            clearPhotoHandler={this.clearPhotoHandler}/>
+                    </div>
                 </Cell>
                 <Cell offset={1} size={4} className={bem.elem('main-info').cls()}>
                     <Form
@@ -230,6 +247,18 @@ class EditPlayer extends React.Component {
         return content;
     }
 
+    removePhoto = () => {
+        this.setState({
+            clearPhoto: true,
+            photo: null,
+            logoUrl: null
+        });
+    };
+
+    clearPhotoHandler = () => {
+        this.setState({ photo: null, logoUrl: null });
+    };
+
     uploadPhotoHandler = (photo, url) => {
         this.setState({
             logoUrl: url,
@@ -242,7 +271,7 @@ class EditPlayer extends React.Component {
             { photo } = this.state,
             savedData = { ...playersData, ...data };
 
-        if (photo) {
+        if (this.state.hasOwnProperty('photo')) {
             savedData.photo = photo;
         }
 

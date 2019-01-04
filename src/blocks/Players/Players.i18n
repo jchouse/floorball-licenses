@@ -9,6 +9,7 @@ const intl = {
             born: 'Born',
             enterNumber: 'Enter some license number',
             enterClub: 'Club',
+            removePhoto: 'Remove photo from card',
             filter: {
                 unactive: 'Show expired license'
             },
@@ -66,6 +67,7 @@ const intl = {
             born: 'Дата народження',
             enterNumber: 'Введіть номер ліцензії',
             enterClub: 'Клуб',
+            removePhoto: 'Видалити фото з картки',
             filter: {
                 unactive: 'Показувати неактивні ліцензії'
             },

@@ -63,9 +63,9 @@ function registerValidSW(swUrl) {
             if (navigator.serviceWorker.controller) {
               // At this point, the old content will have been purged and
               // the fresh content will have been added to the cache.
-              // It's the perfect time to display a "NewRequest.jsx content is
+              // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
-              console.log('NewRequest.jsx content is available; please refresh.');
+              console.log('New content is available; please refresh.');
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a

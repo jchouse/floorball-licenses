@@ -9,9 +9,9 @@ const intl = {
             logout: 'Log out',
             locale: 'Українська',
             main: 'Main',
-            newClub: 'NewRequest.jsx Club',
-            newPlayer: 'NewRequest.jsx Player',
-            newTransfer: 'NewRequest.jsx Transfer',
+            newClub: 'New Club',
+            newPlayer: 'New Player',
+            newTransfer: 'New Transfer',
             startLicenses: 'Start licenses',
             continueLicenses: 'Continue licenses'
         }

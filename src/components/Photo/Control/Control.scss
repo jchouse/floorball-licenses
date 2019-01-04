@@ -6,4 +6,25 @@
     {
         width: 100%;
     }
+
+    &__clear
+    {
+        margin-left: 1em;
+    }
+
+    &__item
+    {
+        margin-top: 10px;
+
+        &--error
+        {
+            color: red;
+        }
+
+        &--info
+        {
+            font-size: .8em;
+            color: #616161;
+        }
+    }
 }

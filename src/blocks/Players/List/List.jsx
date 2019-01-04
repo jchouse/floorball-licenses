@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import DateFormatter from '../../../components/DateFormatter/DateFormatter';
 import Pagination from '../../../components/Pagination/Pagination.jsx';
-import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField } from 'react-md';
+import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField, FontIcon } from 'react-md';
 import BEM from '../../../components/BEM/BEM';
 import './List.css';
 
@@ -189,10 +189,9 @@ class PlayersList extends Component {
                 <Cell
                     size={2}
                     className={bem.elem('card-item').cls()}>
-                    {player.photo &&
                         <div className={bem.elem('avatar').cls()}>
-                            <Avatar src={player.photo.downloadURL}/>
-                        </div>}
+                            {this.renderAvatar(player)}
+                        </div>
                     <div className={bem.elem('card-item-info').cls()}>
                         <div className={bem.elem('name').cls()}>{`${player.lastNameUA} ${player.firstNameUA}`}</div>
                         <div>{DateFormatter.dateForUi(player.born)}</div>
@@ -260,6 +259,18 @@ class PlayersList extends Component {
                 </Cell>
             </Grid>
         );
+    }
+
+    renderAvatar(player) {
+        const options = {};
+
+        if (player.photo) {
+            options.src = player.photo.downloadURL;
+        } else {
+            options.icon = <FontIcon>face</FontIcon>;
+        }
+
+        return  <Avatar random {...options}/>;
     }
 }
 

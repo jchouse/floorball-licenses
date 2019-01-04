@@ -4,6 +4,28 @@
 
     &__main-logo
     {
-        width: 100%;
+        &-wrapper
+        {
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 100%;
+            text-align: center;
+            background: #bdbdbd;
+            margin: auto;
+            line-height: 250px;
+            border: 2px solid rgba(0, 0, 0, 0.12);
+        }
+
+        &-img
+        {
+            height: 100%;
+            width: auto;
+        }
+
+        &-controls
+        {
+            margin-top: 1em;
+        }
     }
 }

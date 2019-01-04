@@ -117,6 +117,7 @@ class EditClub extends React.Component {
                         <img className={bem.elem('main-logo').cls()} src={logoUrl || logo} alt={clubData.shortNameEN}/>
                         <PhotoControl
                             alt={clubData.shortNameEN}
+                            clearPhotoHandler={this.clearPhotoHandler}
                             uploadPhotoHandler={this.uploadPhotoHandler}/>
                     </Cell>
                     <Cell size={4} className={bem.elem('main-info').cls()}>
@@ -131,6 +132,10 @@ class EditClub extends React.Component {
 
         return content;
     }
+
+    clearPhotoHandler = () => {
+        this.setState({ photo: null, logoUrl: null });
+    };
 
     uploadPhotoHandler = (photo, url) => {
         this.setState({

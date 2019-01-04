@@ -1,0 +1,27 @@
+/* eslint-disable max-len */
+const intl = {
+    'en': {
+        PhotoControl: {
+            chooseFile: 'Choose file',
+            clear: 'Clear',
+            progress: 'Upload: {progress}%',
+            file: 'File: {filename}',
+            sizeError: 'The image should be less than {maxSize}Kb',
+            sizeInfo: 'The maximum image size must be smaller {maxSize}Kb.',
+            info: 'The image will be scaled down, such that the image is contained in the {maxWidth}px / {maxHeight}px region. The resulting image will be centered and the parts that stick out will be cropped off.'
+        }
+    },
+    'uk': {
+        PhotoControl: {
+            chooseFile: 'Оберіть файл',
+            clear: 'Видалити',
+            progress: 'Завантажено: {progress}%',
+            file: 'File: {filename}',
+            sizeError: 'Зображення повинно бути меньше {maxSize}Кб.',
+            info: 'Зображення буде зменшено, так що зображення буде міститися в області {maxWidth}px / {maxHeight}px. Отримане зображення буде центрованим, а частини, що виступають, будуть обрізані.'
+        }
+    }
+};
+/* eslint-enable max-len */
+
+module.exports = intl;
