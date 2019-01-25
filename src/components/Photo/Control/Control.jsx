@@ -1,4 +1,5 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import BEM from '../../BEM/BEM';
 import PropTypes from 'prop-types';
 import FileUploader from 'react-firebase-file-uploader';
@@ -72,8 +73,8 @@ class Control extends React.Component {
                 {error &&
                     <div className={bem.elem('item').mods('error').cls()}>
                         <FormattedMessage
-                            value={{ maxSize }}
-                            id={'PhotoControl.error'}/>
+                            values={{ maxSize }}
+                            id={'PhotoControl.sizeError'}/>
                     </div>
                 }
                 {isUploading &&
@@ -105,13 +106,14 @@ class Control extends React.Component {
     }
 
     handleChange = event => {
+
         const { target: { files } } = event,
             { maxSize } = this.props,
             { name, size } = files[0];
         let error;
 
         if (maxSize && size/1024 >= maxSize) {
-            error = 'sizeError';
+            error = true;
         }
 
         this.setState({
@@ -147,6 +149,13 @@ class Control extends React.Component {
     };
 
     clearHandler = () => {
+        //eslint-disable-next-line
+        const node = findDOMNode(this.fileInput.current);
+
+        if (node) {
+            node.value = '';
+        }
+
         this.setState({
             progress: null,
             isUploading: false,

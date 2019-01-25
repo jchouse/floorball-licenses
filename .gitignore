@@ -25,4 +25,6 @@ src/**/*.css
 
 # dev
 .firebase
+.firebase/*
 .idea
+*.log

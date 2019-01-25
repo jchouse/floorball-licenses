@@ -8,10 +8,8 @@ countries.registerLocale(enCountries);
 countries.registerLocale(ukCountries);
 
 class Countries extends Component {
-    constructor(props) {
-        super(props);
-
-        this.names = countries.getNames(props.locale);
+    static defaultProps = {
+        locale: 'uk'
     }
 
     static getCountry(code, locale) {
@@ -19,7 +17,9 @@ class Countries extends Component {
     }
 
     state = {
-        value: this.props.defaultValue
+        value: this.props.defaultValue,
+        data: this.getCountriesList(countries.getNames(this.props.locale)),
+        locale: this.props.locale
     };
 
     componentWillReceiveProps(nextProps) {
@@ -28,32 +28,35 @@ class Countries extends Component {
                 value: Countries.getCountry(nextProps.defaultValue, nextProps.locale)
             });
         }
+
+        if (nextProps.locale !== this.props.locale) {
+            this.setState({
+                data: this.getCountriesList(countries.getNames(nextProps.locale))
+            });
+        }
     }
 
     render() {
-        const { id, label, placeholder } = this.props,
-            { value } = this.state;
+        const { id, label, placeholder, required } = this.props,
+            { value, data } = this.state;
 
         return <Autocomplete
             id={id}
             label={label}
             placeholder={placeholder}
             value={value}
-            data={this.getCountriesList()}
+            data={data}
+            required={required}
             filter={Autocomplete.caseInsensitiveFilter}
             onChange={this.changeHandler}
             onAutocomplete={this.autocompleteHandler}/>;
     }
 
-    getCountriesList() {
-        const { names } = this;
-
-        return Object.entries(names).map(([key, value]) => {
-            return {
+    getCountriesList(names) {
+        return Object.entries(names).map(([key, value]) => ({
                 data: key,
                 primaryText: value
-            };
-        });
+        }));
     }
 
     changeHandler = value => {

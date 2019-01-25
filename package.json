@@ -35,9 +35,7 @@
     "eject": "react-scripts eject",
     "translations": "node ./translationRunner.js"
   },
-  "devDependencies": {
-    "react-intl-translations-manager": "^5.0.3"
-  },
+  "devDependencies": {},
   "browserslist": [
     ">0.2%",
     "not dead",

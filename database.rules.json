@@ -15,7 +15,40 @@
         },
         "players": {
             ".read": true,
-            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+            ".indexOn": ["club", "firstNameUA", "lastNameUA", "registrDate"],
+            "$player": {
+                ".read": true,
+                ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+                ".validate": "newData.hasChildren(['born', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'registrDate'])",
+                "born": {
+                    ".validate": "newData.isNumber()"
+                },
+                "citizenship": {
+                    ".validate": "newData.isString() && newData.val().length == 2"
+                },
+                "club": {
+                    ".validate": "root.child('clubs/' + newData.val()).exists()"
+                },
+                "endActivationDate": {
+                    ".validate": "newData.isNumber() && newData.val() >= now"
+                },
+                "firstNameUA": {
+                    ".validate": "newData.isString()"
+                },
+                "gender": {
+                    ".validate": "newData.isString() && (newData.val().contains('MALE') || newData.val().contains('FEMALE'))"
+                },
+                "lastNameUA": {
+                    ".validate": "newData.isString()"
+                },
+                "license": {
+                    ".validate": "newData.isNumber() || data.isString()"
+                },
+                "registrDate": {
+                    ".validate": "newData.isNumber()"
+                }
+            }
         },
         "requests": {
             ".read": true,

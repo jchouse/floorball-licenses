@@ -14,13 +14,8 @@ import './Edit.css';
  */
 class EditClub extends React.Component {
     static defaultProps = {
-        bem: new BEM('edit-club')
-    };
-
-    state = {};
-
-    get clubData() {
-        return {
+        bem: new BEM('edit-club'),
+        clubData: {
             shortNameEN: '',
             shortNameUA: '',
             fullNameEN: '',
@@ -36,8 +31,10 @@ class EditClub extends React.Component {
             phone: '',
             email: '',
             url: ''
-        };
-    }
+        }
+    };
+
+    state = {};
 
     get clubEditSchema() {
         return [
@@ -103,7 +100,7 @@ class EditClub extends React.Component {
     }
 
     render() {
-        const { bem, imagesList, clubData = this.clubData, params: { id } } = this.props,
+        const { bem, imagesList, clubData, params: { id } } = this.props,
             { logoUrl } = this.state;
         let content = 'Loading';
 

@@ -62,13 +62,13 @@ class Player extends Component {
                             <FormattedMessage id='Players.name'/>,
                             `${lastNameUA} ${firstNameUA} ${secondNameUA}`)}
                         {this.renderRow(
-                            <FormattedMessage id='Players.born'/>,
+                            <FormattedMessage id='Players.born.label'/>,
                             DateFormatter.dateForUi(born))}
                         {citizenship && this.renderRow(
-                            <FormattedMessage id='Players.citizenship'/>,
+                            <FormattedMessage id='Players.citizenship.label'/>,
                             Countries.getCountry(citizenship, locale))}
                         {(firstNameEN || lastNameEN) &&
-                        this.renderRow(<FormattedMessage id='Players.nameEN'/>, `${firstNameEN} ${lastNameEN}`)}
+                        this.renderRow(<FormattedMessage id='Players.nameEN'/>, `${lastNameEN} ${firstNameEN}`)}
                         {height && this.renderRow(
                             <FormattedMessage id='Players.height.header'/>,
                             <FormattedMessage values={{ height }} id='Players.height.num'/>)}
@@ -153,7 +153,7 @@ class Player extends Component {
 
 const populates = [
     { child: 'photo', root: 'images' },
-    { child: 'club', root: 'clubs', keyProp: 'key' },
+    { child: 'club', root: 'clubs', keyProp: 'key' }
 ];
 
 function mapStateToProps(state, props) {

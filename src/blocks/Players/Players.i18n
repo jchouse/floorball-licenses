@@ -6,7 +6,6 @@ const intl = {
             enterName: 'Enter some name',
             name: 'Name',
             nameEN: 'Name latin',
-            born: 'Born',
             enterNumber: 'Enter some license number',
             enterClub: 'Club',
             removePhoto: 'Remove photo from card',
@@ -44,7 +43,37 @@ const intl = {
                 MALE: 'Male',
                 FEMALE: 'Female'
             },
-            citizenship: 'Citizenship'
+            endActivationDate: {
+                label: 'License exp. date'
+            },
+            lastNameUA: {
+                label: 'Last Name',
+                placeholder: 'Last Name'
+            },
+            firstNameUA: {
+                label: 'First Name',
+                placeholder: 'First Name'
+            },
+            secondNameUA: {
+                label: 'Second Name',
+                placeholder: 'Second Name'
+            },
+            lastNameEN: {
+                label: 'Second name english',
+                placeholder: 'Second name english'
+            },
+            firstNameEN: {
+                label: 'First name english',
+                placeholder: 'First name english'
+            },
+            citizenship: {
+                label: 'Citizenship',
+                placeholder: 'Citizenship'
+            },
+            born: {
+                label: 'Born'
+            },
+            registrDate: 'Register date in the system'
         }
     },
     'uk': {
@@ -92,7 +121,37 @@ const intl = {
                 MALE: 'Чоловік',
                 FEMALE: 'Жінка'
             },
-            citizenship: 'Громадянство'
+            endActivationDate: {
+                label: 'Дата закінчення ліцензії'
+            },
+            lastNameUA: {
+                label: 'Призвище',
+                placeholder: 'Призвище'
+            },
+            firstNameUA: {
+                label: 'Ім\'я',
+                placeholder: 'Ім\'я'
+            },
+            secondNameUA: {
+                label: 'Прізвище',
+                placeholder: 'Прізвище'
+            },
+            lastNameEN: {
+                label: 'Призвище латинецею',
+                placeholder: 'Призвище латинецею'
+            },
+            firstNameEN: {
+                label: 'Ім\'я латинецею',
+                placeholder: 'Ім\'я латинецею'
+            },
+            citizenship: {
+                label: 'Громадянство',
+                placeholder: 'Громадянство'
+            },
+            born: {
+                label: 'Дата народження'
+            },
+            registrDate: 'Дата реєєстрації в системі'
         }
     }
 };

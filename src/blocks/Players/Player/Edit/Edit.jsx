@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router';
 import { Grid, Cell, Button } from 'react-md';
 import BEM from '../../../../components/BEM/BEM';
@@ -15,13 +15,8 @@ import './Edit.css';
  */
 class EditPlayer extends React.Component {
     static defaultProps = {
-        bem: new BEM('edit-player')
-    };
-
-    state = {};
-
-    get playersData() {
-        return {
+        bem: new BEM('edit-player'),
+        playersData: {
             firstNameUA: '',
             secondNameUA: '',
             lastNameUA: '',
@@ -40,120 +35,82 @@ class EditPlayer extends React.Component {
             club: '',
             endActivationDate: new Date(1567209600000).valueOf(),
             registrDate: new Date().valueOf()
-        };
-    }
+        }
+    };
+
+    state = {};
 
     get playerEditSchema() {
+        const { intl } = this.props;
+
         return [
             {
+                id: 'registrDate',
+                label: intl.formatMessage({ id: 'Players.registrDate' }),
+                type: 'date',
+                required: true
+            },
+            {
+                id: 'license',
+                label: intl.formatMessage({ id: 'Players.license.header' }),
+                type: 'number',
+                required: true
+            },
+            {
                 id: 'endActivationDate',
-                label: 'License exp. date',
+                label: intl.formatMessage({ id: 'Players.endActivationDate.label' }),
                 type: 'date',
                 required: true
             },
             {
                 id: 'club',
                 type: 'select',
-                label: 'Club',
-                menuItems: this.updateClubsList()
+                label: intl.formatMessage({ id: 'Players.enterClub' }),
+                menuItems: this.updateClubsList(),
+                required: true
             },
             {
                 id: 'lastNameUA',
-                label: 'Last Name',
-                placeholder: 'Last Name',
+                label: intl.formatMessage({ id: 'Players.lastNameUA.label' }),
+                placeholder: intl.formatMessage({ id: 'Players.lastNameUA.placeholder' }),
                 required: true
             },
             {
                 id: 'firstNameUA',
-                label: 'First Name',
-                placeholder: 'First Name',
+                label: intl.formatMessage({ id: 'Players.firstNameUA.label' }),
+                placeholder: intl.formatMessage({ id: 'Players.firstNameUA.placeholder' }),
                 required: true
             },
             {
                 id: 'secondNameUA',
-                label: 'Second Name',
-                placeholder: 'Second Name',
-                required: true
-            },
-            {
-                id: 'citizenship',
-                label: 'Citizenship',
-                type: 'countries',
-                locale: this.props.locale,
-                placeholder: 'ISO ALPHA-2 Code',
-                required: true
+                label: intl.formatMessage({ id: 'Players.secondNameUA.label' }),
+                placeholder: intl.formatMessage({ id: 'Players.secondNameUA.placeholder' })
             },
             {
                 id: 'born',
-                label: 'Born',
+                label: intl.formatMessage({ id: 'Players.born.label' }),
                 type: 'date',
                 required: true
             },
             {
-                id: 'firstNameEN',
-                label: 'First name english',
-                placeholder: 'First name english'
-            },
-            {
-                id: 'lastNameEN',
-                label: 'Second name english',
-                placeholder: 'Second name english'
-            },
-            {
-                id: 'height',
-                label: 'Height',
-                placeholder: 'Height'
-            },
-            {
-                id: 'weight',
-                label: 'Weight',
-                placeholder: 'Weight'
-            },
-            {
-                type: 'select',
-                id: 'position',
-                label: 'Position',
-                menuItems: [
-                    {
-                        label: 'Defender',
-                        value: 'DEFENDER'
-                    },
-                    {
-                        label: 'Forward',
-                        value: 'FORWARD'
-                    },
-                    {
-                        label: 'Goalie',
-                        value: 'GOALIE'
-                    }
-                ]
-            },
-            {
-                type: 'select',
-                id: 'side',
-                label: 'Stick side',
-                menuItems: [
-                    {
-                        label: 'L',
-                        value: 'L'
-                    },
-                    {
-                        label: 'R',
-                        value: 'R'
-                    }
-                ]
+                id: 'citizenship',
+                label: intl.formatMessage({ id: 'Players.citizenship.label' }),
+                type: 'countries',
+                placeholder: intl.formatMessage({ id: 'Players.citizenship.placeholder' }),
+                required: true
             },
             {
                 type: 'select',
                 id: 'licenseType',
-                label: 'License Type',
+                label: intl.formatMessage({ id: 'Players.license.type' }),
+                required: true,
                 menuItems: [
                     {
-                        label: 'Senior',
+                        label: intl.formatMessage({ id: 'Players.license.SENIOR' }),
                         value: 'SENIOR'
                     },
                     {
-                        label: 'Junior',
+                        label: intl.formatMessage({ id: 'Players.license.JUNIOR' }),
                         value: 'JUNIOR'
                     }
                 ]
@@ -161,15 +118,72 @@ class EditPlayer extends React.Component {
             {
                 type: 'select',
                 id: 'gender',
-                label: 'Gender',
+                label: intl.formatMessage({ id: 'Players.gender.header' }),
+                required: true,
                 menuItems: [
                     {
-                        label: 'Male',
+                        label: intl.formatMessage({ id: 'Players.gender.MALE' }),
                         value: 'MALE'
                     },
                     {
-                        label: 'Female',
+                        label: intl.formatMessage({ id: 'Players.gender.FEMALE' }),
                         value: 'FEMALE'
+                    }
+                ]
+            },
+            {
+                id: 'lastNameEN',
+                label: intl.formatMessage({ id: 'Players.lastNameEN.label' }),
+                placeholder: intl.formatMessage({ id: 'Players.lastNameEN.placeholder' })
+            },
+            {
+                id: 'firstNameEN',
+                label: intl.formatMessage({ id: 'Players.firstNameEN.label' }),
+                placeholder: intl.formatMessage({ id: 'Players.firstNameEN.placeholder' })
+            },
+            {
+                id: 'height',
+                type: 'number',
+                label: intl.formatMessage({ id: 'Players.height.header' }),
+                placeholder: intl.formatMessage({ id: 'Players.height.header' })
+            },
+            {
+                id: 'weight',
+                type: 'number',
+                label: intl.formatMessage({ id: 'Players.weight.header' }),
+                placeholder: intl.formatMessage({ id: 'Players.weight.header' })
+            },
+            {
+                type: 'select',
+                id: 'position',
+                label: intl.formatMessage({ id: 'Players.position.header' }),
+                menuItems: [
+                    {
+                        label: intl.formatMessage({ id: 'Players.position.DEFENDER' }),
+                        value: 'DEFENDER'
+                    },
+                    {
+                        label: intl.formatMessage({ id: 'Players.position.FORWARD' }),
+                        value: 'FORWARD'
+                    },
+                    {
+                        label: intl.formatMessage({ id: 'Players.position.GOALIE' }),
+                        value: 'GOALIE'
+                    }
+                ]
+            },
+            {
+                type: 'select',
+                id: 'side',
+                label: intl.formatMessage({ id: 'Players.side.header' }),
+                menuItems: [
+                    {
+                        label: intl.formatMessage({ id: 'Players.side.L' }),
+                        value: 'L'
+                    },
+                    {
+                        label: intl.formatMessage({ id: 'Players.side.R' }),
+                        value: 'R'
                     }
                 ]
             }
@@ -195,8 +209,8 @@ class EditPlayer extends React.Component {
     }
 
     render() {
-        const { bem, imagesList, playersData = this.playersData } = this.props,
-            playerEditSchema = this.playerEditSchema,
+        const { bem, imagesList, playersData, locale } = this.props,
+            { playerEditSchema } = this,
             { logoUrl, clearPhoto } = this.state;
         let content = <Cell offset={5} size={1}>
             Loading...
@@ -239,6 +253,7 @@ class EditPlayer extends React.Component {
                 </Cell>
                 <Cell offset={1} size={4} className={bem.elem('main-info').cls()}>
                     <Form
+                        locale={locale}
                         data={playersData}
                         schema={playerEditSchema}
                         submit={this.submit}/>
@@ -280,12 +295,16 @@ class EditPlayer extends React.Component {
         if (id === 'new') {
             const licenseNumber = playersID + 1;
 
-            savedData.license = licenseNumber.toString().padStart(8, '0');
+            savedData.license = licenseNumber;
 
             await update('counters', { playerID: licenseNumber });
-            push('players', savedData).then(this.goToSavedData);
+            push('players', savedData)
+                .then(this.goToSavedData)
+                .catch(this.errorHandler);
         } else {
-            update(`players/${id}`, savedData).then(this.goToSavedData);
+            update(`players/${id}`, savedData)
+                .then(this.goToSavedData)
+                .catch(this.errorHandler);
         }
     };
 
@@ -293,14 +312,19 @@ class EditPlayer extends React.Component {
         const { router, params: { id } } = this.props;
 
         router.push(`/players/${data ? data.key : id}`);
+    };
+
+    errorHandler = error => {
+        console.log(error.code, error.message);
     }
 }
 
 function mapStateToProps(state, props) {
-    const { locale, firebase: { data: { images, clubs, players, counters } } } = state;
+    const { locale, user, firebase: { data: { images, clubs, players, counters } } } = state;
 
     return {
         locale,
+        user,
         clubsList: clubs,
         imagesList: images,
         playersData: players && players[props.params.id],
@@ -309,7 +333,8 @@ function mapStateToProps(state, props) {
 }
 
 export default compose (
-    firebaseConnect(['images', 'clubs', 'players', 'counters/playerID']),
+    firebaseConnect(['images', 'clubs', 'players', 'counters']),
     connect(mapStateToProps),
-    withRouter
+    withRouter,
+    injectIntl
 )(EditPlayer);
