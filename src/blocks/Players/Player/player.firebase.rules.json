@@ -1,11 +1,11 @@
 {
     "players": {
         ".read": true,
-        ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
         ".indexOn": ["club", "firstNameUA", "lastNameUA", "registrDate"],
         "$player": {
             ".read": true,
-            ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
             ".validate": "newData.hasChildren(['born', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'registrDate'])",
             "born": {
                 ".validate": "newData.isNumber()"

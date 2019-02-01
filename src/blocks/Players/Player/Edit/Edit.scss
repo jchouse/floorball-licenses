@@ -6,21 +6,25 @@
     {
         &-wrapper
         {
+            overflow: hidden;
+
             width: 250px;
             height: 250px;
-            overflow: hidden;
-            border-radius: 100%;
-            text-align: center;
-            background: #bdbdbd;
             margin: auto;
-            line-height: 250px;
+
+            text-align: center;
+
             border: 2px solid rgba(0, 0, 0, 0.12);
+            border-radius: 100%;
+            background: #bdbdbd;
+
+            line-height: 250px;
         }
 
         &-img
         {
-            height: 100%;
             width: auto;
+            height: 100%;
         }
 
         &-controls

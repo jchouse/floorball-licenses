@@ -6,8 +6,8 @@
             ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
         },
         "counters": {
-            ".read": "root.child('users').child(auth.uid).child('role').val() == 99",
-            ".write": "root.child('users').child(auth.uid).child('role').val() == 99"
+            ".read": "root.child('users').child(auth.uid).child('role').val() > 20",
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
         },
         "images": {
             ".read": true,
@@ -15,11 +15,11 @@
         },
         "players": {
             ".read": true,
-            ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
             ".indexOn": ["club", "firstNameUA", "lastNameUA", "registrDate"],
             "$player": {
                 ".read": true,
-                ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+                ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
                 ".validate": "newData.hasChildren(['born', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'registrDate'])",
                 "born": {
                     ".validate": "newData.isNumber()"
@@ -52,15 +52,15 @@
         },
         "requests": {
             ".read": true,
-            ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+            ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
             "$request": {
                 "playersList": {
                     ".read": true,
-                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21",
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
                     "$player": {
                         "playerId": {
                             ".read": true,
-                            ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                            ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
                         },
                         "docsChecked": {
                             ".read": true,
@@ -74,11 +74,11 @@
                 },
                 "manager": {
                     ".read": true,
-                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
                 },
                 "continue": {
                     ".read": true,
-                    ".write": "root.child('users').child(auth.uid).child('role').val() > 21"
+                    ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
                 },
                 "resolved": {
                     ".read": true,

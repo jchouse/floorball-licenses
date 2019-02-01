@@ -41,33 +41,36 @@ class EditPlayer extends React.Component {
     state = {};
 
     get playerEditSchema() {
-        const { intl } = this.props;
+        const { intl, user } = this.props;
 
         return [
             {
                 id: 'registrDate',
                 label: intl.formatMessage({ id: 'Players.registrDate' }),
                 type: 'date',
-                required: true
-            },
-            {
-                id: 'license',
-                label: intl.formatMessage({ id: 'Players.license.header' }),
-                type: 'number',
-                required: true
+                required: true,
+                disabled: !(user && user.role > 90)
             },
             {
                 id: 'endActivationDate',
                 label: intl.formatMessage({ id: 'Players.endActivationDate.label' }),
                 type: 'date',
-                required: true
+                required: true,
+                disabled: !(user && user.role > 90)
+            },
+            {
+                id: 'license',
+                label: intl.formatMessage({ id: 'Players.license.header' }),
+                type: 'number',
+                disabled: !(user && user.role > 90)
             },
             {
                 id: 'club',
                 type: 'select',
                 label: intl.formatMessage({ id: 'Players.enterClub' }),
                 menuItems: this.updateClubsList(),
-                required: true
+                required: true,
+                disabled: !(user && user.role > 90)
             },
             {
                 id: 'lastNameUA',
@@ -209,12 +212,16 @@ class EditPlayer extends React.Component {
     }
 
     render() {
-        const { bem, imagesList, playersData, locale } = this.props,
+        const { bem, user, imagesList, playersData, locale } = this.props,
             { playerEditSchema } = this,
             { logoUrl, clearPhoto } = this.state;
         let content = <Cell offset={5} size={1}>
             Loading...
         </Cell>;
+
+        if (!playersData.club && user && user.clubId) {
+            playersData.club = user.clubId;
+        }
 
         if (isLoaded(playersData)) {
             const { photo } = playersData;

@@ -37,33 +37,36 @@
     {
         &-wrapper
         {
+            overflow: hidden;
+
             width: 250px;
             height: 250px;
-            overflow: hidden;
-            border-radius: 100%;
-            text-align: center;
-            background: #bdbdbd;
             margin: auto;
-            line-height: 250px;
+
+            text-align: center;
+
             border: 2px solid rgba(0, 0, 0, 0.12);
+            border-radius: 100%;
+            background: #bdbdbd;
+
+            line-height: 250px;
         }
 
         &-img
         {
-            height: 100%;
             width: auto;
+            height: 100%;
         }
     }
 
     &__club
     {
         display: flex;
+        align-items: center;
 
         margin-bottom: 15px;
 
         color: #b3b3b3;
-
-        align-items: center;
 
         &-logo
         {
@@ -93,10 +96,9 @@
     &__clubs
     {
         display: flex;
+        align-items: center;
         flex-direction: column;
 
         margin: 30px 0;
-
-        align-items: center;
     }
 }
