@@ -61,8 +61,8 @@ class EditPlayer extends React.Component {
             },
             {
                 id: 'license',
-                label: intl.formatMessage({ id: 'Players.license.header' }),
                 type: 'number',
+                label: intl.formatMessage({ id: 'Players.license.header' }),
                 disabled: !(user && user.role > 90)
             },
             {
