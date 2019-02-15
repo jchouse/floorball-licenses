@@ -1,0 +1,42 @@
+const intl = {
+    'en': {
+        Account: {
+            title: 'Account',
+            roles: 'Roles',
+            clubsAdmin: 'Clubs admin',
+            selectedAdmin: 'Selected club admin: ',
+            changeClubAdmin: 'change club admin',
+            selectClubFirst: 'Select club first',
+            noCurrentAdmin: 'No current admin',
+            guest: 'Your are the guest',
+            displayName: 'Display name',
+            email: 'E-mail:',
+            role: 'Role: ',
+            base: 'base',
+            clubAdmin: '{clubName}`s admin',
+            financeAdmin: 'finance admin',
+            mainAdmin: 'portals admin'
+        }
+    },
+    'uk': {
+        Account: {
+            title: 'Aккаунт',
+            roles: 'Ролі',
+            clubsAdmin: 'Адмін клубу',
+            selectedAdmin: 'Обраний адмін клубу: ',
+            changeClubAdmin: 'Змінити адміна клубу',
+            selectClubFirst: 'Спочатку оберіть клуб',
+            noCurrentAdmin: 'Адмін не обран',
+            guest: 'Ви тут гість',
+            displayName: 'Ім\'я яке відображається:',
+            email: 'Електрона адреса:',
+            role: 'Роль: ',
+            base: 'базова',
+            clubAdmin: 'адмін клубу {clubName}',
+            financeAdmin: 'фінансовий адмін',
+            mainAdmin: 'адмін порталу'
+        }
+    }
+};
+
+module.exports = intl;

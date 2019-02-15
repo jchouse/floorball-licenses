@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../blocks/Header/HeaderActions';
 import { firebaseReducer } from 'react-redux-firebase';
-import { CREATELICENSEREQUEST, ADDPLAYERTOREQUEST } from '../blocks/Requests/ActionsRequests';
+import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../actions/HeaderActions';
+import { CREATELICENSEREQUEST, ADDPLAYERTOREQUEST } from '../actions/RequestsActions';
 
 function user(state = {}, { type, user }) {
     switch (type) {
