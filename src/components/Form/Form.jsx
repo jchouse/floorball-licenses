@@ -137,7 +137,6 @@ class Form extends React.Component {
                 locale={locale}
                 onSelect={this.changeData(options.id, group)}/>;
         } else {
-            console.log(options);
             elem = <TextField
                 key={index}
                 ref={el => options.required && this.createRef(el, options.id, group)}
