@@ -133,8 +133,8 @@ const intl = {
                 placeholder: 'Ім\'я'
             },
             secondNameUA: {
-                label: 'Прізвище',
-                placeholder: 'Прізвище'
+                label: 'По батькові',
+                placeholder: 'По батькові'
             },
             lastNameEN: {
                 label: 'Призвище латинецею',

@@ -83,7 +83,7 @@ class AccountRole extends Component {
             { selectedClub, viewChooseUserDialogue, chosedUser } = this.state;
 
         return (
-            <div className={bem.elem('item').cls()} key='clubs-representative'>
+            <div className={bem.elem('item').mods('repr').cls()} key='clubs-representative'>
                 <h3 className={bem.elem('item-header').cls('md-display-1')}>
                     <FormattedMessage id='Account.clubsAdmin'/>
                 </h3>
@@ -112,8 +112,7 @@ class AccountRole extends Component {
         );
     }
 
-    showChooseUserDialogue = (...args) => {
-        console.log(args);
+    showChooseUserDialogue = () => {
         this.setState({
             viewChooseUserDialogue: true,
             autocompleteHandler: this.selectClubAdminAutocompleteHandler,

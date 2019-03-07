@@ -1,5 +1,13 @@
 .account-role
 {
+    &__item
+    {
+        &--repr
+        {
+            min-height: 500px;
+        }
+    }
+
     &__input
     {
         width: 200px;

@@ -31,7 +31,7 @@
                     ".validate": "root.child('clubs/' + newData.val()).exists()"
                 },
                 "endActivationDate": {
-                    ".validate": "newData.isNumber() && newData.val() >= now"
+                    ".validate": "newData.isNumber()"
                 },
                 "firstNameUA": {
                     ".validate": "newData.isString()"
@@ -43,7 +43,7 @@
                     ".validate": "newData.isString()"
                 },
                 "license": {
-                    ".validate": "newData.isNumber() || data.isString()"
+                    ".validate": "newData.isString()"
                 },
                 "registrDate": {
                     ".validate": "newData.isNumber()"
@@ -108,3 +108,4 @@
         }
     }
 }
+
