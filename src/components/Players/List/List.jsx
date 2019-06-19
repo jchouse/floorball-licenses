@@ -65,7 +65,7 @@ class PlayersList extends Component {
                     _playersList = _playersList.filter(player => {
                         const p = playersList[player];
 
-                        return !!p.license.match(filters.license);
+                        return !!p.license.toString().match(filters.license);
                     });
                 }
 
