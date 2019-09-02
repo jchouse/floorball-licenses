@@ -15,7 +15,9 @@ class TransfersEdit extends React.Component {
         bem: new BEM('transfers-new')
     };
 
-    state = {};
+    state = {
+        transferData: this.transferData
+    };
 
     get transferData() {
         return {
@@ -30,16 +32,22 @@ class TransfersEdit extends React.Component {
     get transfersEditSchema() {
         return [
             {
+                type: 'playerSearch',
                 id: 'player',
                 label: 'Player ID',
                 placeholder: 'Player ID',
-                required: true
+                required: true,
+                linkedFields: {
+                    fromClub: 'club'
+                },
+                players: []
             },
             {
                 type: 'select',
                 id: 'fromClub',
                 label: 'From Club',
                 required: true,
+                disabled: true,
                 menuItems: []
             },
             {
@@ -64,7 +72,8 @@ class TransfersEdit extends React.Component {
     }
 
     render() {
-        const { bem, clubsList, transferData = this.transferData } = this.props;
+        const { bem, clubsList } = this.props,
+            { transferData } = this.state;
         let { transfersEditSchema } = this;
 
         if (isLoaded(clubsList)) {
@@ -96,8 +105,12 @@ class TransfersEdit extends React.Component {
     }
 
     submit = async data => {
-        const { router, firebase: { push, update }, players,
-                    transfersData, params: { id } } = this.props,
+        const {
+                router,
+                firebase: { push, update },
+                players,
+                transfersData, params: { id } 
+            } = this.props,
             savedData = { ...transfersData, ...data },
             playerId = savedData.player,
             player = { ...players[playerId] };

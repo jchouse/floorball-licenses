@@ -2,7 +2,8 @@ import React from 'react';
 
 import { TextField, DatePicker, SelectField, Button } from 'react-md';
 import BEM from '../BEM/BEM';
-import Countries from '../Countries/Countries.jsx';
+import Countries from '../Countries/Countries';
+import Search from './Search/Search';
 
 /**
  * Form
@@ -136,6 +137,12 @@ class Form extends React.Component {
                 error={errors[options.id]}
                 locale={locale}
                 onSelect={this.changeData(options.id, group)}/>;
+        } else if (type === 'playerSearch') {
+            elem = <Search
+                key={index}
+                ref={el => options.required && this.createRef(el, options.id, group)}
+                {...options}
+                onChange={this.changeData(options.id, group, type)}/>
         } else {
             elem = <TextField
                 key={index}
@@ -157,12 +164,21 @@ class Form extends React.Component {
     };
 
     changeData = (id, group, type) => (dataValue, dataObject) => {
-        const { formData } = this.state;
         let value = dataValue;
 
         if (type === 'date') {
             value = dataObject.valueOf();
+        } else if (type === 'playerSearch') {
+            Object.entries(dataObject).forEach(([key, v]) => {
+                this.setNewData(group, key, v);        
+            })
         }
+        
+        this.setNewData(group, id, value);
+    }
+
+    setNewData = (group, id, value) => {
+        const { formData } = this.state;
 
         if (!group) {
             formData[id] = value;
