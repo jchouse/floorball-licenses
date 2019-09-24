@@ -34,8 +34,8 @@ class EditPlayer extends React.Component {
             licenseType: '',
             gender: '',
             club: '',
-            endActivationDate: new Date(1567209600000).valueOf(),
-            registrDate: new Date().valueOf()
+            endActivationDate: new Date('2020-08-31').getTime(),
+            registrDate: new Date().getTime()
         }
     };
 
@@ -97,13 +97,6 @@ class EditPlayer extends React.Component {
                 required: true
             },
             {
-                id: 'citizenship',
-                label: intl.formatMessage({ id: 'Players.citizenship.label' }),
-                type: 'countries',
-                placeholder: intl.formatMessage({ id: 'Players.citizenship.placeholder' }),
-                required: true
-            },
-            {
                 type: 'select',
                 id: 'licenseType',
                 label: intl.formatMessage({ id: 'Players.license.type' }),
@@ -116,8 +109,28 @@ class EditPlayer extends React.Component {
                     {
                         label: intl.formatMessage({ id: 'Players.license.JUNIOR' }),
                         value: 'JUNIOR'
-                    }
+                    },
+                    {
+                        label: intl.formatMessage({ id: 'Players.license.KID' }),
+                        value: 'KID'
+                    },
+                    {
+                        label: intl.formatMessage({ id: 'Players.license.AMATEUR' }),
+                        value: 'AMATEUR'
+                    },
                 ]
+            },
+            {
+                id: 'taxnumber',
+                type: 'number',
+                label: intl.formatMessage({ id: 'Players.license.taxnumber' }),
+            },
+            {
+                id: 'citizenship',
+                label: intl.formatMessage({ id: 'Players.citizenship.label' }),
+                type: 'countries',
+                placeholder: intl.formatMessage({ id: 'Players.citizenship.placeholder' }),
+                required: true
             },
             {
                 type: 'select',

@@ -24,8 +24,11 @@ const intl = {
                 header: 'License',
                 number: '#',
                 type: 'License type',
+                taxnumber: 'Tax number',
                 SENIOR: 'Senior',
-                JUNIOR: 'Junior'
+                JUNIOR: 'Junior',
+                KID: 'Kid',
+                AMATEUR: 'Amateur'
             },
             position: {
                 header: 'Position',
@@ -102,8 +105,11 @@ const intl = {
                 header: 'Ліцензія',
                 number: '№',
                 type: 'Тип ліцензії',
+                taxnumber: 'ІНН',
                 SENIOR: 'Доросла',
-                JUNIOR: 'Юніорська'
+                JUNIOR: 'Юніорська',
+                KID: 'Юнацька',
+                AMATEUR: 'Аматорська'
             },
             position: {
                 header: 'Позиція',
