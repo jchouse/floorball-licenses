@@ -45,7 +45,7 @@ class PlayersList extends Component {
                 _playersList = _playersList.filter(player => {
                     const p = playersList[player];
 
-                    return nowDate < p.endActivationDate;
+                    return new Date('2019-08-01').getTime() < p.endActivationDate;
                 });
             }
 
