@@ -808,7 +808,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-transform-typescript" "^7.6.0"
 
-"@babel/runtime@7.6.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
+"@babel/runtime@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
+  integrity sha512-7hGhzlcmg01CvH1EHdSPVXYX1aJ8KCEyz6I9xYIi/asDtzBPMyMhVibhM/K6g/5qnKBwjZtp10bNZIEFTRW1MA==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
+"@babel/runtime@7.6.0", "@babel/runtime@^7.4.5":
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.0.tgz#4fc1d642a9fd0299754e8b5de62c631cf5568205"
   integrity sha512-89eSBLJsxNxOERC0Op4vd+0Bqm6wRMqMbFtV3i0/fbaWw/mJ8Q3eBvgX0G4SyrOOLCtbu98HspF8o09MRT+KzQ==
@@ -819,6 +826,13 @@
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
   integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0":
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.2.tgz#c3d6e41b304ef10dcf13777a33e7694ec4a9a6dd"
+  integrity sha512-EXxN64agfUqqIGeEjI5dL5z0Sw0ZwWo1mLTi4mQowCZ42O59b7DRpZAnTC6OqdF28wMBMFKNb/4uFGrVaigSpg==
   dependencies:
     regenerator-runtime "^0.13.2"
 
@@ -1247,353 +1261,6 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
-
-"@react-md/alert@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/alert/-/alert-2.0.0-alpha.9.tgz#b3fb1f85a69b21f2c7e4654f07e060ca11b41989"
-  integrity sha512-uub5GAzsOiYsujTIeayU3nnUzhG9tF7PmvRFHXxInTda9VrF0h81OhlAQbQrZEIvdKoSY3sy7C5MyMpa6uSlhA==
-  dependencies:
-    "@react-md/button" "^2.0.0-alpha.9"
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/portal" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-    react-transition-group "^4.2.1"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/app-bar@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/app-bar/-/app-bar-2.0.0-alpha.9.tgz#6a9a86b88abce65008be97ffbba06d1e8629684b"
-  integrity sha512-0iH4OJe8HX9mBqHebb74sntfu3RHRpHWVwJ0wWLRkgSeSs3kdiFNjXPD8PCHR3aFppWcjfr3htEOXCz/d4RVxw==
-  dependencies:
-    "@react-md/button" "^2.0.0-alpha.9"
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/avatar@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/avatar/-/avatar-2.0.0-alpha.9.tgz#460a7af2061dde7c0b13b30c8e17579babcf94aa"
-  integrity sha512-ce9hBp4oW8RUoWFcnlwodOMt1i2y4ouIvETZ4AXVUCn6S588b+NPLQLeIujWdHs5I1rLFe/GeWez1/35wG/Wvg==
-  dependencies:
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/button@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/button/-/button-2.0.0-alpha.9.tgz#1f92a54925cabe8cb98c983b1f9d1b8d11e454d3"
-  integrity sha512-wnBo3Y0Oe8CrJgO3fPRQ6yHfZ7VLhKwpR9N61J11lfO4lxOtvaOnu6AkOdlgSXR7xgkMq1Ult2LioFS9BTRO4Q==
-  dependencies:
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/card@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/card/-/card-2.0.0-alpha.9.tgz#fa4747642dd768d121828bb92525c3ab3db00a3b"
-  integrity sha512-f5kp6RHCtd7m8VcVM0y4i5DgFyKe6+KdrRaeCBqHy+aJb5DnY+5bpTW5ytmyA+vbtiKIN8wQj+Iex1SQmjV+2g==
-  dependencies:
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/dialog@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/dialog/-/dialog-2.0.0-alpha.9.tgz#0aace9e0827b72dd4f52257f00f4092053d6cc76"
-  integrity sha512-3N99PFc8XA2x3V0XSeKQ5IkFkMnOLmrYQE7ymGmh7jrq+ykfDrLim8bnUT+neRHINaOy+QeYns/L93tpkwqAdw==
-  dependencies:
-    "@react-md/app-bar" "^2.0.0-alpha.9"
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/overlay" "^2.0.0-alpha.9"
-    "@react-md/portal" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-    react-transition-group "^4.2.1"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/divider@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/divider/-/divider-2.0.0-alpha.9.tgz#ead91f188ac8028c92b2798faa448dc3cfd31ba4"
-  integrity sha512-BS/8+Nh4hiLCC1QIAq/YGIMc67Pxnvl4zyccqmEvGTHKbZFFzeZNZTwVlM+QKqutWlqZR2UiF1ngtqv1o9/R4Q==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/elevation@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/elevation/-/elevation-2.0.0-alpha.9.tgz#59873700aef9b2cc6ee7516a75bf7199b430c959"
-  integrity sha512-8ZE6GB23oE/wvwPkEs5++NA7EDvJynd+Cvz1cHpgDt61YDA5CR9KIVuy1JL5/pFcnh8YW+N3BfBRcQKcta97+Q==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-
-"@react-md/form@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/form/-/form-2.0.0-alpha.9.tgz#4a1cd833ba76bf9bed6254298be1b33f9444d933"
-  integrity sha512-Z+OBlJ72wbgkHRoxDU+k+1lDvGWbnNLwpsDe5b1Iz7r0NRW8z4jO8kYI2AtZ8VCeiBP+vhgD8rSwoMOPjomFDA==
-  dependencies:
-    "@react-md/button" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/progress" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/icon@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/icon/-/icon-2.0.0-alpha.9.tgz#bc19e0bc4524862c078a21a0bba1f29534afd47d"
-  integrity sha512-USyiI96iJEDvF/uP8KimX0qgRvkKFBcT+pvZXEIuaLzeE1EDsbrN9lGhkzvytbx8ini/Nw8hdYhUIUGd+WB1Tg==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/link@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/link/-/link-2.0.0-alpha.9.tgz#a6f1120ca9283d1192a5b63cbdfaa329c34fd499"
-  integrity sha512-ED0mgqF53RfG7ZsDMleHzA2v1TPCEBeZ1cUHHzSLuyNVoHv328uAKFmYNY7X1+GIAFkwiYXbx29D9DnOcP+O+w==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types "^15.6.2"
-
-"@react-md/list@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/list/-/list-2.0.0-alpha.9.tgz#02a191d1b12506a70a7bcbba9c4812e8139fb630"
-  integrity sha512-inI5oiPHELEldscac4ejaG5TsaFKetIstawNCNIBXeNGfJnxMQgdO3dhPKpD8/PpbEcm3PbfKMI7s3KU8PTe4Q==
-  dependencies:
-    "@react-md/avatar" "^2.0.0-alpha.9"
-    "@react-md/divider" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/material-icons@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/material-icons/-/material-icons-2.0.0-alpha.9.tgz#186acf5b579deb3982476731eb7b059c761d2c94"
-  integrity sha512-6v6haVV80lAWRiQqvuv53QCecOV/9orRmtZ4BBueRQWeJIHHG2NKKqO/W0iHONYmyrbuTqG9GUiqlbtmRSkLlA==
-
-"@react-md/media@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/media/-/media-2.0.0-alpha.9.tgz#5366174c4fd10f06df15c244b956d30f0acaf503"
-  integrity sha512-PIO3QWN+VDVr1t3p+SUP6sv1h1wHmW3AM7jxECoeqctX3ufSdGDhh+Mcx7MfOiWTCVb1eICFGD+GKtFVpXAdxA==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/menu@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/menu/-/menu-2.0.0-alpha.9.tgz#4afa248c40b3572dd1334a1a80d15ee778d851c8"
-  integrity sha512-Y3e19Ddlx1H5/+JFY/zwQriBIZqv5fscMDzpZIz5xO4h7PW8foHQ/GVjJZfxZVtnyTQq9RWngkVz29LLuLM8lg==
-  dependencies:
-    "@react-md/app-bar" "^2.0.0-alpha.9"
-    "@react-md/button" "^2.0.0-alpha.9"
-    "@react-md/divider" "^2.0.0-alpha.9"
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/list" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/overlay@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/overlay/-/overlay-2.0.0-alpha.9.tgz#84e95d40bc2ce95046c91f4ec312d414a6fd8099"
-  integrity sha512-V8YiMjIeV02froUK35mSEJE5+w+0uaR4eYBkU8zX1UuOp3N9bIHqDHyST2YA4UeHJfyrfwa0fcMG5Wo+HY4KxA==
-  dependencies:
-    "@react-md/portal" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-    react-transition-group "^4.2.1"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/portal@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/portal/-/portal-2.0.0-alpha.9.tgz#f812adcaeec08f5222994f88fd8c5d08e8a16ee1"
-  integrity sha512-cCX0vEoLC+0g4cDr5nZ+0eBbl1RTtyMD62NAnWbPAjrm+yWZyPu9CpgtexqjElAIlAQfAvPuRaPPw9QNFpSBFA==
-  dependencies:
-    "@react-md/transition" "^2.0.0-alpha.9"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/progress@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/progress/-/progress-2.0.0-alpha.9.tgz#a1ee8e490e996c00df7cf5517bbe58c6502fa969"
-  integrity sha512-JxRsbrhjaXrOiqcHFv+Lvm22IzK6u2k+3pxuoxs2S9Rh1AVslGKeK3KfBw6sOGExzODKsDLfCrTWLM0K0fKoMg==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/sheet@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/sheet/-/sheet-2.0.0-alpha.9.tgz#b3d4d0ce6260e01b23f266fbe4d89d9590f3c96c"
-  integrity sha512-LNZbRoZACGIO95L47mAP9iBiTcr6DBpCWufKQUCU4EI8CO3UA45q6515hDzhs3ZhjjKtyp4fJZG1fbwVx+7n3g==
-  dependencies:
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/overlay" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/states@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/states/-/states-2.0.0-alpha.9.tgz#5e6f13d62ee36693f4e516d7d9bde338721c7883"
-  integrity sha512-u+ua+1JWMVCIBbrNNt29T57B7ihX2w4p2kK3epclYJk+BGToX98s0kG5Y5BmNc1vxDCgmPNEpApdGFe6eip9jg==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    react-transition-group "^4.2.1"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/table@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/table/-/table-2.0.0-alpha.9.tgz#3e4fbbed7e1a01452ffc3a44855b9be2e25d1b3c"
-  integrity sha512-vzwKznehIJYdd2oNwjSveuBBjQSAxdNebAHghcosFuY92e/3hHD0jVsqpHlt+8kodgIpBa1EbraCOJ746d8n/A==
-  dependencies:
-    "@react-md/divider" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/theme@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/theme/-/theme-2.0.0-alpha.9.tgz#718565b1f6bbd42cdc2fd07c9fad54500f6c2b43"
-  integrity sha512-7uWfAh0R6QF0k0vyOBMxuJeVysdhUI23ja5uR6Z6rONewUSxSVvM+n8FOx4syreezbOS6OK3V52Pbfo8S0G7aA==
-  dependencies:
-    "@react-md/utils" "^2.0.0-alpha.9"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/tooltip@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/tooltip/-/tooltip-2.0.0-alpha.9.tgz#8726ce592af81c2875196e2f233da9300077fa51"
-  integrity sha512-ntYe4yDe7VOLc3PIeJ+WV4TCOUklFYCcJrgLVFmA5XLj46sWSnvYe3/cDKjtfAF5u8JO6ibOAEKImxBPkaOj0Q==
-  dependencies:
-    "@react-md/portal" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-    react-transition-group "^4.2.1"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/transition@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/transition/-/transition-2.0.0-alpha.9.tgz#aa750638fa061322849af05d0b3c3242edb70335"
-  integrity sha512-+cmf6H8Bi4cdCdsXG2XPVdZfbGVVzp3Q2hyUZBFTQxRCauqZYTXNlVJ5ZQwDTLKD+fGhtN6pT4GeUYRStIwNFw==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/tree@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/tree/-/tree-2.0.0-alpha.9.tgz#cb955110dfc567e8d076d4cf22fdf8bbf266651c"
-  integrity sha512-wL2w9945JgfJuLCNrdbmgOtqbEsB8YfAd/4WFfyRtK2JOeVACiVfC0CFwJjAdnn0UpvsO2bEyQIU2mT2FyRYzg==
-  dependencies:
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/list" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/typography@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/typography/-/typography-2.0.0-alpha.9.tgz#eb4e4d2513fd18e4bc05e931d44caef6c42b85dd"
-  integrity sha512-9PztaET3qdlC2St6XV3eVujBJk99tpyns32nHGPV9IoW0MsP1wsY3pdW1T0ARCsbNPan2DAjM2thVzYdd2BcjA==
-  dependencies:
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
-    classnames "^2.2.6"
-  optionalDependencies:
-    prop-types ">= 15.6"
-
-"@react-md/utils@^2.0.0-alpha.9":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-md/utils/-/utils-2.0.0-alpha.9.tgz#b99f7560608c1aaabdd23d95dba78862bf90d0ff"
-  integrity sha512-sORPUnw9QDvs6NSfnonmrGoZZr+CB+LbPUPjTF81nAT6zngka1if5E5+UvM/RTM9izLrJDS0ffqPzuMljH0hzA==
-  dependencies:
-    resize-observer-polyfill "^1.5.1"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
@@ -2936,6 +2603,11 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
+chain-function@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/chain-function/-/chain-function-1.0.1.tgz#c63045e5b4b663fb86f1c6e186adaf1de402a1cc"
+  integrity sha512-SxltgMwL9uCko5/ZCLiyG2B7R9fY4pDZUw7hJ4MhirdjBLosoDqkWABi3XMucddHdLiFJMb7PD2MZifZriuMTg==
+
 chalk@2.4.2, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -3024,7 +2696,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.6:
+classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -3669,11 +3341,6 @@ csstype@^2.2.0:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.7.tgz#bf9235d5872141eccfb2d16d82993c6b149179ff"
 
-csstype@^2.6.6:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
-  integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
-
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -3935,13 +3602,12 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
-dom-helpers@^5.0.1:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.1.0.tgz#57a726de04abcc2a8bbfe664b3e21c584bde514e"
-  integrity sha512-zRRYDhpiKuAJHasOqCm7lBnsd22nrM4+OYI4ASWCxen+ocTMl7BIAKgGag97TlLiTl6rrau5aPe1VGUm9jQBng==
+dom-helpers@^3.2.0, dom-helpers@^3.2.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
+  integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
   dependencies:
-    "@babel/runtime" "^7.5.5"
-    csstype "^2.6.6"
+    "@babel/runtime" "^7.1.2"
 
 dom-serializer@0:
   version "0.1.0"
@@ -4619,7 +4285,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.9:
+fbjs@^0.8.16, fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -6628,6 +6294,11 @@ jsx-ast-utils@^2.1.0, jsx-ast-utils@^2.2.1:
   dependencies:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
+
+keycode@^2.1.7:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
+  integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
 
 killable@^1.0.0:
   version "1.0.0"
@@ -8818,14 +8489,14 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-"prop-types@>= 15.6", prop-types@^15.6.2, prop-types@^15.7.2:
-  version "15.7.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
-  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+prop-types@15.6.0:
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
+  integrity sha1-zq8IMCL8RrSjX2nhPvda7Q1jmFY=
   dependencies:
-    loose-envify "^1.4.0"
+    fbjs "^0.8.16"
+    loose-envify "^1.3.1"
     object-assign "^4.1.1"
-    react-is "^16.8.1"
 
 prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
@@ -8833,6 +8504,15 @@ prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.6.0, prop-types@^15.6.1:
   dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 protobufjs@^5.0.3:
   version "5.0.3"
@@ -8950,7 +8630,7 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
 
-raf@3.4.1:
+raf@3.4.1, raf@^3.1.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
@@ -9063,6 +8743,15 @@ react-error-overlay@^6.0.2:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.2.tgz#642bd6157c6a4b6e9ca4a816f7ed30b868c47f81"
   integrity sha512-DHRuRk3K4Lg9obI6J4Y+nKvtwjasYRU9CFL3ud42x9YJG1HbQjSNublapC/WBJOA726gNUbqbj0U2df9+uzspQ==
 
+react-event-listener@^0.6.0:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.6.6.tgz#758f7b991cad9086dd39fd29fad72127e1d8962a"
+  integrity sha512-+hCNqfy7o9wvO6UgjqFmBzARJS7qrNoda0VqzvOuioEpoEXKutiKuv92dSz6kP7rYLmyHPyYNLesi5t/aH1gfw==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    prop-types "^15.6.0"
+    warning "^4.0.1"
+
 react-firebase-file-uploader@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/react-firebase-file-uploader/-/react-firebase-file-uploader-2.4.2.tgz#6bce6144683c125b282fcca357bb29bf425a16c5"
@@ -9096,38 +8785,34 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-md@v2.0.0-alpha.9:
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/react-md/-/react-md-2.0.0-alpha.9.tgz#0985f1a33003f03d94b51d85054e681275796ccc"
-  integrity sha512-Yfn+MOOe3uXBzvj/fq/JVAn6UAb5I78XfKrJ3fJIp7R/K/XKDnL/OuoCeK7N9JDa35N01vZE77lxJRJtgUQl1Q==
+react-md@^1.12.3:
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/react-md/-/react-md-1.12.3.tgz#7f92182708fb5d5cab1c227a0b83cb1ce436f7b8"
+  integrity sha512-qAANQL5aC3gtAJjksbE22mBkm57SUs5UgOd7TfXR8kA8QHIGXP4XK3p2aSAKSxGQgQXAFxVGMEEtP2YSv0HG/Q==
   dependencies:
-    "@react-md/alert" "^2.0.0-alpha.9"
-    "@react-md/app-bar" "^2.0.0-alpha.9"
-    "@react-md/avatar" "^2.0.0-alpha.9"
-    "@react-md/button" "^2.0.0-alpha.9"
-    "@react-md/card" "^2.0.0-alpha.9"
-    "@react-md/dialog" "^2.0.0-alpha.9"
-    "@react-md/divider" "^2.0.0-alpha.9"
-    "@react-md/elevation" "^2.0.0-alpha.9"
-    "@react-md/form" "^2.0.0-alpha.9"
-    "@react-md/icon" "^2.0.0-alpha.9"
-    "@react-md/link" "^2.0.0-alpha.9"
-    "@react-md/list" "^2.0.0-alpha.9"
-    "@react-md/material-icons" "^2.0.0-alpha.9"
-    "@react-md/media" "^2.0.0-alpha.9"
-    "@react-md/menu" "^2.0.0-alpha.9"
-    "@react-md/overlay" "^2.0.0-alpha.9"
-    "@react-md/portal" "^2.0.0-alpha.9"
-    "@react-md/progress" "^2.0.0-alpha.9"
-    "@react-md/sheet" "^2.0.0-alpha.9"
-    "@react-md/states" "^2.0.0-alpha.9"
-    "@react-md/table" "^2.0.0-alpha.9"
-    "@react-md/theme" "^2.0.0-alpha.9"
-    "@react-md/tooltip" "^2.0.0-alpha.9"
-    "@react-md/transition" "^2.0.0-alpha.9"
-    "@react-md/tree" "^2.0.0-alpha.9"
-    "@react-md/typography" "^2.0.0-alpha.9"
-    "@react-md/utils" "^2.0.0-alpha.9"
+    classnames "^2.2.5"
+    prop-types "15.6.0"
+    react-motion "^0.5.0"
+    react-prop-types "^0.4.0"
+    react-swipeable-views "^0.12.8"
+    react-transition-group "^1.2.1"
+    resize-observer-polyfill "^1.4.2"
+
+react-motion@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
+  integrity sha512-9q3YAvHoUiWlP3cK0v+w1N5Z23HXMj4IF4YuvjvWegWqNPfLXsOBE/V7UvQGpXxHFKRQQcNcVQE31g9SB/6qgQ==
+  dependencies:
+    performance-now "^0.2.0"
+    prop-types "^15.5.8"
+    raf "^3.1.0"
+
+react-prop-types@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.4.0.tgz#f99b0bfb4006929c9af2051e7c1414a5c75b93d0"
+  integrity sha1-+ZsL+0AGkpya8gUefBQUpcdbk9A=
+  dependencies:
+    warning "^3.0.0"
 
 react-redux-firebase@^2.1.7:
   version "2.1.7"
@@ -9232,15 +8917,48 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-transition-group@^4.2.1:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
-  integrity sha512-1qRV1ZuVSdxPlPf4O8t7inxUGpdyO5zG9IoNfJxSO0ImU2A1YWkEQvFPuIPZmMLkg5hYs7vv5mMOyfgSkvAwvw==
+react-swipeable-views-core@^0.12.17:
+  version "0.12.17"
+  resolved "https://registry.yarnpkg.com/react-swipeable-views-core/-/react-swipeable-views-core-0.12.17.tgz#0998f55fd2f8595bcd01bead1c19516dc561c1cf"
+  integrity sha512-KfQ+BPfLVBe7kxb+0zbVJp3eGQfZlt1gn5J+GYAgnYoZ29GrqkTfiQFKmrG4tmVnhxvRiXFA7Q0q9EBMYTc/FA==
   dependencies:
-    "@babel/runtime" "^7.5.5"
-    dom-helpers "^5.0.1"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
+    "@babel/runtime" "7.0.0"
+    warning "^4.0.1"
+
+react-swipeable-views-utils@^0.12.18:
+  version "0.12.18"
+  resolved "https://registry.yarnpkg.com/react-swipeable-views-utils/-/react-swipeable-views-utils-0.12.18.tgz#6edfcc9d722901f0edaf79c78bc6c4a7cc25da81"
+  integrity sha512-Y8APE9bSfZhebYHRGDOoHeIqNJbrZMlpIiHqD0hovdlYv+HvBAdqAKdwppzIE1QXISqBKwJAlYl86plvfTW1dg==
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    fbjs "^0.8.4"
+    keycode "^2.1.7"
+    prop-types "^15.6.0"
+    react-event-listener "^0.6.0"
+    react-swipeable-views-core "^0.12.17"
+
+react-swipeable-views@^0.12.8:
+  version "0.12.18"
+  resolved "https://registry.yarnpkg.com/react-swipeable-views/-/react-swipeable-views-0.12.18.tgz#3b5d75bbfb826553fe0e42bc04b9c1c4b45acd77"
+  integrity sha512-/8OCD2jBWzPNUi+GgRVwNqAz/SANoAzYDKnxE0VtchkL8gSssjEICVCaNF5aGFavY9fizjHxc2avDLfNYMy+Dg==
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    dom-helpers "^3.2.1"
+    prop-types "^15.5.4"
+    react-swipeable-views-core "^0.12.17"
+    react-swipeable-views-utils "^0.12.18"
+    warning "^4.0.1"
+
+react-transition-group@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
+  integrity sha512-CWaL3laCmgAFdxdKbhhps+c0HRGF4c+hdM4H23+FI1QBNUyx/AMeIJGWorehPNSaKnQNOAxL7PQmqMu78CDj3Q==
+  dependencies:
+    chain-function "^1.0.0"
+    dom-helpers "^3.2.0"
+    loose-envify "^1.3.1"
+    prop-types "^15.5.6"
+    warning "^3.0.0"
 
 react@16.9.0:
   version "16.9.0"
@@ -9383,6 +9101,11 @@ regenerator-runtime@0.13.3:
 regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+  integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
 
 regenerator-runtime@^0.13.2:
   version "0.13.2"
@@ -9585,7 +9308,7 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
-resize-observer-polyfill@^1.5.1:
+resize-observer-polyfill@^1.4.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
@@ -11021,6 +10744,13 @@ walker@^1.0.7, walker@~1.0.5:
 warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
+  dependencies:
+    loose-envify "^1.0.0"
+
+warning@^4.0.1:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
 
