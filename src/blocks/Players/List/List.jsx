@@ -8,6 +8,7 @@ import DateFormatter from '../../../components/DateFormatter/DateFormatter';
 import Pagination from '../../../components/Pagination/Pagination.jsx';
 import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField } from 'react-md';
 import BEM from '../../../components/BEM/BEM';
+import { getCurrentSeason } from '../../../utils/timing';
 import './List.css';
 
 /**
