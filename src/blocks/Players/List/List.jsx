@@ -42,6 +42,8 @@ class PlayersList extends Component {
         if (playersList) {
             _playersList = Object.keys(playersList).reverse();
 
+            console.log(getCurrentSeason(nowDate));
+
             if (!filters.showUnactive) {
                 _playersList = _playersList.filter(player => {
                     const p = playersList[player];
