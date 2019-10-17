@@ -31,10 +31,15 @@ class PlayersList extends Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state.currentSeason = getCurrentSeason(new Date());
+    }
+
     render() {
         const { bem, playersList } = this.props,
-            { offset, itemsOnPage, filters } = this.state,
-            nowDate = new Date().getTime();
+            { offset, itemsOnPage, filters, currentSeason } = this.state;
         let _playersList = [],
             size = 0,
             listLength = 0;
@@ -42,13 +47,11 @@ class PlayersList extends Component {
         if (playersList) {
             _playersList = Object.keys(playersList).reverse();
 
-            console.log(getCurrentSeason(nowDate));
-
             if (!filters.showUnactive) {
                 _playersList = _playersList.filter(player => {
                     const p = playersList[player];
 
-                    return nowDate < p.endActivationDate;
+                    return p.endActivationDate >= currentSeason.start && p.endActivationDate >= currentSeason.end;
                 });
             }
 

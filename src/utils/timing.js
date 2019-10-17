@@ -12,7 +12,7 @@ export const getCurrentSeason = (date) => {
     }
 
     return {
-        seasonStart: new Date(`${startSeasonYear}-05-01`),
-        seasonEnd: new Date(`${endSeasonYear}-07-31`)
+        start: new Date(`${startSeasonYear}-06-01`),
+        end: new Date(`${endSeasonYear}-08-31`)
     };
 }
