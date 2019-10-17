@@ -4,10 +4,11 @@ import { compose } from 'redux';
 import { firebaseConnect, populate } from 'react-redux-firebase';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import DateFormatter from '../../DateFormatter/DateFormatter';
-import Pagination from '../../Pagination/Pagination.jsx';
-import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField, FontIcon } from 'react-md';
-import BEM from '../../BEM/BEM';
+import DateFormatter from '../../../components/DateFormatter/DateFormatter';
+import Pagination from '../../../components/Pagination/Pagination.jsx';
+import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField } from 'react-md';
+import BEM from '../../../components/BEM/BEM';
+import { getCurrentSeason } from '../../../utils/timing';
 import './List.css';
 
 /**
@@ -30,10 +31,15 @@ class PlayersList extends Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state.currentSeason = getCurrentSeason(new Date());
+    }
+
     render() {
         const { bem, playersList } = this.props,
-            { offset, itemsOnPage, filters } = this.state,
-            nowDate = new Date().getTime();
+            { offset, itemsOnPage, filters, currentSeason } = this.state;
         let _playersList = [],
             size = 0,
             listLength = 0;
@@ -45,7 +51,7 @@ class PlayersList extends Component {
                 _playersList = _playersList.filter(player => {
                     const p = playersList[player];
 
-                    return new Date('2019-08-01').getTime() < p.endActivationDate;
+                    return p.endActivationDate >= currentSeason.start && p.endActivationDate >= currentSeason.end;
                 });
             }
 
@@ -65,7 +71,7 @@ class PlayersList extends Component {
                     _playersList = _playersList.filter(player => {
                         const p = playersList[player];
 
-                        return !!p.license.toString().match(filters.license);
+                        return !!p.license.match(filters.license);
                     });
                 }
 
@@ -189,9 +195,10 @@ class PlayersList extends Component {
                 <Cell
                     size={2}
                     className={bem.elem('card-item').cls()}>
+                    {player.photo &&
                         <div className={bem.elem('avatar').cls()}>
-                            {this.renderAvatar(player)}
-                        </div>
+                            <Avatar src={player.photo.downloadURL}/>
+                        </div>}
                     <div className={bem.elem('card-item-info').cls()}>
                         <div className={bem.elem('name').cls()}>{`${player.lastNameUA} ${player.firstNameUA}`}</div>
                         <div>{DateFormatter.dateForUi(player.born)}</div>
@@ -260,23 +267,11 @@ class PlayersList extends Component {
             </Grid>
         );
     }
-
-    renderAvatar(player) {
-        const options = {};
-
-        if (player.photo) {
-            options.src = player.photo.downloadURL;
-        } else {
-            options.icon = <FontIcon>face</FontIcon>;
-        }
-
-        return  <Avatar random {...options}/>;
-    }
 }
 
 const populates = [
     { child: 'photo', root: 'images' },
-    { child: 'club', root: 'clubs', keyProp: 'key' }
+    { child: 'club', root: 'clubs', keyProp: 'key' },
 ];
 
 function mapStateToProps(state) {
