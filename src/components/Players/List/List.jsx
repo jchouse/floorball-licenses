@@ -71,7 +71,7 @@ class PlayersList extends Component {
                     _playersList = _playersList.filter(player => {
                         const p = playersList[player];
 
-                        return !!p.license.match(filters.license);
+                        return !!p.license.toString().match(filters.license);
                     });
                 }
 
@@ -196,7 +196,7 @@ class PlayersList extends Component {
                     size={2}
                     className={bem.elem('card-item').cls()}>
                     {player.photo &&
-                        <div className={bem.elem('avatar').cls()}>
+                        <div key={playerId} className={bem.elem('avatar').cls()}>
                             <Avatar src={player.photo.downloadURL}/>
                         </div>}
                     <div className={bem.elem('card-item-info').cls()}>
