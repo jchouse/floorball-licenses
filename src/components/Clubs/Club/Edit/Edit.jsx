@@ -79,13 +79,11 @@ class EditClub extends React.Component {
                         },
                         {
                             id: 'city',
-                            label: 'City',
-                            required: true
+                            label: 'City'
                         },
                         {
                             id: 'country',
-                            label: 'Country',
-                            required: true
+                            label: 'Country'
                         },
                         {
                             id: 'postCode',

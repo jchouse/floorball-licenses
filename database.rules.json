@@ -43,7 +43,7 @@
                     ".validate": "newData.isString()"
                 },
                 "license": {
-                    ".validate": "newData.isString()"
+                    ".validate": "newData.isString() || newData.isNumber()"
                 },
                 "registrDate": {
                     ".validate": "newData.isNumber()"
