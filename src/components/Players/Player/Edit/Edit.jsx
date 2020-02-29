@@ -220,61 +220,54 @@ class EditPlayer extends React.Component {
     render() {
         const { bem, user, imagesList, playersData, locale } = this.props,
             { playerEditSchema } = this,
-            { logoUrl, clearPhoto } = this.state;
-        let content = <Cell offset={5} size={1}>
-            Loading...
-        </Cell>;
+            { logoUrl, clearPhoto } = this.state,
+            { photo } = playersData;
 
         if (!playersData.club && user && user.clubId) {
             playersData.club = user.clubId;
         }
 
-        if (isLoaded(playersData)) {
-            const { photo } = playersData;
-            let photoUrl = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
+        let photoUrl = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
 
-            if (clearPhoto) {
-                photoUrl = '';
-            }
-
-            content = <Grid className={bem.elem('main').cls('row')}>
-                <Cell
-                    offset={2}
-                    size={3}
-                    className={bem.elem('main-logo').cls()}>
-                    <div className={bem.elem('main-logo-wrapper').cls()}>
-                        <img className={bem.elem('main-logo-img').cls()} src={logoUrl || photoUrl} alt=''/>
-                    </div>
-                    <div className={bem.elem('main-logo-controls').cls()}>
-                        <Button
-                            flat
-                            secondary
-                            swapTheming
-                            onClick={this.removePhoto}>
-                            <FormattedMessage id='Players.removePhoto'/>
-                        </Button>
-                    </div>
-                    <div className={bem.elem('main-logo-controls').cls()}>
-                        <PhotoControl
-                            alt={playersData.lastNameEN}
-                            maxSize={512}
-                            maxHeight={500}
-                            maxWidth={500}
-                            uploadPhotoHandler={this.uploadPhotoHandler}
-                            clearPhotoHandler={this.clearPhotoHandler}/>
-                    </div>
-                </Cell>
-                <Cell offset={1} size={4} className={bem.elem('main-info').cls()}>
-                    <Form
-                        locale={locale}
-                        data={playersData}
-                        schema={playerEditSchema}
-                        submit={this.submit}/>
-                </Cell>
-            </Grid>;
+        if (clearPhoto) {
+            photoUrl = '';
         }
 
-        return content;
+        return <Grid className={bem.elem('main').cls('row')}>
+            <Cell
+                offset={2}
+                size={3}
+                className={bem.elem('main-logo').cls()}>
+                <div className={bem.elem('main-logo-wrapper').cls()}>
+                    <img className={bem.elem('main-logo-img').cls()} src={logoUrl || photoUrl} alt=''/>
+                </div>
+                <div className={bem.elem('main-logo-controls').cls()}>
+                    <Button
+                        flat
+                        secondary
+                        swapTheming
+                        onClick={this.removePhoto}>
+                        <FormattedMessage id='Players.removePhoto'/>
+                    </Button>
+                </div>
+                <div className={bem.elem('main-logo-controls').cls()}>
+                    <PhotoControl
+                        alt={playersData.lastNameEN}
+                        maxSize={512}
+                        maxHeight={500}
+                        maxWidth={500}
+                        uploadPhotoHandler={this.uploadPhotoHandler}
+                        clearPhotoHandler={this.clearPhotoHandler}/>
+                </div>
+            </Cell>
+            <Cell offset={1} size={4} className={bem.elem('main-info').cls()}>
+                <Form
+                    locale={locale}
+                    data={playersData}
+                    schema={playerEditSchema}
+                    submit={this.submit}/>
+            </Cell>
+        </Grid>;
     }
 
     removePhoto = () => {

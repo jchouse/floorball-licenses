@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router';
 import { Grid, Cell } from 'react-md';
 import Form from '../../../Form/Form.jsx';
@@ -96,34 +96,28 @@ class EditClub extends React.Component {
     }
 
     render() {
-        const { bem, imagesList, clubData, params: { id } } = this.props,
-            { logoUrl } = this.state;
-        let content = 'Loading';
+        const { bem, imagesList, clubData } = this.props,
+            { photo } = clubData,
+            { logoUrl } = this.state,
+            logo =  photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
 
-        if (id === 'new' || isLoaded(clubData)) {
-            const { photo } = clubData,
-                logo =  photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
-
-            content = <div className={bem.cls()}>
-                <Grid className={bem.elem('main').cls()}>
-                    <Cell size={4} offset={2}>
-                        <img className={bem.elem('main-logo').cls()} src={logoUrl || logo} alt={clubData.shortNameEN}/>
-                        <PhotoControl
-                            alt={clubData.shortNameEN}
-                            clearPhotoHandler={this.clearPhotoHandler}
-                            uploadPhotoHandler={this.uploadPhotoHandler}/>
-                    </Cell>
-                    <Cell size={4} className={bem.elem('main-info').cls()}>
-                        <Form
-                            data={clubData}
-                            schema={this.clubEditSchema}
-                            submit={this.submit}/>
-                    </Cell>
-                </Grid>
-            </div>;
-        }
-
-        return content;
+        return <div className={bem.cls()}>
+            <Grid className={bem.elem('main').cls()}>
+                <Cell size={4} offset={2}>
+                    <img className={bem.elem('main-logo').cls()} src={logoUrl || logo} alt={clubData.shortNameEN}/>
+                    <PhotoControl
+                        alt={clubData.shortNameEN}
+                        clearPhotoHandler={this.clearPhotoHandler}
+                        uploadPhotoHandler={this.uploadPhotoHandler}/>
+                </Cell>
+                <Cell size={4} className={bem.elem('main-info').cls()}>
+                    <Form
+                        data={clubData}
+                        schema={this.clubEditSchema}
+                        submit={this.submit}/>
+                </Cell>
+            </Grid>
+        </div>;
     }
 
     clearPhotoHandler = () => {

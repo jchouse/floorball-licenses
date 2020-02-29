@@ -6,8 +6,6 @@ import Countries from '../Countries/Countries';
 import Search from './Search/Search';
 
 /**
- * Form
- *
  * NOTE: DO NOT USE identical keys inside one form
  */
 class Form extends React.Component {
@@ -22,12 +20,14 @@ class Form extends React.Component {
         formData: this.props.data
     };
 
-    componentWillReceiveProps({ data }) {
-        if (data) {
-            this.setState({
-                formData: data
+    static getDerivedStateFromProps (props, state) {
+        if (props.data) {
+            return ({
+                formData: props.data
             });
         }
+
+        return null;
     }
 
     render() {
