@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import BEM from '../BEM/BEM';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import AccountRole from './AccountRole/AccountRole.jsx';
+import SeasonSettings from './SeasonSettings/SeasonSettings.jsx';
 
 class Account extends Component {
     static defaultProps = {
@@ -37,9 +38,14 @@ class Account extends Component {
         if (role > 90) {
             tabsList.push(
                 <Tab key='roles' label={<FormattedMessage id='Account.roles'/>}>
-                    <Grid>
+                    {/* <Grid>
                         <Cell size={12}>
                             <AccountRole/>
+                        </Cell>
+                    </Grid> */}
+                    <Grid>
+                        <Cell size={12}>
+                            <SeasonSettings/>
                         </Cell>
                     </Grid>
                 </Tab>

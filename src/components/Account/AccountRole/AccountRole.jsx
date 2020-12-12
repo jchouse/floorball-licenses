@@ -12,10 +12,11 @@ class AccountRole extends Component {
     static defaultProps = {
         bem: new BEM('account-role'),
         playersList: {}
-    };
+    }
 
     static getRole(user, clubs, locale) {
         const { role, clubId } = user;
+
         let message = {
             id: 'Account.base'
         };
@@ -123,6 +124,7 @@ class AccountRole extends Component {
     findClubAdmin() {
         const { users } = this.props,
             { selectedClub } = this.state;
+
         let admin = <FormattedMessage id='Account.selectClubFirst'/>,
             user;
 
@@ -165,6 +167,7 @@ class AccountRole extends Component {
     renderClubDropdown() {
         const { bem, clubs } = this.props,
             { selectedClub } = this.state;
+
         let clubsList = [];
 
         if (isLoaded(clubs)) {
@@ -192,6 +195,7 @@ class AccountRole extends Component {
         const { chosedUser } = this.state,
             { bem, users } = this.props,
             selectedUser = chosedUser && users[chosedUser.data];
+
         let usersForSelect = [],
             chosedUserInfo = {};
 
