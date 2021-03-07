@@ -96,9 +96,10 @@ class EditClub extends React.Component {
     }
 
     render() {
-        const { bem, imagesList, clubData, params: { id } } = this.props,
+        const { bem, imagesList, clubData, match: { params: { id } } } = this.props,
             { logoUrl } = this.state;
-        let content = 'Loading';
+
+            let content = 'Loading';
 
         if (id === 'new' || isLoaded(clubData)) {
             const { photo } = clubData,
@@ -138,7 +139,7 @@ class EditClub extends React.Component {
     };
 
     submit = data => {
-        const { firebase: { push, update }, clubData, params: { id } } = this.props,
+        const { firebase: { push, update }, clubData, match: { params: { id } } } = this.props,
             { photo } = this.state,
             savedData = { ...clubData, ...data };
 
@@ -154,7 +155,7 @@ class EditClub extends React.Component {
     };
 
     goToSavedData = data => {
-        const { router, params: { id } } = this.props;
+        const { router, match: { params: { id } } } = this.props;
 
         router.push(`/clubs/${data ? data.key : id}`);
     }
@@ -165,7 +166,7 @@ function mapStateToProps(state, props) {
 
     return {
         imagesList: images,
-        clubData: clubs && clubs[props.params.id]
+        clubData: clubs && clubs[props.match.params.id]
     };
 }
 

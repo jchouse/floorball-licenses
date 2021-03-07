@@ -37,7 +37,7 @@ class Account extends Component {
 
         if (role > 90) {
             tabsList.push(
-                <Tab key='roles' label={<FormattedMessage id='Account.roles'/>}>
+                <Tab key='roles' label={<FormattedMessage id='Account.portalSettings'/>}>
                     {/* <Grid>
                         <Cell size={12}>
                             <AccountRole/>

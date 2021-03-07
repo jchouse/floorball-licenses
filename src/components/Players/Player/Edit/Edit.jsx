@@ -297,7 +297,7 @@ class EditPlayer extends React.Component {
     };
 
     submit = async data => {
-        const { firebase: { push, update }, playersData, params: { id }, playersID } = this.props,
+        const { firebase: { push, update }, playersData, match: { params: { id } }, playersID } = this.props,
             { photo } = this.state,
             savedData = { ...playersData, ...data };
 
@@ -322,7 +322,7 @@ class EditPlayer extends React.Component {
     };
 
     goToSavedData = data => {
-        const { router, params: { id } } = this.props;
+        const { router, match: { params: { id } } } = this.props;
 
         router.push(`/players/${data ? data.key : id}`);
     };
@@ -340,7 +340,7 @@ function mapStateToProps(state, props) {
         user,
         clubsList: clubs,
         imagesList: images,
-        playersData: players && players[props.params.id],
+        playersData: players && players[props.match.params.id],
         playersID: counters && counters.playerID
     };
 }

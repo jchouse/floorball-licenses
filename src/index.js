@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -21,11 +21,12 @@ import Transfers from './components/Transfers/Transfers.jsx';
 import TransfersEdit from './components/Transfers/Edit/TransfersEdit.jsx';
 import Info from './components/Info/Info.jsx';
 import Account from './components/Account/Account.jsx';
-import Requests from './components/Requests/Requests.jsx';
-import NewRequest from './components/Requests/New/NewRequest.jsx';
+// import Requests from './components/Requests/Requests.jsx';
+// import NewRequest from './components/Requests/New/NewRequest.jsx';
 import floorballApp from './reducers/reducers';
 import './index.css';
 import WebFontLoader from 'webfontloader';
+import { createBrowserHistory } from 'history';
 
 WebFontLoader.load({
     google: {
@@ -41,6 +42,7 @@ firebase.initializeApp(firebaseConfig[process.env.REACT_APP_FIREBASE_CONFIG]);
 const initialState = {};
 const store = createStore(floorballApp, initialState);
 
+const browserHistory = createBrowserHistory();
 const history = syncHistoryWithStore(browserHistory, store);
 
 // react-redux-firebase config
@@ -69,29 +71,29 @@ render (
         <CookiesProvider>
             <ReactReduxFirebaseProvider {...rrfProps}>
                 <Router history={history}>
-                    <Route path='/' component={Floorball}>
-                        <IndexRoute component={Info}/>
-                        <Route path='clubs'>
-                            <IndexRoute component={Clubs}/>
-                            <Route path=':id' component={ClubCard}/>
-                            <Route path=':id/edit' component={EditClubCard}/>
-                        </Route>
-                        <Route path='players'>
-                            <IndexRoute component={Players}/>
-                            <Route path=':id' component={PlayerCard}/>
-                            <Route path=':id/edit' component={EditPlayerCard}/>
-                        </Route>
-                        <Route path='transfers'>
-                            <IndexRoute component={Transfers}/>
-                            <Route path=':id/edit' component={TransfersEdit}/>
-                        </Route>
-                        <Route path='your-account' component={Account}/>
-                        <Route path='requests'>
-                            <IndexRoute component={Requests}/>
-                            <Route path='new' component={NewRequest}/>
-                        </Route>
-                    </Route>
-                    <Route path='*' component={NotFound}/>
+                    <Floorball>
+                        <Switch>
+                            <Route path='/clubs/:id/edit' component={EditClubCard}/>
+                            <Route path='/clubs/:id' component={ClubCard}/>
+                            <Route path='/clubs' component={Clubs}/>
+
+                            <Route path='/players/:id/edit' component={EditPlayerCard}/>
+                            <Route path='/players/:id' component={PlayerCard}/>
+                            <Route path='/players' component={Players}/>
+
+                            <Route path='/transfers/:id/edit' component={TransfersEdit}/>
+                            <Route path='/transfers' component={Transfers}/>
+
+                            <Route path='/your-account' component={Account}/>
+
+                            {/* <Route path='/requests' component={Requests}/> */}
+                            {/* <Route path='/requests/new' component={NewRequest}/> */}
+
+                            <Route exact path='/' component={Info}/>
+
+                            <Route path='*' component={NotFound}/>
+                        </Switch>
+                    </Floorball>
                 </Router>
             </ReactReduxFirebaseProvider>
         </CookiesProvider>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { Grid, Cell, Media, MediaOverlay, CardTitle, Button } from 'react-md';
 import BEM from '../../BEM/BEM';

@@ -20,7 +20,8 @@ class Player extends Component {
     state = {};
 
     render() {
-        const { bem, params: { id }, playerData, user: { role }, locale } = this.props;
+        const { bem, match: { params: { id } }, playerData, user: { role }, locale } = this.props;
+
         let content = '';
 
         if (isLoaded(playerData)) {
@@ -164,7 +165,7 @@ function mapStateToProps(state, props) {
         user,
         locale,
         images,
-        playerData: popPlayers && popPlayers[props.params.id]
+        playerData: popPlayers && popPlayers[props.match.params.id]
     };
 }
 

@@ -7,6 +7,7 @@ import './KebabMenu.css';
 
 const KebabMenu = ({ className, menuItems, id, user }) => {
     const bem = new BEM('kebab-menu');
+
     let button = <Button icon>more_vert</Button>;
 
     if (user) {

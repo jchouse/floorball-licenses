@@ -4,7 +4,7 @@ import BEM from '../../BEM/BEM';
 import { ListItem } from 'react-md';
 import './User.css';
 import { pages } from '../../../constans/location';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const User = ({ user }) => {
     const { email, displayName = 'Guest' } = user;

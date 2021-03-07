@@ -18,7 +18,8 @@ class Club extends React.Component {
     };
 
     render() {
-        const { bem, clubData, params: { id } } = this.props;
+        const { bem, clubData, match: { params: { id } } } = this.props;
+
         let content = '';
 
         if (clubData) {
@@ -128,7 +129,7 @@ function mapStateToProps(state, props) {
     }
 
     return {
-        clubData: clubsList && clubsList[props.params.id]
+        clubData: clubsList && clubsList[props.match.params.id]
     };
 }
 

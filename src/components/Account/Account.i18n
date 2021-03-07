@@ -12,10 +12,12 @@ const intl = {
             displayName: 'Display name',
             email: 'E-mail:',
             role: 'Role: ',
+            seasons: 'Seasons',
             base: 'base',
             clubAdmin: '{clubName}`s admin',
             financeAdmin: 'finance admin',
-            mainAdmin: 'portals admin'
+            mainAdmin: 'portals admin',
+            portalSettings: 'Portal Settings',
         }
     },
     'uk': {
@@ -31,10 +33,12 @@ const intl = {
             displayName: 'Ім\'я яке відображається:',
             email: 'Електрона адреса:',
             role: 'Роль: ',
+            seasons: 'Сезони',
             base: 'базова',
             clubAdmin: 'адмін клубу {clubName}',
             financeAdmin: 'фінансовий адмін',
-            mainAdmin: 'адмін порталу'
+            mainAdmin: 'адмін порталу',
+            portalSettings: 'Налаштування порталу',
         }
     }
 };

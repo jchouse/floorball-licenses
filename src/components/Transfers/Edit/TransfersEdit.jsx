@@ -109,7 +109,8 @@ class TransfersEdit extends React.Component {
                 router,
                 firebase: { push, update },
                 players,
-                transfersData, params: { id } 
+                transfersData,
+                match: { params: { id } },
             } = this.props,
             savedData = { ...transfersData, ...data },
             playerId = savedData.player,
@@ -139,7 +140,7 @@ function mapStateToProps(state, props) {
 
     return {
         clubsList: clubs,
-        transferData: transfers && transfers[props.params.id],
+        transferData: transfers && transfers[props.match.params.id],
         players
     };
 }

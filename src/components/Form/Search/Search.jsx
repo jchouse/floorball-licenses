@@ -18,8 +18,9 @@ class PlayersSearch extends React.PureComponent {
     }
 
     handleAutocomplete = (suggestion, suggestionIndex, matches) => {
-        const { linkedFields, players } = this.props;
-        const { data } = matches[suggestionIndex];
+        const { linkedFields, players } = this.props,
+            { data } = matches[suggestionIndex];
+
         let dataObject = {};
 
         if (linkedFields) {
@@ -34,14 +35,14 @@ class PlayersSearch extends React.PureComponent {
     }
 
     getPlayersList(players) {
-        return Object.entries(players).map(([key, {firstNameEN, firstNameUA, lastNameEN, lastNameUA, license}]) => ({
+        return Object.entries(players).map(([key, { firstNameEN, firstNameUA, lastNameEN, lastNameUA, license }]) => ({
                 data: key,
                 primaryText: `${firstNameUA} ${lastNameUA} (${license}) ${firstNameEN} ${lastNameEN}`
         }));
     }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
     const { firebase: { data: { players } } } = state;
 
     return { players };

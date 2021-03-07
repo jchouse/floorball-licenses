@@ -105,6 +105,26 @@
             },
             ".read": true,
             ".write": true
+        },
+        "seasons": {
+            "$season_id": {
+                ".read": true,
+                ".write": "root.child('users').child(auth.uid).child('role').val() > 90",
+                ".validate": "newData.hasChildren(['start_date', 'end_date', 'title'])",
+                "start_date": {
+                    ".validate": "newData.isString()"
+                },
+                "end_date": {
+                    ".validate": "newData.isString()"
+                },
+                "title": {
+                    ".validate": "newData.isString()"
+                },
+                "active": {
+                    ".validate": "newData.isBoolean()"
+                }
+            },
+            ".read": true
         }
     }
 }
