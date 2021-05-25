@@ -4,6 +4,7 @@ import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { DatePicker, Button, TextField, Grid, Cell, SelectField } from 'react-md';
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
+import BEM from '../../BEM/BEM';
 
 const SeasonSettings = props => {
     const defaultSeason = 'new';
@@ -13,11 +14,15 @@ const SeasonSettings = props => {
 
     const { seasons } = props,
         { control, handleSubmit, errors, setValue } = useForm(),
+        bem = new BEM('season-settings'),
         onSubmit = data => {
             const { firebase: { push, update } } = props;
 
             if (selectedSeason === defaultSeason) {
-                push('seasons', data);
+                push('seasons', data)
+                    .then(data => {
+                        console.log('then', data);
+                    });
             } else {
                 update('seasons', {
                     [`${selectedSeason}`]: data
@@ -44,9 +49,9 @@ const SeasonSettings = props => {
     }
 
     return (
-        <div>
-            <h2 className={'md-headline'}>Seasons</h2>
-            <Grid>
+        <div className={bem.cls()}>
+            <h2 className={bem.elem('item-header').cls('md-headline')}>Seasons</h2>
+            <Grid className={bem.elem('grid').cls()}>
                 <Cell size={1} align='bottom'>
                     <h3 className='md-title'>
                         Active
