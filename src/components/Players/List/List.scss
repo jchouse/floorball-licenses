@@ -1,0 +1,72 @@
+.players-list
+{
+    &__name
+    {
+        font-size: 20px;
+    }
+
+    &__card
+    {
+        display: flex;
+
+        &-item
+        {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            min-width: 250px;
+            margin-right: 20px;
+
+            .players-list__card-item-info
+            {
+                margin-left: 53px;
+            }
+        }
+
+        &--disactive
+        {
+            opacity: .5;
+        }
+    }
+
+    &__avatar,
+    &__club-logo
+    {
+        position: absolute;
+        left: 0;
+
+    }
+
+    &__club-logo
+    {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+
+        &-img
+        {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+
+    &__controls
+    {
+        &-item
+        {
+            display: flex;
+            align-items: flex-end;
+
+            &-header
+            {
+                margin: 0;
+
+                font-size: 20px;
+                line-height: 36px;
+            }
+        }
+    }
+}

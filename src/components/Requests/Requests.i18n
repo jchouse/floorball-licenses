@@ -1,0 +1,18 @@
+const intl = {
+    'en': {
+        requests: {
+            mainHeader: 'Licenses request',
+            addPlayer: 'Add player',
+            createRequest: 'Create request'
+        }
+    },
+    'uk': {
+        Requests: {
+            mainHeader: 'Запит на ліцензії',
+            addPlayer: 'Додати гравця',
+            createRequest: 'Зробити запит'
+        }
+    }
+};
+
+module.exports = intl;

@@ -1,0 +1,18 @@
+const intl = {
+    'en': {
+        Components: {
+            Select: {
+                defaultOption: 'Choose your option'
+            }
+        }
+    },
+    'uk': {
+        Components: {
+            Select: {
+                defaultOption: 'Оберіть варіант'
+            }
+        }
+    }
+};
+
+module.exports = intl;

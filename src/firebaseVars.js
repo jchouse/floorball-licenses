@@ -1,0 +1,1 @@
+/home/jchouse/projects/firebaseVars.js

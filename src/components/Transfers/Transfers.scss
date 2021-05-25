@@ -1,0 +1,53 @@
+.transfers
+{
+    padding: 40px 20px 100px;
+
+    &__avatar
+    {
+        min-width: 42px;
+
+        &-img
+        {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+        }
+    }
+
+    &__list
+    {
+        &-item
+        {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__club
+    {
+        &-logo
+        {
+            width: 50px;
+            height: auto;
+        }
+    }
+
+    &__card-item
+    {
+        display: flex;
+        align-items: center;
+        min-width: 200px;
+
+        &--club-info
+        {
+            display: flex;
+            min-width: 60px;
+        }
+
+        &--about
+        {
+            flex-direction: column;
+        }
+    }
+}
