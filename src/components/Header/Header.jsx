@@ -62,7 +62,7 @@ class Header extends Component {
 
     if (isLoaded(users) && user && !user.displayName) {
       props.firebase.auth().onAuthStateChanged(userData => {
-        if (userData) {
+        if (userData && users[userData.uid]) {
           dispatch(login(users[userData.uid]));
         }
       });

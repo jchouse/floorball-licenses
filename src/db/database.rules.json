@@ -1,0 +1,185 @@
+{
+  "rules": {
+    ".read": false,
+    "clubs": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() >= 90",
+      "$club": {
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['email', 'fullNameEN', 'fullNameUA', 'logo', 'shortNameEN', 'shortNameUA', 'region'])",
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "fullNameEN": {
+          ".validate": "newData.isString()"
+        },
+        "fullNameUA": {
+          ".validate": "newData.isString()"
+        },
+        "phone": {
+          ".validate": "newData.isString()"
+        },
+        "logo": {
+          ".validate": "root.child('images/' + newData.val()).exists()"
+        },
+        "shortNameEN": {
+          ".validate": "newData.isString()"
+        },
+        "shortNameUA": {
+          ".validate": "newData.isString()"
+        },
+        "url": {
+          ".validate": "newData.isString()"
+        },
+        "city": {
+          ".validate": "newData.isString()"
+        },
+        "line": {
+          ".validate": "newData.isString()"
+        },
+        "postCode": {
+          ".validate": "newData.isString()"
+        },
+        "region": {
+          ".validate": "root.child('regions/' + newData.val()).exists()"
+        }
+      }
+    },
+    "counters": {
+      ".read": "root.child('users').child(auth.uid).child('role').val() > 20",
+      ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
+    },
+    "images": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+      "$image": {
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        "downloadURL": {
+          ".validate": "newData.isString()"
+        },
+        "fileName": {
+          ".validate": "newData.isString()"
+        },
+        "lastModified": {
+          ".validate": "newData.isString()"
+        },
+        "md5Hash": {
+          ".validate": "newData.isString()"
+        },
+        "size": {
+          ".validate": "newData.isString()"
+        },
+        "type": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "players": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+      ".indexOn": [
+        "club",
+        "firstNameUA",
+        "lastNameUA",
+        "registrDate"
+      ],
+      "$player": {
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['born', 'citizenship', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'licenseType', 'registrDate'])",
+        "born": {
+          ".validate": "newData.isNumber()"
+        },
+        "citizenship": {
+          ".validate": "newData.isString() && newData.val().length == 2"
+        },
+        "club": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "endActivationDate": {
+          ".validate": "newData.isNumber()"
+        },
+        "firstNameEN": {
+          ".validate": "newData.isString()"
+        },
+        "firstNameUA": {
+          ".validate": "newData.isString()"
+        },
+        "gender": {
+          ".validate": "newData.isString()"
+        },
+        "height": {
+          ".validate": "newData.isString()"
+        },
+        "lastNameEA": {
+          ".validate": "newData.isString()"
+        },
+        "lastNameUA": {
+          ".validate": "newData.isString()"
+        },
+        "license": {
+          ".validate": "newData.isString()"
+        },
+        "licenseType": {
+          ".validate": "newData.isString()"
+        },
+        "photo": {
+          ".validate": "root.child('images/' + newData.val()).exists()"
+        },
+        "position": {
+          ".validate": "newData.isString()"
+        },
+        "registrDate": {
+          ".validate": "newData.isNumber()"
+        },
+        "side": {
+          ".validate": "newData.isString()"
+        },
+        "secondNameUA": {
+          ".validate": "newData.isString()"
+        },
+        "weight": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "transfers": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+      "$transfer": {
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['date', 'fromClub', 'player', 'toClub'])",
+        "date": {
+          ".validate": "newData.isNumber()"
+        },
+        "endDate": {
+          ".validate": "newData.isNumber()"
+        },
+        "fromClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "toClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "player": {
+          ".validate": "root.child('players/' + newData.val()).exists()"
+        }
+      }
+    },
+    "users": {
+      "$user_id": {
+        ".read": true,
+        ".write": true,
+        "role": {
+          ".read": true,
+          ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
+        }
+      },
+      ".read": true,
+      ".write": true
+    }
+  }
+}
