@@ -103,20 +103,20 @@ class EditPlayer extends React.Component {
         required: true,
         menuItems: [
           {
-            label: intl.formatMessage({ id: 'Players.license.SENIOR' }),
-            value: 'SENIOR',
+            label: intl.formatMessage({ id: 'Players.license.Adult_1' }),
+            value: 'Adult_1',
           },
           {
-            label: intl.formatMessage({ id: 'Players.license.JUNIOR' }),
-            value: 'JUNIOR',
+            label: intl.formatMessage({ id: 'Players.license.Adult_2' }),
+            value: 'Adult_1',
           },
           {
-            label: intl.formatMessage({ id: 'Players.license.KID' }),
-            value: 'KID',
+            label: intl.formatMessage({ id: 'Players.license.Junior_1' }),
+            value: 'Junior_1',
           },
           {
-            label: intl.formatMessage({ id: 'Players.license.AMATEUR' }),
-            value: 'AMATEUR',
+            label: intl.formatMessage({ id: 'Players.license.Junior_2' }),
+            value: 'Junior_2',
           },
         ],
       },

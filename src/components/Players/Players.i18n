@@ -29,6 +29,10 @@ const intl = {
         JUNIOR: 'Junior',
         KID: 'Kid',
         AMATEUR: 'Amateur',
+        Adult_1: 'Adult 1',
+        Adult_2: 'Adult 2',
+        Junior_1: 'Junior 1',
+        Junior_2: 'Junior 2',
       },
       position: {
         header: 'Position',
@@ -109,6 +113,10 @@ const intl = {
         JUNIOR: 'Юніорська',
         KID: 'Юнацька',
         AMATEUR: 'Аматорська',
+        Adult_1: 'Доросла 1',
+        Adult_2: 'Доросла 2',
+        Junior_1: 'Юніорська 1',
+        Junior_2: 'Юніорська 2',
       },
       position: {
         header: 'Позиція',
