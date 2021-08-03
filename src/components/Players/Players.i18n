@@ -1,165 +1,172 @@
 const intl = {
-    'en': {
-        Players: {
-            items: '{length, plural, =0 {No items} =1 {One item} other {# items}} in total',
-            filters: 'Filters',
-            enterName: 'Enter some name',
-            name: 'Name',
-            nameEN: 'Name latin',
-            enterNumber: 'Enter some license number',
-            enterClub: 'Club',
-            removePhoto: 'Remove photo from card',
-            filter: {
-                unactive: 'Show expired license'
-            },
-            height: {
-                header: 'Height',
-                num: '{height} sm'
-            },
-            weight: {
-                header: 'Height',
-                num: '{weight} sm'
-            },
-            license: {
-                header: 'License',
-                number: '#',
-                type: 'License type',
-                taxnumber: 'Tax number',
-                SENIOR: 'Senior',
-                JUNIOR: 'Junior',
-                KID: 'Kid',
-                AMATEUR: 'Amateur'
-            },
-            position: {
-                header: 'Position',
-                FORWARD: 'Forward',
-                DEFENDER: 'Defender',
-                GOALIE: 'Goalie'
-            },
-            side: {
-                header: 'Stick side',
-                R: 'Right',
-                L: 'Left'
-            },
-            gender: {
-                header: 'Gender',
-                MALE: 'Male',
-                FEMALE: 'Female'
-            },
-            endActivationDate: {
-                label: 'License exp. date'
-            },
-            lastNameUA: {
-                label: 'Last Name',
-                placeholder: 'Last Name'
-            },
-            firstNameUA: {
-                label: 'First Name',
-                placeholder: 'First Name'
-            },
-            secondNameUA: {
-                label: 'Second Name',
-                placeholder: 'Second Name'
-            },
-            lastNameEN: {
-                label: 'Second name english',
-                placeholder: 'Second name english'
-            },
-            firstNameEN: {
-                label: 'First name english',
-                placeholder: 'First name english'
-            },
-            citizenship: {
-                label: 'Citizenship',
-                placeholder: 'Citizenship'
-            },
-            born: {
-                label: 'Born'
-            },
-            registrDate: 'Register date in the system'
-        }
+  'en': {
+    Players: {
+      items: '{length, plural, =0 {No items} =1 {One item} other {# items}} in total',
+      filters: 'Filters',
+      enterName: 'Enter some name',
+      name: 'Name',
+      nameEN: 'Name latin',
+      enterNumber: 'Enter some license number',
+      enterClub: 'Club',
+      removePhoto: 'Remove photo from card',
+      filter: {
+        unactive: 'Show expired license',
+      },
+      height: {
+        header: 'Height',
+        num: '{height} sm',
+      },
+      weight: {
+        header: 'Height',
+        num: '{weight} sm',
+      },
+      license: {
+        header: 'License',
+        number: '#',
+        type: 'License type',
+        taxnumber: 'Tax number',
+        SENIOR: 'Senior',
+        JUNIOR: 'Junior',
+        KID: 'Kid',
+        AMATEUR: 'Amateur',
+        Adult_A: 'Adult A',
+        Adult_B: 'Adult B',
+        Junior_A: 'Junior A',
+        Junior_B: 'Junior B',
+      },
+      position: {
+        header: 'Position',
+        FORWARD: 'Forward',
+        DEFENDER: 'Defender',
+        GOALIE: 'Goalie',
+      },
+      side: {
+        header: 'Stick side',
+        R: 'Right',
+        L: 'Left',
+      },
+      gender: {
+        header: 'Gender',
+        MALE: 'Male',
+        FEMALE: 'Female',
+      },
+      endActivationDate: {
+        label: 'License exp. date',
+      },
+      lastNameUA: {
+        label: 'Last Name',
+        placeholder: 'Last Name',
+      },
+      firstNameUA: {
+        label: 'First Name',
+        placeholder: 'First Name',
+      },
+      secondNameUA: {
+        label: 'Second Name',
+        placeholder: 'Second Name',
+      },
+      lastNameEN: {
+        label: 'Second name english',
+        placeholder: 'Second name english',
+      },
+      firstNameEN: {
+        label: 'First name english',
+        placeholder: 'First name english',
+      },
+      citizenship: {
+        label: 'Citizenship',
+        placeholder: 'Citizenship',
+      },
+      born: {
+        label: 'Born',
+      },
+      registrDate: 'Register date in the system',
     },
-    'uk': {
-        Players: {
-            items: '{length, plural, =0 {Немає гравців} =1 {Один гравець} other {# гравців}} в списку',
-            filters: 'Фільтри',
-            enterName: 'Введіть ім\'я',
-            name: 'Ім\'я',
-            nameEN: 'Ім\'я латиницею',
-            born: 'Дата народження',
-            enterNumber: 'Введіть номер ліцензії',
-            enterClub: 'Клуб',
-            removePhoto: 'Видалити фото з картки',
-            filter: {
-                unactive: 'Показувати неактивні ліцензії'
-            },
-            height: {
-                header: 'Зріст',
-                num: '{height} см'
-            },
-            weight: {
-                header: 'Вага',
-                num: '{weight} кг'
-            },
-            license: {
-                header: 'Ліцензія',
-                number: '№',
-                type: 'Тип ліцензії',
-                taxnumber: 'ІНН',
-                SENIOR: 'Доросла',
-                JUNIOR: 'Юніорська',
-                KID: 'Юнацька',
-                AMATEUR: 'Аматорська'
-            },
-            position: {
-                header: 'Позиція',
-                FORWARD: 'Нападник',
-                DEFENDER: 'Захисник',
-                GOALIE: 'Воротар'
-            },
-            side: {
-                header: 'Сторона ключки',
-                R: 'Права',
-                L: 'Ліва'
-            },
-            gender: {
-                header: 'Стать',
-                MALE: 'Чоловік',
-                FEMALE: 'Жінка'
-            },
-            endActivationDate: {
-                label: 'Дата закінчення ліцензії'
-            },
-            lastNameUA: {
-                label: 'Призвище',
-                placeholder: 'Призвище'
-            },
-            firstNameUA: {
-                label: 'Ім\'я',
-                placeholder: 'Ім\'я'
-            },
-            secondNameUA: {
-                label: 'По батькові',
-                placeholder: 'По батькові'
-            },
-            lastNameEN: {
-                label: 'Призвище латинецею',
-                placeholder: 'Призвище латинецею'
-            },
-            firstNameEN: {
-                label: 'Ім\'я латинецею',
-                placeholder: 'Ім\'я латинецею'
-            },
-            citizenship: {
-                label: 'Громадянство',
-                placeholder: 'Громадянство'
-            },
-            born: {
-                label: 'Дата народження'
-            },
-            registrDate: 'Дата реєєстрації в системі'
-        }
-    }
+  },
+  'uk': {
+    Players: {
+      items: '{length, plural, =0 {Немає гравців} =1 {Один гравець} other {# гравців}} в списку',
+      filters: 'Фільтри',
+      enterName: 'Введіть ім\'я',
+      name: 'Ім\'я',
+      nameEN: 'Ім\'я латиницею',
+      enterNumber: 'Введіть номер ліцензії',
+      enterClub: 'Клуб',
+      removePhoto: 'Видалити фото з картки',
+      filter: {
+        unactive: 'Показувати неактивні ліцензії',
+      },
+      height: {
+        header: 'Зріст',
+        num: '{height} см',
+      },
+      weight: {
+        header: 'Вага',
+        num: '{weight} кг',
+      },
+      license: {
+        header: 'Ліцензія',
+        number: '№',
+        type: 'Тип ліцензії',
+        taxnumber: 'ІНН',
+        SENIOR: 'Доросла',
+        JUNIOR: 'Юніорська',
+        KID: 'Юнацька',
+        AMATEUR: 'Аматорська',
+        Adult_A: 'Доросла A',
+        Adult_B: 'Доросла B',
+        Junior_A: 'Юніорська A',
+        Junior_B: 'Юніорська B',
+      },
+      position: {
+        header: 'Позиція',
+        FORWARD: 'Нападник',
+        DEFENDER: 'Захисник',
+        GOALIE: 'Воротар',
+      },
+      side: {
+        header: 'Сторона ключки',
+        R: 'Права',
+        L: 'Ліва',
+      },
+      gender: {
+        header: 'Стать',
+        MALE: 'Чоловік',
+        FEMALE: 'Жінка',
+      },
+      endActivationDate: {
+        label: 'Дата закінчення ліцензії',
+      },
+      lastNameUA: {
+        label: 'Призвище',
+        placeholder: 'Призвище',
+      },
+      firstNameUA: {
+        label: 'Ім\'я',
+        placeholder: 'Ім\'я',
+      },
+      secondNameUA: {
+        label: 'По батькові',
+        placeholder: 'По батькові',
+      },
+      lastNameEN: {
+        label: 'Призвище латинецею',
+        placeholder: 'Призвище латинецею',
+      },
+      firstNameEN: {
+        label: 'Ім\'я латинецею',
+        placeholder: 'Ім\'я латинецею',
+      },
+      citizenship: {
+        label: 'Громадянство',
+        placeholder: 'Громадянство',
+      },
+      born: {
+        label: 'Дата народження',
+      },
+      registrDate: 'Дата реєєстрації в системі',
+    },
+  },
 };
 
 module.exports = intl;
