@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Pagination from '../Pagination/Pagination.jsx';
@@ -32,10 +32,10 @@ class Transfers extends React.Component {
   }
 
   renderContent(transfersList) {
-    const { bem } = this.props,
-      { offset, itemsOnPage } = this.state,
-      listSize = Object.keys(transfersList).length,
-      size = listSize / itemsOnPage || 0;
+    const { bem } = this.props;
+    const { offset, itemsOnPage } = this.state;
+    const listSize = Object.keys(transfersList).length;
+    const size = listSize / itemsOnPage || 0;
 
     return [
       this.renderTransfersList(),
@@ -55,11 +55,11 @@ class Transfers extends React.Component {
   };
 
   renderTransfersList() {
-    const { bem, transfersList } = this.props,
-      { offset, itemsOnPage } = this.state,
-      startItem = offset * itemsOnPage,
-      endItem = startItem + itemsOnPage,
-      transfersListArray = Object.keys(transfersList).reverse().slice(startItem, endItem);
+    const { bem, transfersList } = this.props;
+    const { offset, itemsOnPage } = this.state;
+    const startItem = offset * itemsOnPage;
+    const endItem = startItem + itemsOnPage;
+    const transfersListArray = Object.keys(transfersList).reverse().slice(startItem, endItem);
 
     return (transfersListArray.length !== 0 && <ul key='transferlist' className={bem.elem('list').cls()}>
       {transfersListArray.map(key => this.renderTransfer(key))}
@@ -67,13 +67,15 @@ class Transfers extends React.Component {
   }
 
   renderTransfer = key => {
-    const { bem, transfersList, user, imagesList } = this.props,
-      transfer = transfersList[key],
-      { player, fromClub, toClub } = transfer;
+    const { bem, transfersList, user, imagesList } = this.props;
+    const transfer = transfersList[key];
+    const { player, fromClub, toClub } = transfer;
 
-      let playerPhoto,
-      fromClubPhoto,
-      toClubPhoto;
+    let playerPhoto;
+
+    let fromClubPhoto;
+
+    let toClubPhoto;
 
     if (isLoaded(imagesList)) {
       playerPhoto = player.photo && imagesList[player.photo].downloadURL;

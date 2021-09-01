@@ -25,10 +25,25 @@ class Player extends Component {
     let content = '';
 
     if (isLoaded(playerData)) {
-      const { license, lastNameUA, firstNameUA, secondNameUA,
-        firstNameEN, lastNameEN, height, weight, position, side, born,
-        citizenship, licenseType, gender, club, photo } = playerData,
-        logo = photo && photo.downloadURL;
+      const {
+        license,
+        lastNameUA,
+        firstNameUA,
+        secondNameUA,
+        firstNameEN,
+        lastNameEN,
+        height,
+        weight,
+        position,
+        side,
+        born,
+        citizenship,
+        licenseType,
+        gender,
+        club,
+        photo,
+      } = playerData;
+      const logo = photo && photo.downloadURL;
 
       content = (
         <Grid className={bem.cls()}>
@@ -158,8 +173,8 @@ const populates = [
 ];
 
 function mapStateToProps(state, props) {
-  const { user, locale, firebase, firebase: { data: { images } } } = state,
-    popPlayers = populate(firebase, 'players', populates);
+  const { user, locale, firebase, firebase: { data: { images } } } = state;
+  const popPlayers = populate(firebase, 'players', populates);
 
   return {
     user,

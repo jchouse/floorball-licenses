@@ -31,8 +31,8 @@ class Form extends React.Component {
   }
 
   render() {
-    const { bem, schema } = this.props,
-      { formData } = this.state;
+    const { bem, schema } = this.props;
+    const { formData } = this.state;
 
     return <form className={bem.cls()}>
       {schema.map((component, index) => {
@@ -76,9 +76,9 @@ class Form extends React.Component {
   };
 
   isValid() {
-    const { requiredElems } = this,
-      { formData } = this.state,
-      errors = {};
+    const { requiredElems } = this;
+    const { formData } = this.state;
+    const errors = {};
 
     let isValid = true;
 
@@ -97,9 +97,9 @@ class Form extends React.Component {
   }
 
   renderComponents(component, index, value, group) {
-    const { type, ...options } = component,
-      { errors } = this.state,
-      { locale } = this.props;
+    const { type, ...options } = component;
+    const { errors } = this.state;
+    const { locale } = this.props;
 
     let elem;
 

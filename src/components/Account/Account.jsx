@@ -21,8 +21,8 @@ class Account extends Component {
   };
 
   render() {
-    const { user: { role } } = this.props,
-      tabsList = [];
+    const { user: { role } } = this.props;
+    const tabsList = [];
 
     tabsList.push(
       <Tab key='title' label={<FormattedMessage id='Account.title'/>}>

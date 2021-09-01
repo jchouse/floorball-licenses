@@ -1,7 +1,7 @@
-export const LOGIN  = 'LOGIN',
-    LOGOUT = 'LOGOUT',
-    LOCALE = 'LOCALE',
-    IMAGES_LIST = 'IMAGES_LIST';
+export const LOGIN  = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const LOCALE = 'LOCALE';
+export const IMAGES_LIST = 'IMAGES_LIST';
 
 export function login(user) {
     return {

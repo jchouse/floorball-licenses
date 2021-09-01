@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { Grid, Cell, Button } from 'react-md';
 import BEM from '../../../BEM/BEM';
 import Form from '../../../Form/Form.jsx';
@@ -218,9 +218,9 @@ class EditPlayer extends React.Component {
   }
 
   render() {
-    const { bem, user, imagesList, playersData, locale } = this.props,
-      { playerEditSchema } = this,
-      { logoUrl, clearPhoto } = this.state;
+    const { bem, user, imagesList, playersData, locale } = this.props;
+    const { playerEditSchema } = this;
+    const { logoUrl, clearPhoto } = this.state;
 
     let content = <Cell offset={5} size={1}>
       Loading...
@@ -299,9 +299,9 @@ class EditPlayer extends React.Component {
   };
 
   submit = async data => {
-    const { firebase: { push, update }, playersData, params: { id }, playersID } = this.props,
-      { photo } = this.state,
-      savedData = { ...playersData, ...data };
+    const { firebase: { push, update }, playersData, params: { id }, playersID } = this.props;
+    const { photo } = this.state;
+    const savedData = { ...playersData, ...data };
 
     if (this.state.photo) {
       savedData.photo = photo;

@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import { firebaseReducer } from 'react-redux-firebase';
-import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../actions/HeaderActions';
-import { CREATELICENSEREQUEST, ADDPLAYERTOREQUEST } from '../actions/RequestsActions';
+import { LOGIN, LOGOUT, LOCALE, IMAGES_LIST } from '../components/Header/HeaderStore/HeaderActions';
+import { CREATELICENSEREQUEST, ADDPLAYERTOREQUEST } from '../components/Requests/RequestsStore/RequestsActions';
 
 function user(state = {}, { type, user }) {
   switch (type) {
@@ -85,8 +84,8 @@ function licenseRequest(state = {}, action) {
     case CREATELICENSEREQUEST:
       return action.newRequest;
     case ADDPLAYERTOREQUEST: {
-      const { player } = action,
-        newState = {};
+      const { player } = action;
+      const newState = {};
 
       newState.playersList = { ...state.playersList, ...player };
 
@@ -108,7 +107,6 @@ const floorballApp = combineReducers({
   transfersList,
   imagesList,
   licenseRequest,
-  routing: routerReducer,
 });
 
 export default floorballApp;

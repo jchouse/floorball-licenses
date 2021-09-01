@@ -4,7 +4,7 @@ import { firebaseConnect, populate } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Autocomplete, Grid, Cell, Button } from 'react-md';
 import BEM from '../../BEM/BEM';
-import { licenseRequest, addPlayerToRequest } from '../../../actions/RequestsActions';
+import { licenseRequest, addPlayerToRequest } from '../RequestsStore/RequestsActions';
 
 class NewRequest extends Component {
   static defaultProps = {
@@ -86,9 +86,9 @@ class NewRequest extends Component {
   }
 
   autocompleteHandler = (suggestion, suggestionIndex, matches) => {
-    const { dispatch, players, user: { clubId }, licenseRequest: { playersList } } = this.props,
-      { data } = matches[suggestionIndex],
-      newPlayerInRequest = players[data];
+    const { dispatch, players, user: { clubId }, licenseRequest: { playersList } } = this.props;
+    const { data } = matches[suggestionIndex];
+    const newPlayerInRequest = players[data];
 
     if (newPlayerInRequest && !playersList[data]) {
       dispatch(addPlayerToRequest({ [data]: newPlayerInRequest }, clubId));
@@ -108,8 +108,8 @@ function mapStateToProps(state) {
         requests,
       },
     },
-  } = state,
-    clubsPlayers = [];
+  } = state;
+  const clubsPlayers = [];
 
   if (players && user && user.clubId) {
     Object.entries(players).forEach(([playerId, plVal]) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { Grid, Cell } from 'react-md';
 import Form from '../../../Form/Form.jsx';
 import BEM from '../../../BEM/BEM';
@@ -96,14 +96,14 @@ class EditClub extends React.Component {
   }
 
   render() {
-    const { bem, imagesList, clubData, params: { id } } = this.props,
-      { logoUrl } = this.state;
+    const { bem, imagesList, clubData, params: { id } } = this.props;
+    const { logoUrl } = this.state;
 
     let content = 'Loading';
 
     if (id === 'new' || isLoaded(clubData)) {
-      const { photo } = clubData,
-        logo = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
+      const { photo } = clubData;
+      const logo = photo && imagesList && imagesList[photo] && imagesList[photo].downloadURL;
 
       content = <div className={bem.cls()}>
         <Grid className={bem.elem('main').cls()}>
@@ -139,9 +139,9 @@ class EditClub extends React.Component {
   };
 
   submit = data => {
-    const { firebase: { push, update }, clubData, params: { id } } = this.props,
-      { photo } = this.state,
-      savedData = { ...clubData, ...data };
+    const { firebase: { push, update }, clubData, params: { id } } = this.props;
+    const { photo } = this.state;
+    const savedData = { ...clubData, ...data };
 
     if (photo) {
       savedData.photo = photo;

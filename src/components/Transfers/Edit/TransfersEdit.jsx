@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { Grid, Cell } from 'react-md';
 import BEM from '../../BEM/BEM';
 import Form from '../../Form/Form.jsx';
@@ -72,8 +72,8 @@ class TransfersEdit extends React.Component {
   }
 
   render() {
-    const { bem, clubsList } = this.props,
-      { transferData } = this.state;
+    const { bem, clubsList } = this.props;
+    const { transferData } = this.state;
 
     let { transfersEditSchema } = this;
 
@@ -111,10 +111,10 @@ class TransfersEdit extends React.Component {
       firebase: { push, update },
       players,
       transfersData, params: { id },
-    } = this.props,
-      savedData = { ...transfersData, ...data },
-      playerId = savedData.player,
-      player = { ...players[playerId] };
+    } = this.props;
+    const savedData = { ...transfersData, ...data };
+    const playerId = savedData.player;
+    const player = { ...players[playerId] };
 
     if (id === 'new') {
       const data = await push('transfers', savedData);

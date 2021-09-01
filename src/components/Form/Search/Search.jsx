@@ -18,8 +18,8 @@ class PlayersSearch extends React.PureComponent {
   }
 
   handleAutocomplete = (suggestion, suggestionIndex, matches) => {
-    const { linkedFields, players } = this.props,
-      { data } = matches[suggestionIndex];
+    const { linkedFields, players } = this.props;
+    const { data } = matches[suggestionIndex];
 
     let dataObject = {};
 

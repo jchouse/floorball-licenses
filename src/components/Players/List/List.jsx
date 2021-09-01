@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firebaseConnect, populate } from 'react-redux-firebase';
@@ -38,12 +38,14 @@ class PlayersList extends Component {
   }
 
   render() {
-    const { bem, playersList } = this.props,
-      { offset, itemsOnPage, filters, currentSeason } = this.state;
+    const { bem, playersList } = this.props;
+    const { offset, itemsOnPage, filters, currentSeason } = this.state;
 
-    let _playersList = [],
-      size = 0,
-      listLength = 0;
+    let _playersList = [];
+
+    let size = 0;
+
+    let listLength = 0;
 
     if (playersList) {
       _playersList = Object.keys(playersList).reverse();
@@ -78,8 +80,8 @@ class PlayersList extends Component {
 
         if (filters.club) {
           _playersList = _playersList.filter(player => {
-            const p = playersList[player],
-              { key } = p.club;
+            const p = playersList[player];
+            const { key } = p.club;
 
             return key === filters.club;
           });
@@ -109,12 +111,12 @@ class PlayersList extends Component {
   }
 
   renderControls() {
-    const { bem, clubsList = {}, club, locale, intl } = this.props,
-      { filters } = this.state,
-      options = Object.entries(clubsList).map(([clubId, clubData]) => ({
-        value: clubId,
-        label: locale === 'uk' ? clubData.shortNameUA : clubData.shortNameEN,
-      }));
+    const { bem, clubsList = {}, club, locale, intl } = this.props;
+    const { filters } = this.state;
+    const options = Object.entries(clubsList).map(([clubId, clubData]) => ({
+      value: clubId,
+      label: locale === 'uk' ? clubData.shortNameUA : clubData.shortNameEN,
+    }));
 
     return (
       <Grid className={bem.elem('controls').cls()}>
@@ -181,9 +183,9 @@ class PlayersList extends Component {
   };
 
   renderCard(player, playerId, index) {
-    const { bem, imagesList } = this.props,
-      nowDate = new Date().getTime(),
-      clubLogoURL = player.club && imagesList[player.club.photo] && imagesList[player.club.photo].downloadURL;
+    const { bem, imagesList } = this.props;
+    const nowDate = new Date().getTime();
+    const clubLogoURL = player.club && imagesList[player.club.photo] && imagesList[player.club.photo].downloadURL;
 
     return (
       <Grid

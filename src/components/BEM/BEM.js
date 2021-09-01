@@ -26,8 +26,8 @@ class bem {
      * @return {string} the css classname
      */
     cls(mixCls) {
-        const that = this,
-            { bn, _elemStr, _modsStr } = this;
+        const that = this;
+        const { bn, _elemStr, _modsStr } = this;
 
         let str = bn;
 

@@ -1,9 +1,10 @@
 export const getCurrentSeason = date => {
-  const currentMonth = date.getMonth(),
-    currentYear = date.getFullYear();
+  const currentMonth = date.getMonth();
+  const currentYear = date.getFullYear();
 
-  let startSeasonYear = currentYear,
-    endSeasonYear = currentYear;
+  let startSeasonYear = currentYear;
+
+  let endSeasonYear = currentYear;
 
   if (currentMonth > 5) {
     endSeasonYear = ++endSeasonYear;

@@ -5,7 +5,7 @@ import BEM from '../BEM/BEM';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 class Requests extends Component {
   static defaultProps = {
@@ -102,10 +102,10 @@ class Requests extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user, locale, firebase: { data: { requests } } } = state,
-    clubsPlayers = [],
-    inProgressRequests = [],
-    closedRequests = [];
+  const { user, locale, firebase: { data: { requests } } } = state;
+  const clubsPlayers = [];
+  const inProgressRequests = [];
+  const closedRequests = [];
 
   // if (requests && user && user.clubId) {
 

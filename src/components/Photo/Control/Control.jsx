@@ -33,8 +33,8 @@ class Control extends React.Component {
   state = {};
 
   render() {
-    const { bem, mixCls, firebase, maxHeight, maxWidth, maxSize } = this.props,
-      { fileName, progress, isUploading, error } = this.state;
+    const { bem, mixCls, firebase, maxHeight, maxWidth, maxSize } = this.props;
+    const { fileName, progress, isUploading, error } = this.state;
 
     return (
       <div className={bem.cls(mixCls)}>
@@ -106,9 +106,9 @@ class Control extends React.Component {
   }
 
   handleChange = event => {
-    const { target: { files } } = event,
-      { maxSize } = this.props,
-      [{ name, size }] = files;
+    const { target: { files } } = event;
+    const { maxSize } = this.props;
+    const [{ name, size }] = files;
 
     let error;
 

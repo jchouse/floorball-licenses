@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontIcon, ListItem } from 'react-md';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const NavItemLink = ({ to, label, icon, onClick }) => {
   let leftIcon;

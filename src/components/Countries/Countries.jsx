@@ -37,8 +37,8 @@ class Countries extends Component {
   }
 
   render() {
-    const { id, label, placeholder, required } = this.props,
-      { value, data } = this.state;
+    const { id, label, placeholder, required } = this.props;
+    const { value, data } = this.state;
 
     return <Autocomplete
       id={id}

@@ -11,9 +11,10 @@ import BEM from '../BEM/BEM';
 import { pages } from '../../constans/location';
 import NavItemLink from './NavItemLink/NavItemLink.jsx';
 import KebabMenu from './KebabMenu/KebabMenu.jsx';
+
 import './Header.css';
 
-import { locale as changeLang, login, logout } from '../../actions/HeaderActions';
+import { locale as changeLang, login, logout } from './HeaderStore/HeaderActions';
 
 const navItems = [{
   label: <FormattedMessage id='Header.main'/>,
@@ -33,8 +34,8 @@ const navItems = [{
   label: <FormattedMessage id='Header.transfers'/>,
   to: pages.TRANSFERS,
   icon: 'transfer_within_a_station',
-}],
-  { location } = global;
+}];
+const { location } = global;
 
 /**
  * Header
@@ -53,8 +54,8 @@ class Header extends Component {
   };
 
   static getDerivedStateFromProps(props) {
-    const { users, cookies, dispatch, user } = props,
-      locale = cookies.get('locale');
+    const { users, cookies, dispatch, user } = props;
+    const locale = cookies.get('locale');
 
     if (locale) {
       dispatch(changeLang(locale));
@@ -76,12 +77,12 @@ class Header extends Component {
   }
 
   render() {
-    const { user, intl } = this.props,
-      { menuVisible } = this.state,
-      actionsItem = [{
-        label: <FormattedMessage id='Header.locale'/>,
-        onClick: this.changeLang,
-      }];
+    const { user, intl } = this.props;
+    const { menuVisible } = this.state;
+    const actionsItem = [{
+      label: <FormattedMessage id='Header.locale'/>,
+      onClick: this.changeLang,
+    }];
 
     if (user && user.role === 99) {
       actionsItem.push({
@@ -154,8 +155,8 @@ class Header extends Component {
   };
 
   loginWithGoogle = () => {
-    const { firebase, dispatch } = this.props,
-      provider = new firebase.auth.GoogleAuthProvider();
+    const { firebase, dispatch } = this.props;
+    const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase
       .auth()
@@ -167,8 +168,8 @@ class Header extends Component {
   };
 
   async saveUser(profile) {
-    const { users, firebase: { update } } = this.props,
-      { email, displayName, uid, photoURL } = profile;
+    const { users, firebase: { update } } = this.props;
+    const { email, displayName, uid, photoURL } = profile;
 
     if (!users[uid]) {
       await update('users', {
@@ -203,8 +204,8 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user, locale, routing, firebase: { data: { users } } } = state,
-    _locale = locale === 'uk' ? 'en' : 'uk';
+  const { user, locale, routing, firebase: { data: { users } } } = state;
+  const _locale = locale === 'uk' ? 'en' : 'uk';
 
   if (users && user && users[user.uid]) {
     user.role = users[user.uid].role;
