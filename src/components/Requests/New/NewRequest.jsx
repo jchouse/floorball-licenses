@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { firebaseConnect, populate } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Autocomplete, Grid, Cell, Button } from 'react-md';
+import { AutoComplete, Grid, GridCell, Button } from 'react-md';
 import BEM from '../../BEM/BEM';
 import { licenseRequest, addPlayerToRequest } from '../RequestsStore/RequestsActions';
 
@@ -50,28 +50,28 @@ class NewRequest extends Component {
   renderList() {
     const { bem, licenseRequest: { playersList = {} } } = this.props;
 
-    return <Cell size={12} className={bem.elem('list').cls()}>
+    return <GridCell size={12} className={bem.elem('list').cls()}>
       {Object.entries(playersList).map((elem, i) => (<div key={i}>{elem.toString()}</div>))}
-    </Cell>;
+    </GridCell>;
   }
 
   renderSelectPlayers() {
     const { clubsPlayers } = this.props;
 
     return [
-      <Cell
+      <GridCell
         key='select-player'
         size={2}>
-        <Autocomplete
+        <AutoComplete
           id='clubs-players'
           label='Players'
           placeholder='Марко Вовчок'
           data={clubsPlayers}
-          clearOnAutocomplete={true}
-          filter={Autocomplete.caseInsensitiveFilter}
-          onAutocomplete={this.autocompleteHandler}/>
-      </Cell>,
-      <Cell
+          clearOnAutoComplete={true}
+          filter={AutoComplete.caseInsensitiveFilter}
+          onAutoComplete={this.autocompleteHandler}/>
+      </GridCell>,
+      <GridCell
         size={2}
         key={'text'}
         align='bottom'>
@@ -81,7 +81,7 @@ class NewRequest extends Component {
           secondary>
           add new player
         </Button>
-      </Cell>,
+      </GridCell>,
     ];
   }
 

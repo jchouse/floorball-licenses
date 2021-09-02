@@ -1,23 +1,23 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Autocomplete } from 'react-md';
+import { AutoComplete } from 'react-md';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 
 class PlayersSearch extends React.PureComponent {
   render() {
     const { id, label, placeholder, players } = this.props;
 
-    return isLoaded(players) && <Autocomplete
+    return isLoaded(players) && <AutoComplete
       id={id}
       label={label}
       placeholder={placeholder}
       data={this.getPlayersList(players)}
-      filter={Autocomplete.caseInsensitiveFilter}
-      onAutocomplete={this.handleAutocomplete}/>;
+      filter={AutoComplete.caseInsensitiveFilter}
+      onAutoComplete={this.handleAutoComplete}/>;
   }
 
-  handleAutocomplete = (suggestion, suggestionIndex, matches) => {
+  handleAutoComplete = (suggestion, suggestionIndex, matches) => {
     const { linkedFields, players } = this.props;
     const { data } = matches[suggestionIndex];
 

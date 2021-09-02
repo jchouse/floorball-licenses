@@ -21,25 +21,42 @@ import Account from '../Account/Account.jsx';
 import Requests from '../Requests/Requests.jsx';
 import NewRequest from '../Requests/New/NewRequest.jsx';
 
-export default function Floorball() {
-  const locale = useSelector(state => state.locale);
+import { Layout } from '@react-md/layout';
 
 function NotFound() {
   return <h2>Воу воу полегче, еще не написали :)</h2>;
 }
 
+// const layoutOptions = {
+//   "showNav": "function",
+//   "hideNav": "function",
+//   "baseId": "custom-layout",
+//   "layout": "full-height",
+//   "visible": true,
+//   "fixedAppBar": true,
+//   "isMiniable": false,
+// };
+
+export default function Floorball() {
+  const locale = useSelector(state => state.locale);
+
   return (
     <IntlProvider locale={locale} messages={intlData[locale]}>
-      <div>
+      <Layout
+        id='app-layout'
+        navHeaderTitle='Ukraine Floorball'
+        mainProps={{ component: 'div' }}
+      >
         <Header/>
         <Switch>
           <Route exact path='/'>
             <Redirect to='clubs'/>
           </Route>
-          <Route path='/clubs' component={Clubs}>
-            <Route path=':id' component={ClubCard}/>
-            <Route path=':id/edit' component={EditClubCard}/>
-          </Route>
+
+          <Route path='/clubs/:id/edit' component={EditClubCard}/>
+          <Route path='/clubs/:id' component={ClubCard}/>
+          <Route path='/clubs' component={Clubs}/>
+
           <Route path='players' component={Players}>
             <Route path=':id' component={PlayerCard}/>
             <Route path=':id/edit' component={EditPlayerCard}/>
@@ -55,7 +72,7 @@ function NotFound() {
             <NotFound/>
           </Route>
         </Switch>
-      </div>
+        </Layout>
     </IntlProvider>
   );
 }

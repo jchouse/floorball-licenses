@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { Autocomplete, SelectField, Button } from 'react-md';
+import { AutoComplete, NativeSelect, Button } from 'react-md';
 import { FormattedMessage } from 'react-intl';
 import { ClubsListDropdown } from '../../Clubs/ClubsListDropdown/ClubsListDropdown';
 import BEM from '../../BEM/BEM';
@@ -116,7 +116,7 @@ class AccountRole extends Component {
   showChooseUserDialogue = () => {
     this.setState({
       viewChooseUserDialogue: true,
-      autocompleteHandler: this.selectClubAdminAutocompleteHandler,
+      autocompleteHandler: this.selectClubAdminAutoCompleteHandler,
       confirmHandler: this.clubAdminModalConfirmHandler,
     });
   };
@@ -176,7 +176,7 @@ class AccountRole extends Component {
     }
 
     return (
-      <SelectField
+      <NativeSelect
         value={selectedClub}
         label='Select club'
         id='club-selector'
@@ -214,21 +214,21 @@ class AccountRole extends Component {
 
     return (
       <div className={bem.elem('input').cls()}>
-        <Autocomplete
+        <AutoComplete
           id='clubs-players'
           label='Users email'
           placeholder='Please type email'
           autocompleteWithLabel={true}
           data={usersForSelect}
           listHeightRestricted={true}
-          onAutocomplete={this.state.autocompleteHandler}/>
+          onAutoComplete={this.state.autocompleteHandler}/>
         {selectedUser && this.renderUserInfo(chosedUserInfo.displayName, chosedUserInfo.email)}
         {this.renderChooseUserModalActions()}
       </div>
     );
   }
 
-  selectClubAdminAutocompleteHandler = (suggestion, suggestionIndex, matches) => {
+  selectClubAdminAutoCompleteHandler = (suggestion, suggestionIndex, matches) => {
     this.setState({
       chosedUser: matches[suggestionIndex],
     });

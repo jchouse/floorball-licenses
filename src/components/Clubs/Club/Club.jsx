@@ -1,7 +1,7 @@
 import React from 'react';
 // import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { Grid, Cell } from 'react-md';
+import { Grid, GridCell } from 'react-md';
 import BEM from '../../BEM/BEM';
 import PlayersList from '../../Players/List/List.jsx';
 import { connect } from 'react-redux';
@@ -38,10 +38,10 @@ class Club extends React.Component {
         <div className={bem.elem('main').cls()}>
           {/* <Helmet {...meta}/> */}
           <Grid className={bem.elem('players').cls()}>
-            <Cell size={4} className={bem.elem('main-logo').cls()}>
+            <GridCell size={4} className={bem.elem('main-logo').cls()}>
               {photo && <img className={bem.elem('main-logo-img').cls()} src={photo.downloadURL} alt={clubData.shortNameUA}/>}
-            </Cell>
-            <Cell size={6} className={bem.elem('main-info').cls()}>
+            </GridCell>
+            <GridCell size={6} className={bem.elem('main-info').cls()}>
               <div className={bem.elem('info').cls()}>
                 <div className={bem.elem('info-text').mods('label').cls()}>
                   <FormattedMessage id='Clubs.fullName'/>
@@ -88,14 +88,14 @@ class Club extends React.Component {
                   {[address.line, address.city, address.country, address.postCode].join(', ')}
                 </div>
               </div>}
-            </Cell>
+            </GridCell>
           </Grid>
           <Grid className={bem.elem('players').cls()}>
-            <Cell size={10}>
+            <GridCell size={10}>
               <h4 className={bem.elem('players-header').cls('md-title')}>
                 <FormattedMessage id='Clubs.players'/>
               </h4>
-            </Cell>
+            </GridCell>
           </Grid>
           <PlayersList club={id}/>
         </div>

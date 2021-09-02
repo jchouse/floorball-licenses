@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Grid, Cell } from 'react-md';
+import { Grid, GridCell } from 'react-md';
 import BEM from '../../BEM/BEM';
 import Form from '../../Form/Form.jsx';
 import { compose } from 'redux';
@@ -83,12 +83,12 @@ class TransfersEdit extends React.Component {
 
     return (
       <Grid className={bem.cls()}>
-        <Cell size={8} offset={2} className={bem.elem('main').cls()}>
+        <GridCell size={8} offset={2} className={bem.elem('main').cls()}>
           <Form
             data={transferData}
             schema={transfersEditSchema}
             submit={this.submit}/>
-        </Cell>
+        </GridCell>
       </Grid>
     );
   }

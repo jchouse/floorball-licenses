@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
-import { Grid, Cell } from 'react-md';
+import { Grid, GridCell } from 'react-md';
 import Form from '../../../Form/Form.jsx';
 import BEM from '../../../BEM/BEM';
 import PhotoControl from '../../../Photo/Control/Control.jsx';
@@ -107,19 +107,19 @@ class EditClub extends React.Component {
 
       content = <div className={bem.cls()}>
         <Grid className={bem.elem('main').cls()}>
-          <Cell size={4} offset={2}>
+          <GridCell size={4} offset={2}>
             <img className={bem.elem('main-logo').cls()} src={logoUrl || logo} alt={clubData.shortNameEN}/>
             <PhotoControl
               alt={clubData.shortNameEN}
               clearPhotoHandler={this.clearPhotoHandler}
               uploadPhotoHandler={this.uploadPhotoHandler}/>
-          </Cell>
-          <Cell size={4} className={bem.elem('main-info').cls()}>
+          </GridCell>
+          <GridCell size={4} className={bem.elem('main-info').cls()}>
             <Form
               data={clubData}
               schema={this.clubEditSchema}
               submit={this.submit}/>
-          </Cell>
+          </GridCell>
         </Grid>
       </div>;
     }

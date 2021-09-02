@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DropdownMenu, Avatar, Button, AccessibleFakeButton } from 'react-md';
+import { DropdownMenu, Avatar, Button } from 'react-md';
 import User from '../User/User.jsx';
 import BEM from '../../BEM/BEM';
 import './KebabMenu.css';
@@ -14,14 +14,12 @@ const KebabMenu = ({ className, menuItems, id, user }) => {
     const { photoURL, displayName } = user;
 
     if (photoURL || displayName) {
-      button = <AccessibleFakeButton>
-        <Avatar
-          className={bem.elem('avatar').cls()}
-          src={photoURL}
-          random>
-          {displayName.slice(0, 1)}
-        </Avatar>
-      </AccessibleFakeButton>;
+      button = <Avatar
+        className={bem.elem('avatar').cls()}
+        src={photoURL}
+        random>
+        {displayName.slice(0, 1)}
+      </Avatar>;
     }
   }
 

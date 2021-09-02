@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
-import { Grid, Cell, Media, MediaOverlay, CardTitle, Button } from 'react-md';
+import { Grid, GridCell, MediaContainer, MediaOverlay, CardTitle, Button } from 'react-md';
 import BEM from '../../BEM/BEM';
 import './List.css';
 
@@ -30,8 +30,8 @@ class ClubsList extends Component {
     const clubName = locale === 'en' ? 'shortNameEN' : 'shortNameUA';
 
     return (
-      <Cell size={3} key={clibId}>
-        <Media aspectRatio='4-3' className={bem.elem('card').cls()}>
+      <GridCell size={3} key={clibId}>
+        <MediaContainer aspectRatio='4-3' className={bem.elem('card').cls()}>
           <img className={bem.elem('card-image').cls()} src={club.photo && club.photo.downloadURL} alt={club[clubName]}/>
           <MediaOverlay>
             <CardTitle title={club[clubName]} subtitle={club.address.city}>
@@ -40,8 +40,8 @@ class ClubsList extends Component {
               </Link>
             </CardTitle>
           </MediaOverlay>
-        </Media>
-      </Cell>
+        </MediaContainer>
+      </GridCell>
     );
   }
 }

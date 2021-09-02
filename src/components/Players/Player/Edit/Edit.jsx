@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { Grid, Cell, Button } from 'react-md';
+import { Grid, GridCell, Button } from 'react-md';
 import BEM from '../../../BEM/BEM';
 import Form from '../../../Form/Form.jsx';
 import PhotoControl from '../../../Photo/Control/Control.jsx';
@@ -222,9 +222,9 @@ class EditPlayer extends React.Component {
     const { playerEditSchema } = this;
     const { logoUrl, clearPhoto } = this.state;
 
-    let content = <Cell offset={5} size={1}>
+    let content = <GridCell offset={5} size={1}>
       Loading...
-    </Cell>;
+    </GridCell>;
 
     if (!playersData.club && user && user.clubId) {
       playersData.club = user.clubId;
@@ -240,7 +240,7 @@ class EditPlayer extends React.Component {
       }
 
       content = <Grid className={bem.elem('main').cls('row')}>
-        <Cell
+        <GridCell
           offset={2}
           size={3}
           className={bem.elem('main-logo').cls()}>
@@ -265,14 +265,14 @@ class EditPlayer extends React.Component {
               uploadPhotoHandler={this.uploadPhotoHandler}
               clearPhotoHandler={this.clearPhotoHandler}/>
           </div>
-        </Cell>
-        <Cell offset={1} size={4} className={bem.elem('main-info').cls()}>
+        </GridCell>
+        <GridCell offset={1} size={4} className={bem.elem('main-info').cls()}>
           <Form
             locale={locale}
             data={playersData}
             schema={playerEditSchema}
             submit={this.submit}/>
-        </Cell>
+        </GridCell>
       </Grid>;
     }
 

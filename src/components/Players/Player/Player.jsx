@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Button, Cell, Grid } from 'react-md';
+import { Button, GridCell, Grid } from 'react-md';
 import BEM from '../../BEM/BEM';
 import DateFormatter from '../../DateFormatter/DateFormatter';
 import { compose } from 'redux';
@@ -47,13 +47,13 @@ class Player extends Component {
 
       content = (
         <Grid className={bem.cls()}>
-          <Cell offset={2} size={4} className={bem.elem('main-logo').cls()}>
+          <GridCell offset={2} size={4} className={bem.elem('main-logo').cls()}>
             <div className={bem.elem('main-logo-wrapper').cls()}>
               <img className={bem.elem('main-logo-img').cls()} src={logo} alt={`${lastNameUA} ${firstNameUA}`}/>
             </div>
             {this.renderClub(club)}
-          </Cell>
-          <Cell size={4} className={bem.elem('main-info').cls()}>
+          </GridCell>
+          <GridCell size={4} className={bem.elem('main-info').cls()}>
             {role >= 99 && <div className={bem.elem('info').cls()}>
               <Button
                 raised
@@ -100,7 +100,7 @@ class Player extends Component {
             {gender && this.renderRow(
               <FormattedMessage id='Players.gender.header'/>,
               <FormattedMessage id={`Players.gender.${gender}`}/>)}
-          </Cell>
+          </GridCell>
         </Grid>
       );
     } else {

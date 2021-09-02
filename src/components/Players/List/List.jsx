@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import DateFormatter from '../../../components/DateFormatter/DateFormatter';
 import Pagination from '../../../components/Pagination/Pagination.jsx';
-import { Avatar, Button, Cell, Grid, SelectField, Switch, TextField } from 'react-md';
+import { Avatar, Button, GridCell, Grid, NativeSelect, Switch, TextField } from 'react-md';
 import BEM from '../../../components/BEM/BEM';
 import { getCurrentSeason } from '../../../utils/timing';
 import './List.css';
@@ -95,18 +95,18 @@ class PlayersList extends Component {
     }
 
     return <Grid className={bem.cls()}>
-      <Cell size={12}>
+      <GridCell size={12}>
         {this.renderControls()}
         <Grid className={bem.cls('row')}>
-          <Cell className={bem.elem('controls-item').cls()}>
+          <GridCell className={bem.elem('controls-item').cls()}>
             <FormattedMessage
               values={{ length: listLength }}
               id='Players.items'/>
-          </Cell>
+          </GridCell>
         </Grid>
         {_playersList.map((playerId, index) => this.renderCard(playersList[playerId], playerId, index))}
         <Pagination offset={offset} size={Math.ceil(size)} changePage={this.changePage}/>
-      </Cell>
+      </GridCell>
     </Grid>;
   }
 
@@ -120,12 +120,12 @@ class PlayersList extends Component {
 
     return (
       <Grid className={bem.elem('controls').cls()}>
-        <Cell size={1} className={bem.elem('controls-item').cls()}>
+        <GridCell size={1} className={bem.elem('controls-item').cls()}>
           <h3 className={bem.elem('controls-item-header').cls()}>
             <FormattedMessage id='Players.filters'/>
           </h3>
-        </Cell>
-        <Cell size={2} className={bem.elem('controls-item').cls()}>
+        </GridCell>
+        <GridCell size={2} className={bem.elem('controls-item').cls()}>
           <TextField
             id='floating-center-title'
             lineDirection='center'
@@ -133,8 +133,8 @@ class PlayersList extends Component {
             value={filters.name}
             onChange={value => this.changeFilter('name', value)}
             placeholder={intl.formatMessage({ id: 'Players.enterName' })}/>
-        </Cell>
-        <Cell size={2} className={bem.elem('controls-item').cls()}>
+        </GridCell>
+        <GridCell size={2} className={bem.elem('controls-item').cls()}>
           <TextField
             id='floating-center-title'
             lineDirection='center'
@@ -143,24 +143,24 @@ class PlayersList extends Component {
             type='number'
             onChange={value => this.changeFilter('license', value)}
             placeholder={intl.formatMessage({ id: 'Players.enterNumber' })}/>
-        </Cell>
-        {!club && <Cell size={2} className={bem.elem('controls-item').cls()}>
-          <SelectField
+        </GridCell>
+        {!club && <GridCell size={2} className={bem.elem('controls-item').cls()}>
+          <NativeSelect
             id='select-club'
             fullWidth={true}
             placeholder={intl.formatMessage({ id: 'Players.enterClub' })}
             menuItems={options}
             value={filters.club}
             onChange={value => this.changeFilter('club', value)}/>
-        </Cell>}
-        <Cell size={2} className={bem.elem('controls-item').cls()}>
+        </GridCell>}
+        <GridCell size={2} className={bem.elem('controls-item').cls()}>
           <Switch
             id='show-unactive'
             checked={filters.showUnactive}
             label={<FormattedMessage id='Players.filter.unactive'/>}
             name='showUnactive'
             onChange={value => this.changeFilter('showUnactive', value)}/>
-        </Cell>
+        </GridCell>
       </Grid>
     );
   }
@@ -195,7 +195,7 @@ class PlayersList extends Component {
             .mods(nowDate > player.endActivationDate && 'disactive')
             .cls()
         }>
-        <Cell
+        <GridCell
           size={2}
           className={bem.elem('card-item').cls()}>
           {player.photo &&
@@ -206,8 +206,8 @@ class PlayersList extends Component {
             <div className={bem.elem('name').cls()}>{`${player.lastNameUA} ${player.firstNameUA}`}</div>
             <div>{DateFormatter.dateForUi(player.born)}</div>
           </div>
-        </Cell>
-        <Cell
+        </GridCell>
+        <GridCell
           size={2}
           align='middle'
           className={bem.elem('card-item').mods('club-info').cls()}>
@@ -228,8 +228,8 @@ class PlayersList extends Component {
             <FormattedMessage id='Players.license.number'/>
             {` ${player.license}`}
           </div>
-        </Cell>
-        <Cell
+        </GridCell>
+        <GridCell
           size={2}
           align='middle'
           className={bem.elem('card-item-info').cls()}>
@@ -259,14 +259,14 @@ class PlayersList extends Component {
               <FormattedMessage id={`Players.side.${player.side}`}/>
             </div>}
           </div>
-        </Cell>
-        <Cell
+        </GridCell>
+        <GridCell
           size={1}
           align='middle'>
           <Link to={`/players/${playerId}`} className={bem.elem('goto').cls('secondary-content')}>
             <Button icon primary>open_in_browser</Button>
           </Link>
-        </Cell>
+        </GridCell>
       </Grid>
     );
   }

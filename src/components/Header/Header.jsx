@@ -5,7 +5,18 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { withCookies } from 'react-cookie';
-import { Button, Drawer, Toolbar } from 'react-md';
+import {
+  Button,
+  // Drawer,
+  // Toolbar,
+} from 'react-md';
+
+import {
+  AppBar,
+  AppBarNav,
+  AppBarTitle,
+  AppBarAction,
+} from '@react-md/app-bar';
 
 import BEM from '../BEM/BEM';
 import { pages } from '../../constans/location';
@@ -120,25 +131,25 @@ class Header extends Component {
     }
 
     return [
-      <Toolbar
-        key='header-toolbar'
-        colored
-        nav={<Button onClick={this.handleVisibility} icon>menu</Button>}
-        title={intl.formatMessage({ id: 'Header.title' })}
-        actions={
-          <KebabMenu
-            id='header-toolbar-menu'
-            user={user}
-            menuItems={actionsItem.map((props, i) => <NavItemLink {...props} key={i}/>)}/>
-        }/>,
-      <Drawer
-        key='main-menu'
-        id='main-menu'
-        type={Drawer.DrawerTypes.TEMPORARY}
-        visible={menuVisible}
-        position='left'
-        onVisibilityChange={this.handleVisibility}
-        navItems={navItems.map(props => <NavItemLink {...props} key={props.to}/>)}/>,
+      // <Toolbar
+      //   key='header-toolbar'
+      //   colored
+      //   nav={<Button onClick={this.handleVisibility} icon>menu</Button>}
+      //   title={intl.formatMessage({ id: 'Header.title' })}
+      //   actions={
+      //     <KebabMenu
+      //       id='header-toolbar-menu'
+      //       user={user}
+      //       menuItems={actionsItem.map((props, i) => <NavItemLink {...props} key={i}/>)}/>
+      //   }/>,
+      // <Drawer
+      //   key='main-menu'
+      //   id='main-menu'
+      //   type={Drawer.DrawerTypes.TEMPORARY}
+      //   visible={menuVisible}
+      //   position='left'
+      //   onVisibilityChange={this.handleVisibility}
+      //   navItems={navItems.map(props => <NavItemLink {...props} key={props.to}/>)}/>,
     ];
   }
 

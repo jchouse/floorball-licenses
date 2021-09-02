@@ -1,6 +1,9 @@
 import React from 'react';
-
-import { TextField, DatePicker, SelectField, Button } from 'react-md';
+import {
+  TextField,
+  NativeSelect,
+  Button,
+} from 'react-md';
 import BEM from '../BEM/BEM';
 import Countries from '../Countries/Countries';
 import Search from './Search/Search';
@@ -104,7 +107,7 @@ class Form extends React.Component {
     let elem;
 
     if (type === 'select') {
-      elem = <SelectField
+      elem = <NativeSelect
         className='md-full-width'
         key={index}
         ref={el => options.required && this.createRef(el, options.id, group)}
@@ -123,7 +126,8 @@ class Form extends React.Component {
         dateValue = new Date();
       }
 
-      elem = <DatePicker
+      elem = <TextField
+        type='date'
         key={index}
         ref={el => options.required && this.createRef(el, options.id, group)}
         {...optionsData}

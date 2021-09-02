@@ -1,4 +1,4 @@
-@import 'globals';
+@import "./everything";
 
 .player-card
 {
@@ -14,7 +14,7 @@
             {
                 margin-bottom: 5px;
 
-                color: $md-indigo-100;
+                // color: $rmd-indigo-100;
             }
 
             &--main

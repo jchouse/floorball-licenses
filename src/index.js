@@ -19,7 +19,8 @@ import Floorball from './components/Floorball/Floorball.jsx';
 
 import floorballApp from './reducers/reducers';
 
-import './index.css';
+import { Configuration } from 'react-md';
+import './index.scss';
 import WebFontLoader from 'webfontloader';
 
 WebFontLoader.load({
@@ -46,7 +47,9 @@ render(
     <ReactReduxFirebaseProvider {...reactReduxFirebaseProps}>
       <CookiesProvider>
         <Router>
-          <Floorball/>
+          <Configuration>
+            <Floorball/>
+          </Configuration>
         </Router>
       </CookiesProvider>
     </ReactReduxFirebaseProvider>

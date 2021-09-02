@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Autocomplete } from 'react-md';
+import { AutoComplete } from 'react-md';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import ukCountries from 'i18n-iso-countries/langs/uk.json';
@@ -40,16 +40,16 @@ class Countries extends Component {
     const { id, label, placeholder, required } = this.props;
     const { value, data } = this.state;
 
-    return <Autocomplete
+    return <AutoComplete
       id={id}
       label={label}
       placeholder={placeholder}
       value={value}
       data={data}
       required={required}
-      filter={Autocomplete.caseInsensitiveFilter}
+      filter={AutoComplete.caseInsensitiveFilter}
       onChange={this.changeHandler}
-      onAutocomplete={this.autocompleteHandler}/>;
+      onAutoComplete={this.autocompleteHandler}/>;
   }
 
   getCountriesList(names) {
