@@ -1,33 +1,33 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
-import { addLocaleData } from 'react-intl';
-import uk from 'react-intl/locale-data/uk';
+import './i18n';
 
 import firebase from 'firebase';
 import 'firebase/auth';
 import firebaseConfig from './firebaseVars';
 
-import { CookiesProvider } from 'react-cookie';
 
 import Floorball from './components/Floorball/Floorball.jsx';
 
 import floorballApp from './reducers/reducers';
 
-import { Configuration } from 'react-md';
-import './index.scss';
 import WebFontLoader from 'webfontloader';
-
 WebFontLoader.load({
   google: {
     families: ['Roboto:300,400,500,700', 'Material Icons'],
   },
 });
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme';
 
 const reactReduxFirebaseConfig = {};
 
@@ -40,16 +40,15 @@ const reactReduxFirebaseProps = {
   dispatch: store.dispatch,
 };
 
-addLocaleData(uk);
-
 render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...reactReduxFirebaseProps}>
       <CookiesProvider>
         <Router>
-          <Configuration>
+          <ThemeProvider theme={theme}>
+            <CssBaseline/>
             <Floorball/>
-          </Configuration>
+          </ThemeProvider>
         </Router>
       </CookiesProvider>
     </ReactReduxFirebaseProvider>

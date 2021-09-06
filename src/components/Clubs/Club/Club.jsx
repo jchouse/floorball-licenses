@@ -1,5 +1,5 @@
 import React from 'react';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { Grid, GridCell } from 'react-md';
 import BEM from '../../BEM/BEM';
@@ -24,19 +24,18 @@ class Club extends React.Component {
 
     if (clubData) {
       const { address, photo } = clubData;
-      // ,
-      // meta = {
-      //     title: clubData.shortNameUA,
-      //     meta: [
-      //         { property: 'og:title', content: clubData.shortNameUA },
-      //         { property: 'og:url', content: document.location.href },
-      //         { property: 'og:image', content: photo && photo.key }
-      //     ]
-      // };
+      const meta = {
+          title: clubData.shortNameUA,
+          meta: [
+              { property: 'og:title', content: clubData.shortNameUA },
+              { property: 'og:url', content: document.location.href },
+              { property: 'og:image', content: photo && photo.key },
+          ],
+      };
 
       content = (
         <div className={bem.elem('main').cls()}>
-          {/* <Helmet {...meta}/> */}
+          <Helmet {...meta}/>
           <Grid className={bem.elem('players').cls()}>
             <GridCell size={4} className={bem.elem('main-logo').cls()}>
               {photo && <img className={bem.elem('main-logo-img').cls()} src={photo.downloadURL} alt={clubData.shortNameUA}/>}

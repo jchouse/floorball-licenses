@@ -1,4 +1,4 @@
-const intl = {
+export const intl = {
     'en': {
         Header: {
             title: 'Floorball Ukraine',
@@ -13,8 +13,8 @@ const intl = {
             newPlayer: 'New Player',
             newTransfer: 'New Transfer',
             startLicenses: 'Start licenses',
-            continueLicenses: 'Continue licenses'
-        }
+            continueLicenses: 'Continue licenses',
+        },
     },
     'uk': {
         Header: {
@@ -30,9 +30,7 @@ const intl = {
             newPlayer: 'Новий гравець',
             newTransfer: 'Новий трансфер',
             startLicenses: 'Нові ліцензії',
-            continueLicenses: 'Продовжити ліцензії'
-        }
-    }
+            continueLicenses: 'Продовжити ліцензії',
+        },
+    },
 };
-
-module.exports = intl;

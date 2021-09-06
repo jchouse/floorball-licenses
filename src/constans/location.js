@@ -2,6 +2,7 @@ const ROOT = '/';
 const pages = {
   MAIN: ROOT,
   CLUBS: `${ROOT}clubs`,
+  CLUB_INFO: `${ROOT}club/:id`,
   PLAYERS: `${ROOT}players`,
   TRANSFERS: `${ROOT}transfers`,
   NEW_CLUB: `${ROOT}clubs/new/edit`,
