@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import {
@@ -27,11 +26,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import GroupIcon from '@material-ui/icons/Group';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 
-import { useStyles } from './FloorballStyles';
+import { useStyles } from './Floorball.styles';
 
-// import Header from '../Header/Header.jsx';
-import Clubs from '../Clubs/Clubs.jsx';
-// import ClubCard from '../Clubs/Club/Club.jsx';
+import Clubs from '../Clubs/Clubs';
+import ClubInfo from '../Clubs/ClubInfo/ClubInfo';
 // import EditClubCard from '../Clubs/Club/Edit/Edit.jsx';
 // import Players from '../Players/Players.jsx';
 // import PlayerCard from '../Players/Player/Player.jsx';
@@ -45,16 +43,6 @@ import Clubs from '../Clubs/Clubs.jsx';
 function NotFound() {
   return <h2>Воу воу полегче, еще не написали :)</h2>;
 }
-
-// const layoutOptions = {
-//   "showNav": "function",
-//   "hideNav": "function",
-//   "baseId": "custom-layout",
-//   "layout": "full-height",
-//   "visible": true,
-//   "fixedAppBar": true,
-//   "isMiniable": false,
-// };
 
 export default function Floorball() {
   const history = useHistory();
@@ -143,7 +131,7 @@ export default function Floorball() {
           </Route>
 
           {/* <Route path='/clubs/:id/edit' component={EditClubCard}/> */}
-          {/* <Route path='/clubs/:id' component={ClubCard}/> */}
+          <Route path='/clubs/:id' component={ClubInfo}/>
           <Route path='/clubs' component={Clubs}/>
 
           {/* <Route path='players' component={Players}>

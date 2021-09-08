@@ -3,7 +3,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { useHistory } from 'react-router-dom';
-import { pages } from '../../constans/location';
+import { useTranslation } from 'react-i18next';
+import Helmet from 'react-helmet';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Card from '@material-ui/core/Card';
@@ -12,6 +13,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import { pages } from '../../constans/location';
+import { useStyles } from './Clubs.styles';
 
 const populates = [
   { child: 'photo', root: 'images' },
@@ -29,6 +33,8 @@ const enhance = compose(
 function Clubs(props) {
   const { clubs } = props;
   const history = useHistory();
+  const { t } = useTranslation();
+  const classes = useStyles();
 
   if (!isLoaded(clubs)) {
     return <LinearProgress/>;
@@ -43,19 +49,18 @@ function Clubs(props) {
         photo,
       } = club;
 
-      console.log(club);
-
       return (
-        <Grid key={clubId} item xs={3}>
-          <Card onClick={() => history.push(`${pages.CLUBS}`)}>
+        <Grid key={clubId} item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Card onClick={() => history.push(pages.CLUB_INFO.replace(':id', clubId))}>
             <CardActionArea>
               {photo && (
                 <CardMedia
                   component='img'
                   alt={shortNameEN}
                   height='140'
-                  image={`${photo.downloadURL}`}
+                  image={photo.downloadURL}
                   title={shortNameEN}
+                  className={classes.media}
                 />
               )}
               <CardContent>
@@ -74,6 +79,9 @@ function Clubs(props) {
 
   return (
     <Grid container spacing={2}>
+      <Helmet>
+        <title>{t('Floorball.title')}</title>
+      </Helmet>
       {content}
     </Grid>
   );
