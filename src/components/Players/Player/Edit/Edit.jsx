@@ -25,6 +25,7 @@ class EditPlayer extends React.Component {
       citizenship: '',
       firstNameEN: '',
       lastNameEN: '',
+      taxnumber: null,
       photo: '',
       weight: '',
       height: '',

@@ -7,7 +7,6 @@
       "$club": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
-        ".validate": "newData.hasChildren(['email', 'fullNameEN', 'fullNameUA', 'logo', 'shortNameEN', 'shortNameUA', 'region'])",
         "email": {
           ".validate": "newData.isString()"
         },
@@ -88,7 +87,6 @@
       "$player": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
-        ".validate": "newData.hasChildren(['born', 'citizenship', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'licenseType', 'registrDate'])",
         "born": {
           ".validate": "newData.isNumber()"
         },
@@ -120,7 +118,7 @@
           ".validate": "newData.isString()"
         },
         "license": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isNumber() || newData.isString()"
         },
         "licenseType": {
           ".validate": "newData.isString()"
@@ -136,6 +134,9 @@
         },
         "side": {
           ".validate": "newData.isString()"
+        },
+        "taxnumber": {
+          ".validate": "newData.isNumber() || newData.isString()"
         },
         "secondNameUA": {
           ".validate": "newData.isString()"
