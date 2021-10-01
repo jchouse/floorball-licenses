@@ -59,7 +59,7 @@ function ClubInfo(props) {
     <Grid
       container
       justifyContent='center'
-      spacing='4'
+      spacing={4}
     >
       <Helmet>
         <title>{shortNameUA}</title>
