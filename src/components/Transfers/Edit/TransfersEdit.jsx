@@ -25,7 +25,7 @@ class TransfersEdit extends React.Component {
       fromClub: '',
       toClub: '',
       date: new Date().getTime(),
-      endDate: '',
+      endDate: null,
     };
   }
 
