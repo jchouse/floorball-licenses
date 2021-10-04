@@ -31,7 +31,7 @@ import { useStyles } from './Floorball.styles';
 import Clubs from '../Clubs/Clubs';
 import ClubInfo from '../Clubs/ClubInfo/ClubInfo';
 // import EditClubCard from '../Clubs/Club/Edit/Edit.jsx';
-// import Players from '../Players/Players.jsx';
+import Players from '../Players/Players.jsx';
 // import PlayerCard from '../Players/Player/Player.jsx';
 // import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
 // import Transfers from '../Transfers/Transfers.jsx';
@@ -133,11 +133,10 @@ export default function Floorball() {
           {/* <Route path='/clubs/:id/edit' component={EditClubCard}/> */}
           <Route path='/clubs/:id' component={ClubInfo}/>
           <Route path='/clubs' component={Clubs}/>
+          <Route path='/players' component={Players}/>
 
-          {/* <Route path='players' component={Players}>
-            <Route path=':id' component={PlyerCard}/>
+          {/*   <Route path=':id' component={PlyerCard}/>
             <Route path=':id/edit' component={EditPlayerCard}/>
-          </Route>
           <Route path='transfers' component={Transfers}>
             <Route path=':id/edit' component={TransfersEdit}/>
           </Route>
