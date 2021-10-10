@@ -4,6 +4,7 @@ const pages = {
   CLUBS: `${ROOT}clubs`,
   CLUB_INFO: `${ROOT}clubs/:id`,
   PLAYERS: `${ROOT}players`,
+  PLAYER_INFO: `${ROOT}players/:id`,
   TRANSFERS: `${ROOT}transfers`,
   NEW_CLUB: `${ROOT}clubs/new/edit`,
   NEW_PLAYER: `${ROOT}players/new/edit`,

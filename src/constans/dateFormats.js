@@ -1,0 +1,1 @@
+export const bornDate = 'MM.dd.yyyy';

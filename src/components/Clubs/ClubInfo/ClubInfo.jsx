@@ -66,9 +66,9 @@ function ClubInfo(props) {
       </Helmet>
       <Grid
         item
-        xs='10'
-        md='3'
-        lg='3'
+        xs={10}
+        md={3}
+        lg={3}
       >
        {downloadURL &&
         <img
@@ -80,9 +80,9 @@ function ClubInfo(props) {
       </Grid>
       <Grid
         item
-        xs='10'
-        md='7'
-        lg='7'
+        xs={10}
+        md={7}
+        lg={7}
       >
         <div className={classes.info}>
           <Typography gutterBottom variant='body1' className={classes.infoTextLabel}>
