@@ -9,4 +9,12 @@ export const useStyles = makeStyles(() => ({
   clubLogo: {
     marginRight: 20,
   },
+  disabledRow: {
+    '& td': {
+      color: '#c6c6c6',
+    },
+  },
+  tableWrapper: {
+    marginTop: 30,
+  },
 }));

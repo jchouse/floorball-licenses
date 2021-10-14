@@ -7,6 +7,7 @@ import { useHistory, generatePath } from 'react-router-dom';
 import queryString from 'query-string';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
+import cn from 'classnames';
 
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -28,25 +29,26 @@ import Switch from '@material-ui/core/Switch';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import { clubsListDropdown } from '../Clubs/ClubsListDropdown/ClubsListDropdown';
+
 import { pages } from '../../constans/location';
-import * as dateFormas from '../../constans/dateFormats';
+import {
+  bornDateFormate,
+  activeSeason,
+} from '../../constans/settings';
 import { useStyles } from './Players.styles';
+
+const NOW = new Date;
 
 const populates = [{ child: 'photo', root: 'images' }];
 
 const enhance = compose(
-  firebaseConnect(props => {
-    console.log('firebaseConnect props', props);
-
-    return [
-      { path: 'players', populates },
-      { path: 'clubs', populates },
-    ];
-  }),
+  firebaseConnect(() => ([
+    { path: 'players', populates },
+    { path: 'clubs', populates },
+  ])),
   connect(props => {
     const { firebase } = props;
-
-    console.log('connect props', props);
 
     return {
       players: populate(firebase, 'players', populates),
@@ -99,18 +101,22 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
           lastNameUA,
           born,
           photo: userPhoto,
+          endActivationDate,
         } = player;
         const playersClub = clubs[club];
+
         const {
           photo: {
             downloadURL: clubsLogo,
           },
           shortNameUA,
         } = playersClub;
+        const isExpired = endActivationDate <= activeSeason.startDate;
 
         return (
           <TableRow
             hover
+            classes={{ root: cn({ [classes.disabledRow]: isExpired }) }}
             onClick={event => handleClick(event, key)}
             key={key}
           >
@@ -137,7 +143,7 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
             <TableCell>{firstNameUA}</TableCell>
             <TableCell>{lastNameUA}</TableCell>
             <TableCell>
-              {`${differenceInYears(new Date, born)} (${format(born, dateFormas.bornDate)})`}
+              {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
             </TableCell>
           </TableRow>
         );
@@ -160,22 +166,32 @@ const PlayersFilter = props => {
     translator,
     changeFilterHandler,
     searchParams,
+    handleChangePage,
+    clubs,
   } = props;
-
   const changeInputHandler = name => event => {
     changeFilterHandler(name, event.target.value);
+    changeFilterHandler(name, event.target.value);
+    handleChangePage(event, 0);
   };
+  const changeSwitchHandler = name => event => {
+    changeFilterHandler(name, event.target.checked);
+    handleChangePage(event, 0);
+  };
+  const clubsItems = React.useMemo(() => clubsListDropdown(clubs), [clubs]);
 
   return (
     <Grid
       container
-      alignItems='flex-start'
+      alignItems='flex-end'
       spacing={2}
     >
       <Grid
+        md={1}
         item
       >
         <TextField
+          fullWidth
           value={searchParams[filterMap.license] || ''}
           type='number'
           color='primary'
@@ -185,9 +201,12 @@ const PlayersFilter = props => {
         />
       </Grid>
       <Grid
+        md={1}
         item
       >
-        <FormControl>
+        <FormControl
+          fullWidth
+        >
           <InputLabel id='license-type-select'>{translator('Players.license.type')}</InputLabel>
           <Select
             labelId='license-type-select'
@@ -195,18 +214,21 @@ const PlayersFilter = props => {
             value={searchParams[filterMap.licenseType] || ''}
             onChange={changeInputHandler(filterMap.licenseType)}
           >
-            <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
-            <MenuItem value={'Adult_A'}>{translator('Players.license.Adult_A')}</MenuItem>
-            <MenuItem value={'Adult_B'}>{translator('Players.license.Adult_B')}</MenuItem>
-            <MenuItem value={'Junior_A'}>{translator('Players.license.Junior_A')}</MenuItem>
-            <MenuItem value={'Junior_B'}>{translator('Players.license.Junior_B')}</MenuItem>
+            {[
+              <MenuItem key={-1} value={''}>{translator('Players.filter.all')}</MenuItem>,
+              activeSeason.possibleLiciensies.map(license => (
+                <MenuItem key={license.value} value={license.value}>{license.name}</MenuItem>
+              )),
+            ]}
           </Select>
         </FormControl>
       </Grid>
       <Grid
+        md={2}
         item
       >
         <TextField
+          fullWidth
           value={searchParams[filterMap.name] || ''}
           color='primary'
           id={filterMap.name}
@@ -215,39 +237,51 @@ const PlayersFilter = props => {
         />
       </Grid>
       <Grid
+        md={2}
         item
       >
-        <FormControl>
-          <InputLabel id='license-type-select'>{translator('Players.license.type')}</InputLabel>
+        <FormControl
+          fullWidth
+        >
+          <InputLabel id='license-type-select'>{translator('Players.enterClub')}</InputLabel>
           <Select
             labelId='clubs-select'
             id={filterMap.club}
-            // value={age}
-            // onChange={handleChange}
+            value={searchParams[filterMap.club] || ''}
+            onChange={changeInputHandler(filterMap.club)}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
+            {clubsItems.map(club => (
+              <MenuItem key={club.value} value={club.value}>{club.label}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
       <Grid
+        md={1}
         item
       >
         <TextField
+          fullWidth
+          value={searchParams[filterMap.age] || ''}
           type='number'
           id={filterMap.age}
           label={translator('Players.table.age')}
+          onChange={changeInputHandler(filterMap.age)}
         />
       </Grid>
-      <Grid>
+      <Grid
+        md={2}
+        item
+      >
         <FormControlLabel
           control={
             <Switch
-              // checked={state.checkedB}
-              // onChange={handleChange}
               name={filterMap.expired}
               color='primary'
+              checked={searchParams[filterMap.expired]}
+              value={searchParams[filterMap.expired]}
+              onChange={changeSwitchHandler(filterMap.expired)}
             />
           }
           label={translator('Players.filter.unactive')}
@@ -256,6 +290,46 @@ const PlayersFilter = props => {
     </Grid>
   );
 };
+
+function stableSort(players, comparator) {
+  let result = Object.entries(players);
+
+  if (comparator[filterMap.license]) {
+    result = result
+      .filter(([, player]) => player.license.toString().includes(comparator[filterMap.license].toString()));
+  }
+
+  if (comparator[filterMap.licenseType]) {
+    result = result
+      .filter(([, player]) => player.licenseType === comparator[filterMap.licenseType]);
+  }
+
+  if (comparator[filterMap.name]) {
+    result = result
+      .filter(([, player]) => {
+        const searchString = `${player.firstNameUA.toLowerCase()}${player.lastNameUA.toLowerCase()}`;
+
+        return searchString.includes(comparator[filterMap.name].toLowerCase());
+      });
+  }
+
+  if (comparator[filterMap.club]) {
+    result = result
+      .filter(([, player]) => player.club === comparator[filterMap.club]);
+  }
+
+  if (comparator[filterMap.age]) {
+    result = result
+      .filter(([, player]) => differenceInYears(NOW, parseInt(player.born)) <= parseInt(comparator[filterMap.age]));
+  }
+
+  if (!comparator[filterMap.expired]) {
+    result = result
+      .filter(([, player]) => player.endActivationDate >= activeSeason.startDate && player.endActivationDate <= activeSeason.endDate);
+  }
+
+  return result;
+}
 
 const ROWS_PER_PAGE = [10, 25, 50];
 
@@ -268,7 +342,8 @@ const Players = props => {
   const classes = useStyles();
   const history = useHistory();
   const { location, replace, push } = history;
-  const searchParams = queryString.parse(location.search);
+
+  let searchParams = queryString.parse(location.search);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
@@ -298,16 +373,22 @@ const Players = props => {
     push(generatePath(pages.PLAYER_INFO, { id: key }));
   };
 
-  const playersRows = Object.entries(players);
-
   const setFilterLocation = (name, value) => {
-    const stringified = queryString.stringify({
-      ...searchParams,
-      [`${name}`]: value,
-    });
+    if (value) {
+      searchParams = {
+        ...searchParams,
+        [`${name}`]: value,
+      };
+    } else if (searchParams[name]) {
+      delete searchParams[name];
+    }
+
+    const stringified = queryString.stringify(searchParams);
 
     replace(`${location.pathname}?${stringified}`);
   };
+
+  const playersRows = stableSort(players, searchParams);
 
   return (
       <Grid>
@@ -315,8 +396,12 @@ const Players = props => {
           translator={t}
           searchParams={searchParams}
           changeFilterHandler={setFilterLocation}
+          handleChangePage={handleChangePage}
+          clubs={clubs}
         />
-        <Paper>
+        <Paper
+          className={classes.tableWrapper}
+        >
           <TableContainer>
             <Table
               aria-labelledby='tableTitle'
