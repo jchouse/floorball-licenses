@@ -1,5 +1,6 @@
 export const intl = {
   'en': {
+    'Players.list.title': 'Players list', 
     'Players.items': 'Players in list:',
     'Players.filters': 'Filters',
     'Players.enterName': 'Enter some name',
@@ -59,6 +60,7 @@ export const intl = {
     'Players.table.club': 'Club',
   },
   'uk': {
+    'Players.list.title': 'Гравці',
     'Players.items': 'Гравців в списку:',
     'Players.filters': 'Фільтри',
     'Players.enterName': 'Введіть ім\'я',

@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
 import cn from 'classnames';
+import Helmet from 'react-helmet';
 
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -433,6 +434,9 @@ const Players = props => {
 
   return (
       <Grid>
+        <Helmet>
+          <title>{t('Players.list.title')}</title>
+        </Helmet>
         <PlayersFilter
           translator={t}
           searchParams={searchParams}
