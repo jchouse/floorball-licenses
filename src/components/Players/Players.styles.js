@@ -17,4 +17,7 @@ export const useStyles = makeStyles(() => ({
   tableWrapper: {
     marginTop: 30,
   },
+  count: {
+    marginTop: 10,
+  },
 }));

@@ -63,6 +63,7 @@ const headCell = [
   { id: 'photo', labelI18nKey: 'Players.table.photo' },
   { id: 'firstName', labelI18nKey: 'Players.table.firstName' },
   { id: 'lastName', labelI18nKey: 'Players.table.lastName' },
+  { id: 'gender', labelI18nKey: 'Players.gender.header' },
   { id: 'age', labelI18nKey: 'Players.table.age' },
 ];
 
@@ -82,6 +83,11 @@ const PlayersTableHead = (function PlayersTableHead({ translator }) {
   );
 });
 
+export const gendersMap = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+};
+
 const PlayersTableRows = React.memo(function PlayersTableRows(props) {
   const {
     players,
@@ -89,7 +95,13 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
     classes,
     handleClick,
     handleClubClick,
+    translator,
   } = props;
+
+  const genderMap = {
+    [gendersMap.MALE]: translator('Players.gender.MALE'),
+    [gendersMap.FEMALE]: translator('Players.gender.FEMALE'),
+  };
 
   return (
     <TableBody>
@@ -102,6 +114,7 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
           born,
           photo: userPhoto,
           endActivationDate,
+          gender,
         } = player;
         const playersClub = clubs[club];
 
@@ -142,6 +155,7 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
             </TableCell>
             <TableCell>{firstNameUA}</TableCell>
             <TableCell>{lastNameUA}</TableCell>
+            <TableCell>{genderMap[gender]}</TableCell>
             <TableCell>
               {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
             </TableCell>
@@ -157,6 +171,7 @@ const filterMap = {
   licenseType: 'licenseType',
   name: 'name',
   club: 'club',
+  gender: 'gender',
   age: 'age',
   expired: 'expired',
 };
@@ -243,7 +258,7 @@ const PlayersFilter = props => {
         <FormControl
           fullWidth
         >
-          <InputLabel id='license-type-select'>{translator('Players.enterClub')}</InputLabel>
+          <InputLabel id='club-select'>{translator('Players.enterClub')}</InputLabel>
           <Select
             labelId='clubs-select'
             id={filterMap.club}
@@ -253,6 +268,27 @@ const PlayersFilter = props => {
             <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
             {clubsItems.map(club => (
               <MenuItem key={club.value} value={club.value}>{club.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid
+        md={1}
+        item
+      >
+        <FormControl
+          fullWidth
+        >
+          <InputLabel id='gender-select'>{translator('Players.gender.header')}</InputLabel>
+          <Select
+            labelId='gender-select'
+            id={filterMap.gender}
+            value={searchParams[filterMap.gender] || ''}
+            onChange={changeInputHandler(filterMap.gender)}
+          >
+            <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
+            {Object.entries(gendersMap).map(([key]) => (
+              <MenuItem key={key} value={key}>{translator(`Players.gender.${key}`)}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -316,6 +352,11 @@ function stableSort(players, comparator) {
   if (comparator[filterMap.club]) {
     result = result
       .filter(([, player]) => player.club === comparator[filterMap.club]);
+  }
+
+  if (comparator[filterMap.gender]) {
+    result = result
+      .filter(([, player]) => player.gender === comparator[filterMap.gender]);
   }
 
   if (comparator[filterMap.age]) {
@@ -399,6 +440,11 @@ const Players = props => {
           handleChangePage={handleChangePage}
           clubs={clubs}
         />
+        <div className={classes.count}>
+          {t('Players.items')}
+          {' '}
+          {playersRows.length}
+        </div>
         <Paper
           className={classes.tableWrapper}
         >
@@ -414,6 +460,7 @@ const Players = props => {
                 players={
                   playersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 }
+                translator={t}
                 clubs={clubs}
                 classes={classes}
                 handleClubClick={handleClubClick}

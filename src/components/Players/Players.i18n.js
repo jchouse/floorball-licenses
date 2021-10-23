@@ -1,6 +1,6 @@
 export const intl = {
   'en': {
-    'Players.items': '{length, plural, =0 {No items} =1 {One item} other {# items}} in total',
+    'Players.items': 'Players in list:',
     'Players.filters': 'Filters',
     'Players.enterName': 'Enter some name',
     'Players.name': 'Name',
@@ -59,7 +59,7 @@ export const intl = {
     'Players.table.club': 'Club',
   },
   'uk': {
-    'Players.items': '{length, plural, =0 {Немає гравців} =1 {Один гравець} other {# гравців}} в списку',
+    'Players.items': 'Гравців в списку:',
     'Players.filters': 'Фільтри',
     'Players.enterName': 'Введіть ім\'я',
     'Players.name': 'Ім\'я',
