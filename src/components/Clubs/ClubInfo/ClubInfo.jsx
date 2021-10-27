@@ -143,6 +143,4 @@ function ClubInfo(props) {
   );
 }
 
-
-
 export default enhance(ClubInfo);
