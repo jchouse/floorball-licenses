@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export const mockSourcedDB = {
   clubs: {
-    '-KcK6EdiKmIMx8aHZRkf' : {
+    'club-key-1' : {
       'address' : {
         'city' : 'м. City',
         'country' : 'Україна',
@@ -12,12 +12,12 @@ export const mockSourcedDB = {
       'fullNameEN' : 'Floorball Club \'Alfa\'',
       'fullNameUA' : 'Флорбольний клуб \'Альфа\'',
       'phone' : '+380990000000',
-      'photo' : '-LEoEuWO_NtxQJeT_jzl',
+      'photo' : 'photo-key-1',
       'shortNameEN' : 'FlC \'Alfa\'',
       'shortNameUA' : 'ФЛК \'Альфа\'',
       'url' : '',
     },
-    '-KcT2q1Fud4fVXT9DFb0' : {
+    'club-key-2' : {
       'address' : {
         'city' : 'м. Київ',
         'country' : 'Ukraine',
@@ -27,24 +27,24 @@ export const mockSourcedDB = {
       'email' : 's.syrkin@gmail.com',
       'fullNameEN' : 'Kyiv Floorball Club',
       'fullNameUA' : 'Київський флорбольний клуб',
-      'phone' : '+38 097 804 91 17',
-      'photo' : '-LEoEJI3V-paM6X2V73r',
+      'phone' : '+38 097 000 00 00',
+      'photo' : 'photo-key-2',
       'shortNameEN' : 'KFC',
       'shortNameUA' : 'КФК',
       'url' : '',
     },
-    '-Kd6Eq6cxdh_jOYRVI40' : {
+    'club-key-3' : {
       'address' : {
         'city' : 'м. Луцьк',
         'country' : 'Україна',
-        'line' : 'вул. Станіславського, б. 15а, офіс 302',
-        'postCode' : '43017',
+        'line' : 'вул. Станіславського',
+        'postCode' : '43000',
       },
       'email' : 'icebergfimiam@gmail.com',
       'fullNameEN' : 'Sport Club \'Fimiam\'',
       'fullNameUA' : 'Громадська організація спортивний клуб \'Фіміам\'',
-      'phone' : '+380954595123, +380501470808',
-      'photo' : '-Kd6D_Hw2dJQN99w97rp',
+      'phone' : '+380950000000, +380500000000',
+      'photo' : 'photo-key-3',
       'shortNameEN' : 'SC \'Iceberg-Fimiam\'',
       'shortNameUA' : 'СК \'Айсберг-Фіміам\'',
       'url' : '',
@@ -54,7 +54,7 @@ export const mockSourcedDB = {
     'playerID' : 1983,
   },
   'images' : {
-    '-Kd6D_Hw2dJQN99w97rp' : {
+    'photo-key-1' : {
       'downloadURL' : 'Some str with url',
       'fileName' : 'some file name',
       'lastModified' : 1487169999000,
@@ -63,7 +63,7 @@ export const mockSourcedDB = {
       'tags' : [ 'iceberg' ],
       'type' : 'image/jpeg',
     },
-    '-Kd6KvDSeCufk3S2Cr8c' : {
+    'photo-key-2' : {
       'downloadURL' : 'Some str with url',
       'fileName' : 'Name.jpg',
       'lastModified' : 1487170002000,
@@ -72,7 +72,7 @@ export const mockSourcedDB = {
       'tags' : [ 'iceberg' ],
       'type' : 'image/jpeg',
     },
-    '-Kd6LWowEBvgUz3v_xaK' : {
+    'photo-key-3' : {
       'downloadURL' : '',
       'fileName' : 'Some Name.jpg',
       'lastModified' : 1487170038000,
@@ -83,10 +83,10 @@ export const mockSourcedDB = {
     },
   },
   'players' : {
-    '-KcK2IJezJYk0PBp1Emb' : {
+    'player-key-1' : {
       'born' : 892846800000,
       'citizenship' : 'UA',
-      'club' : '-KcK6EdiKmIMx8aHZRkf',
+      'club' : 'club-key-2',
       'endActivationDate' : 1656540000000,
       'firstNameEN' : '',
       'firstNameUA' : 'Name',
@@ -96,7 +96,7 @@ export const mockSourcedDB = {
       'lastNameUA' : 'SecondName',
       'license' : '00000001',
       'licenseType' : 'Adult_A',
-      'photo' : '-M0Pg_hdrQ6wnTA1R5C5',
+      'photo' : 'photo-key-4',
       'position' : 'FORWARD',
       'registrDate' : 1486245600000,
       'secondNameUA' : 'NoNoName',
@@ -104,10 +104,10 @@ export const mockSourcedDB = {
       'taxnumber' : '1231231231',
       'weight' : '79',
     },
-    '-KcK9LR_sUzoeRrsGXog' : {
+    'player-key-2' : {
       'born' : 904424400000,
       'citizenship' : 'UA',
-      'club' : '-KcK6EdiKmIMx8aHZRkf',
+      'club' : 'club-key-3',
       'endActivationDate' : 1625004000000,
       'firstNameEN' : '',
       'firstNameUA' : 'Name',
@@ -117,7 +117,7 @@ export const mockSourcedDB = {
       'lastNameUA' : 'NameName',
       'license' : '00000002',
       'licenseType' : 'SENIOR',
-      'photo' : '-M0PgG6PQ4IluBHVA9-Q',
+      'photo' : 'photo-key-5',
       'position' : 'FORWARD',
       'registrDate' : 1486245600000,
       'secondNameUA' : 'MiddleName',
@@ -125,10 +125,10 @@ export const mockSourcedDB = {
       'taxnumber' : '1231231231',
       'weight' : '55',
     },
-    '-KcK9weojysunHgH_zDB' : {
+    'player-key-3' : {
       'born' : 981496800000,
       'citizenship' : 'UA',
-      'club' : '-KcK6EdiKmIMx8aHZRkf',
+      'club' : 'club-key-3',
       'endActivationDate' : 1535673600000,
       'firstNameEN' : '',
       'firstNameUA' : 'Name',
@@ -138,7 +138,7 @@ export const mockSourcedDB = {
       'lastNameUA' : 'NoName',
       'license' : '00000003',
       'licenseType' : 'JUNIOR',
-      'photo' : '-KwjTJrxWBWMUCpxCnQg',
+      'photo' : 'photo-key-6',
       'position' : '',
       'registrDate' : 1486245600000,
       'secondNameUA' : 'MiddleName',
@@ -147,28 +147,28 @@ export const mockSourcedDB = {
     },
   },
   'transfers' : {
-    '-Ks-XumSikWeGgKqPbo9' : {
+    'transfer-key-1' : {
       'date' : 1485907200000,
       'endDate' : 1496188800000,
-      'fromClub' : '-KcT2q1Fud4fVXT9DFb0',
-      'player' : '-KcK2IJezJYk0PBp1Emb',
-      'toClub' : '-KeKyexHWx6jVyOH2VU1',
+      'fromClub' : 'club-key-1',
+      'player' : 'player-key-1',
+      'toClub' : 'club-key-2',
     },
-    '-Ks-ZA-y2SGHjBzeEhKn' : {
+    'transfer-key-2' : {
       'date' : 1495929600000,
-      'fromClub' : '-Kd_phRaSKZ31Nrvx8Ov',
-      'player' : '-Kda00DPfimK6_Y23aW3',
-      'toClub' : '-Ks-YZkNyoNFYRgLGz7O',
+      'fromClub' : 'club-key-1',
+      'player' : 'player-key-2',
+      'toClub' : 'club-key-2',
     },
-    '-Ks-ZNUQpzbs4KVp1vFF' : {
+    'transfer-key-3' : {
       'date' : 1495929600000,
-      'fromClub' : '-Kd_phRaSKZ31Nrvx8Ov',
-      'player' : '-Kda-lUbBEEgtGVhtWw7',
-      'toClub' : '-Ks-YZkNyoNFYRgLGz7O',
+      'fromClub' : 'club-key-2',
+      'player' : 'player-key-2',
+      'toClub' : 'club-key-3',
     },
   },
   'users' : {
-    '43sqWiFk9LUqYg6j930uCpZuaa83' : {
+    'user-key-1' : {
       'displayName' : 'Name Name',
       'email' : 'name.name@gmail.com',
       'photoURL' : 'someurlstring.com',
