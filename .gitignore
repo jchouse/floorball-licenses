@@ -31,4 +31,4 @@ src/**/*.css
 .idea
 *.log
 src/db/*-export.json
-src/db/db_converted.json
+src/db/db_migration.json
