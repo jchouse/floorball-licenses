@@ -32,7 +32,7 @@ import Clubs from '../Clubs/Clubs';
 import ClubInfo from '../Clubs/ClubInfo/ClubInfo';
 // import EditClubCard from '../Clubs/Club/Edit/Edit.jsx';
 import Players from '../Players/Players.jsx';
-// import PlayerCard from '../Players/Player/Player.jsx';
+import PlayerInfo from '../Players/PlayerInfo/PlayerInfo';
 // import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
 // import Transfers from '../Transfers/Transfers.jsx';
 // import TransfersEdit from '../Transfers/Edit/TransfersEdit.jsx';
@@ -133,6 +133,7 @@ export default function Floorball() {
           {/* <Route path='/clubs/:id/edit' component={EditClubCard}/> */}
           <Route path='/clubs/:id' component={ClubInfo}/>
           <Route path='/clubs' component={Clubs}/>
+          <Route path='/players/:id' component={PlayerInfo}/>
           <Route path='/players' component={Players}/>
 
           {/*   <Route path=':id' component={PlyerCard}/>

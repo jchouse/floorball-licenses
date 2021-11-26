@@ -39,21 +39,17 @@ function ClubInfo(props) {
     photo: {
       downloadURL,
     },
-    shortNameUA,
-    shortNameEN,
-    fullNameUA,
-    fullNameEN,
+    shortName,
+    shortNameInt,
+    fullName,
+    fullNameInt,
     phone,
     email,
-    address: {
-      line,
-      city,
-      postCode,
-      country,
-    },
+    line,
+    city,
+    postCode,
+    country,
   } = clubs[id];
-
-  console.log(clubs[id]);
 
   return (
     <Grid
@@ -62,7 +58,7 @@ function ClubInfo(props) {
       spacing={4}
     >
       <Helmet>
-        <title>{shortNameUA}</title>
+        <title>{shortName}</title>
       </Helmet>
       <Grid
         item
@@ -70,13 +66,13 @@ function ClubInfo(props) {
         md={3}
         lg={3}
       >
-       {downloadURL &&
-        <img
-          className={classes.photo}
-          src={downloadURL}
-          alt={shortNameUA}
-        />
-      }
+        {downloadURL &&
+          <img
+            className={classes.photo}
+            src={downloadURL}
+            alt={shortName}
+          />
+        }
       </Grid>
       <Grid
         item
@@ -89,10 +85,10 @@ function ClubInfo(props) {
             {t('Clubs.fullName')}
           </Typography>
           <Typography gutterBottom variant='h3'>
-            {fullNameUA}
+            {fullName}
           </Typography>
           <Typography gutterBottom variant='h4'>
-            {fullNameEN}
+            {fullNameInt}
           </Typography>
         </div>
         <div className={classes.info}>
@@ -100,10 +96,10 @@ function ClubInfo(props) {
             {t('Clubs.shortName')}
           </Typography>
           <Typography variant='h4'>
-            {shortNameUA}
+            {shortName}
           </Typography>
           <Typography variant='h5'>
-            {shortNameEN}
+            {shortNameInt}
           </Typography>
         </div>
         {phone &&

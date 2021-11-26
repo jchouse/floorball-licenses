@@ -41,7 +41,10 @@ import { useStyles } from './Players.styles';
 
 const NOW = new Date;
 
-const populates = [{ child: 'photo', root: 'images' }];
+const populates = [
+  { child: 'photo', root: 'images' },
+  { child: 'lastTransfer', root: 'transfers' },
+];
 
 const enhance = compose(
   firebaseConnect(() => ([
@@ -89,7 +92,7 @@ export const gendersMap = {
   FEMALE: 'FEMALE',
 };
 
-const PlayersTableRows = React.memo(function PlayersTableRows(props) {
+const PlayersTableRows = function PlayersTableRows(props) {
   const {
     players,
     clubs,
@@ -109,21 +112,29 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
       {players.map(([ key, player ]) => {
         const {
           license,
-          club,
-          firstNameUA,
-          lastNameUA,
+          firstClub,
+          lastTransfer,
+          firstName,
+          lastName,
           born,
           photo: userPhoto,
           endActivationDate,
           gender,
         } = player;
+
+        let club = firstClub;
+
+        if (lastTransfer) {
+          club = lastTransfer.toClub;
+        }
+
         const playersClub = clubs[club];
 
         const {
           photo: {
             downloadURL: clubsLogo,
           },
-          shortNameUA,
+          shortName,
         } = playersClub;
         const isExpired = endActivationDate <= activeSeason.startDate;
 
@@ -142,20 +153,20 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
               >
                 <Avatar
                   className={classes.clubLogo}
-                  alt={shortNameUA}
+                  alt={shortName}
                   src={clubsLogo}
                 />
-                <Link href='#'>{shortNameUA}</Link>
+                <Link href='#'>{shortName}</Link>
               </div>
             </TableCell>
             <TableCell>
               <Avatar
-                alt={`${firstNameUA} ${lastNameUA}`}
+                alt={`${firstName} ${lastName}`}
                 src={userPhoto && userPhoto.downloadURL}
               />
             </TableCell>
-            <TableCell>{firstNameUA}</TableCell>
-            <TableCell>{lastNameUA}</TableCell>
+            <TableCell>{firstName}</TableCell>
+            <TableCell>{lastName}</TableCell>
             <TableCell>{genderMap[gender]}</TableCell>
             <TableCell>
               {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
@@ -165,7 +176,7 @@ const PlayersTableRows = React.memo(function PlayersTableRows(props) {
       })}
     </TableBody>
   );
-});
+};
 
 const filterMap = {
   license: 'license',
@@ -316,7 +327,7 @@ const PlayersFilter = props => {
             <Switch
               name={filterMap.expired}
               color='primary'
-              checked={searchParams[filterMap.expired]}
+              checked={!!searchParams[filterMap.expired]}
               value={searchParams[filterMap.expired]}
               onChange={changeSwitchHandler(filterMap.expired)}
             />
@@ -344,7 +355,7 @@ function stableSort(players, comparator) {
   if (comparator[filterMap.name]) {
     result = result
       .filter(([, player]) => {
-        const searchString = `${player.firstNameUA.toLowerCase()}${player.lastNameUA.toLowerCase()}`;
+        const searchString = `${player.firstName.toLowerCase()}${player.lastName.toLowerCase()}`;
 
         return searchString.includes(comparator[filterMap.name].toLowerCase());
       });
@@ -367,7 +378,7 @@ function stableSort(players, comparator) {
 
   if (!comparator[filterMap.expired]) {
     result = result
-      .filter(([, player]) => player.endActivationDate >= activeSeason.startDate && player.endActivationDate <= activeSeason.endDate);
+      .filter(([, player]) => player.lastActiveSeason >= activeSeason.startDate && player.lastActiveSeason <= activeSeason.endDate);
   }
 
   return result;

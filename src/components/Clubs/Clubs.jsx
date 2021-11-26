@@ -44,8 +44,8 @@ function Clubs(props) {
     .entries(clubs)
     .map(([clubId, club]) => {
       const {
-        shortNameEN,
-        shortNameUA,
+        shortNameInt,
+        shortName,
         photo,
       } = club;
 
@@ -56,19 +56,19 @@ function Clubs(props) {
               {photo && (
                 <CardMedia
                   component='img'
-                  alt={shortNameEN}
+                  alt={shortNameInt}
                   height='140'
                   image={photo.downloadURL}
-                  title={shortNameEN}
+                  title={shortNameInt}
                   className={classes.media}
                 />
               )}
               <CardContent>
                 <Typography gutterBottom variant='h5' component='h5'>
-                  {shortNameUA}
+                  {shortName}
                 </Typography>
                 <Typography gutterBottom variant='h6' component='h6'>
-                  {shortNameEN}
+                  {shortNameInt}
                 </Typography>
               </CardContent>
             </CardActionArea>

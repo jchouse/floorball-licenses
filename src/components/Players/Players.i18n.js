@@ -1,6 +1,6 @@
 export const intl = {
   'en': {
-    'Players.list.title': 'Players list', 
+    'Players.list.title': 'Players list',
     'Players.items': 'Players in list:',
     'Players.filters': 'Filters',
     'Players.enterName': 'Enter some name',
@@ -12,9 +12,9 @@ export const intl = {
     'Players.filter.unactive': 'Show expired license',
     'Players.filter.all': 'All',
     'Players.height.header': 'Height',
-    'Players.height.num': '{height} sm',
+    'Players.height.num': '{{height}} sm',
     'Players.weight.header': 'Height',
-    'Players.weight.num': '{weight} sm',
+    'Players.weight.num': '{{weight}} sm',
     'Players.license.header': 'License',
     'Players.license.number': '#',
     'Players.license.type': 'License type',
@@ -58,6 +58,8 @@ export const intl = {
     'Players.table.lastName': 'Last Name',
     'Players.table.age': 'Age',
     'Players.table.club': 'Club',
+    'Players.homeClub': 'Home Club',
+    'Players.transfers': 'Transfers',
   },
   'uk': {
     'Players.list.title': 'Гравці',
@@ -71,9 +73,9 @@ export const intl = {
     'Players.removePhoto': 'Видалити фото з картки',
     'Players.filter.unactive': 'Показувати неактивні ліцензії',
     'Players.height.header': 'Зріст',
-    'Players.height.num': '{height} см',
+    'Players.height.num': '{{height}} см',
     'Players.weight.header': 'Вага',
-    'Players.weight.num': '{weight} кг',
+    'Players.weight.num': '{{weight}} кг',
     'Players.license.header': 'Ліцензія',
     'Players.license.number': '№',
     'Players.license.type': 'Тип ліцензії',
@@ -117,5 +119,7 @@ export const intl = {
     'Players.table.lastName': 'Призвище',
     'Players.table.age': 'Повний вік',
     'Players.table.club': 'Клуб',
+    'Players.homeClub': 'Перший клуб',
+    'Players.transfers': 'Трансферы',
   },
 };
