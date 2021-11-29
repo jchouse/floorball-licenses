@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Link from '@material-ui/core/Link';
 
 import { pages } from '../../../constans/location';
 import { bornDateFormate } from '../../../constans/settings';
@@ -105,8 +104,6 @@ function PlayerInfo(props) {
 
   const playersTransfers = Object.entries(transfers).filter(([, transfer]) => transfer.player === id);
 
-  console.log('playersTransfers', playersTransfers);
-
   return (
     <Grid
       container
@@ -154,53 +151,53 @@ function PlayerInfo(props) {
               </Typography>
             </Grid>
           </Grid>
-          <Grid
-            item
-          >
-            <Typography variant='h6'>
-              {t('Players.transfers')}
-            </Typography>
-            <Grid
-              container
-              spacing={1}
-              alignContent='center'
-              justifyContent='space-between'
-            >
-              {playersTransfers.map(([key, transfer]) => {
-                const {
-                  fromClub,
-                  toClub,
-                  date,
-                } = transfer;
+          {playersTransfers.length > 0 && (
+            <Grid item>
+              <Typography variant='h6'>
+                {t('Players.transfers')}
+              </Typography>
+              <Grid
+                container
+                spacing={1}
+                alignContent='center'
+                justifyContent='space-between'
+              >
+                {playersTransfers.map(([key, transfer]) => {
+                  const {
+                    fromClub,
+                    toClub,
+                    date,
+                  } = transfer;
 
-                return (
-                  <Grid
-                    key={key}
-                    item
-                    container
-                    spacing={2}
-                  >
-                    <Grid item>
-                      {clubLink(fromClub, clubs)}
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      container
+                      spacing={2}
+                    >
+                      <Grid item>
+                        {clubLink(fromClub, clubs)}
+                      </Grid>
+                      <Grid item>
+                        <Typography variant='body' className={classes.transferText}>
+                          {'→'}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        {clubLink(toClub, clubs)}
+                      </Grid>
+                      <Grid item>
+                        <Typography variant='body' className={classes.transferText}>
+                          {format(date, bornDateFormate)}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant='body' className={classes.transferText}>
-                        {'→'}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      {clubLink(toClub, clubs)}
-                    </Grid>
-                    <Grid item>
-                      <Typography variant='body' className={classes.transferText}>
-                        {format(date, bornDateFormate)}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                );
-              })}
+                  );
+                })}
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Grid>
         <Grid
           item
@@ -318,4 +315,3 @@ function PlayerInfo(props) {
 }
 
 export default enhance(PlayerInfo);
-

@@ -136,8 +136,7 @@ export default function Floorball() {
           <Route path='/players/:id' component={PlayerInfo}/>
           <Route path='/players' component={Players}/>
 
-          {/*   <Route path=':id' component={PlyerCard}/>
-            <Route path=':id/edit' component={EditPlayerCard}/>
+          {/*
           <Route path='transfers' component={Transfers}>
             <Route path=':id/edit' component={TransfersEdit}/>
           </Route>

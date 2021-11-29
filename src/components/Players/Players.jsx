@@ -71,7 +71,7 @@ const headCell = [
   { id: 'age', labelI18nKey: 'Players.table.age' },
 ];
 
-const PlayersTableHead = (function PlayersTableHead({ translator }) {
+function PlayersTableHead({ translator }) {
   return (
     <TableHead>
       <TableRow>
@@ -85,7 +85,7 @@ const PlayersTableHead = (function PlayersTableHead({ translator }) {
       </TableRow>
     </TableHead>
   );
-});
+}
 
 export const gendersMap = {
   MALE: 'MALE',
@@ -149,14 +149,15 @@ const PlayersTableRows = function PlayersTableRows(props) {
             <TableCell>
               <div
                 className={classes.clubLogoCell}
-                onClick={event => handleClubClick(event, club)}
               >
                 <Avatar
                   className={classes.clubLogo}
                   alt={shortName}
                   src={clubsLogo}
                 />
-                <Link href='#'>{shortName}</Link>
+                <Link
+                  onClick={event => handleClubClick(event, club)}
+                >{shortName}</Link>
               </div>
             </TableCell>
             <TableCell>

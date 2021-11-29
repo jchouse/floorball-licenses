@@ -1,32 +1,32 @@
-export const migrationScript = function(data) {
+export const migrationScript = function (data) {
   Object.keys(data.clubs).forEach(key => {
     const club = data.clubs[key];
 
-    if (club.hasOwnProperty('fullNameEN')) {
+    if (Object.prototype.hasOwnProperty.call(club, 'fullNameEN')) {
       club.fullNameInt = club.fullNameEN;
 
       delete club.fullNameEN;
     }
 
-    if (club.hasOwnProperty('fullNameUA')) {
+    if (Object.prototype.hasOwnProperty.call(club, 'fullNameUA')) {
       club.fullName = club.fullNameUA;
 
       delete club.fullNameUA;
     }
 
-    if (club.hasOwnProperty('shortNameEN')) {
+    if (Object.prototype.hasOwnProperty.call(club, 'shortNameEN')) {
       club.shortNameInt = club.shortNameEN;
 
       delete club.shortNameEN;
     }
 
-    if (club.hasOwnProperty('shortNameUA')) {
+    if (Object.prototype.hasOwnProperty.call(club, 'shortNameUA')) {
       club.shortName = club.shortNameUA;
 
       delete club.shortNameUA;
     }
 
-    if (club.hasOwnProperty('address')) {
+    if (Object.prototype.hasOwnProperty.call(club, 'address')) {
       club.city = club.address.city || '';
       club.line = club.address.line || '';
       club.postCode = club.address.postCode || '';
@@ -40,76 +40,94 @@ export const migrationScript = function(data) {
   Object.keys(data.players).forEach(key => {
     const player = data.players[key];
 
-    if (player.hasOwnProperty('firstNameEN')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'firstNameEN')) {
       player.firstNameInt = player.firstNameEN;
 
       delete player.firstNameEN;
     }
 
-    if (player.hasOwnProperty('firstNameUA')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'firstNameUA')) {
       player.firstName = player.firstNameUA;
 
       delete player.firstNameUA;
     }
 
-    if (player.hasOwnProperty('lastNameEN')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'lastNameEN')) {
       player.lastNameInt = player.lastNameEN;
 
       delete player.lastNameEN;
     }
 
-    if (player.hasOwnProperty('lastNameUA')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'lastNameUA')) {
       player.lastName = player.lastNameUA;
 
       delete player.lastNameUA;
     }
 
-    if (player.hasOwnProperty('secondNameUA')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'secondNameUA')) {
       player.secondName = player.secondNameUA;
 
       delete player.secondNameUA;
     }
 
-    if (player.hasOwnProperty('license')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'license')) {
       player.license = parseInt(player.license);
     }
 
-    if (player.hasOwnProperty('endActivationDate')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'endActivationDate')) {
       player.lastActiveSeason = player.endActivationDate;
 
       delete player.endActivationDate;
     }
 
-    if (player.hasOwnProperty('taxnumber')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'taxnumber')) {
       player.uniqueExternId = player.taxnumber;
 
       delete player.taxnumber;
-    } else if (!player.hasOwnProperty('uniqueExternId')) {
+    } else if (!Object.prototype.hasOwnProperty.call(player, 'uniqueExternId')) {
       player.uniqueExternId = '0000000000';
     }
 
-    if (player.hasOwnProperty('club')) {
+    if (Object.prototype.hasOwnProperty.call(player, 'club')) {
       const playerTransfers = Object.entries(data.transfers)
-        .filter((transfer) => transfer[1].player === key);
+        .filter(([, transfer]) => transfer.player === key && !transfer.endDate);
 
-      if (playerTransfers.length > 1) {
+      if (playerTransfers.length > 0) {
         playerTransfers.sort((transferA, transferB) => (
           transferA[1].date - transferB[1].date
         ));
 
-        player.firstClub = playerTransfers[0][1].fromClub;
-        player.lastTransfer = playerTransfers[playerTransfers.length - 1][0];
-      } else if (playerTransfers.length === 1) {
-        player.firstClub = playerTransfers[0][1].fromClub;
-        player.lastTransfer = playerTransfers[0][0];
+        const [[ ,firstTransfer ]] = playerTransfers;
+
+        player.firstClub = firstTransfer.fromClub;
+
+        const [ , lastTransfer ] = playerTransfers[playerTransfers.length - 1];
+
+        player.currentClub = lastTransfer.toClub;
       } else {
         player.firstClub = player.club;
-        player.lastTransfer = '';
+        player.currentClub = player.club;
       }
 
       delete player.club;
     }
   });
+
+  const transfersList = {};
+  const loansList = {};
+
+  Object.keys(data.transfers).forEach(key => {
+    const transfer = data.transfers[key];
+
+    if (transfer.endDate) {
+      loansList[key] = transfer;
+    } else {
+      transfersList[key] = transfer;
+    }
+  });
+
+  data.transfers = transfersList;
+  data.loans = loansList;
 
   return data;
 };

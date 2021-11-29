@@ -152,6 +152,27 @@
         "date": {
           ".validate": "newData.isNumber()"
         },
+        "fromClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "toClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "player": {
+          ".validate": "root.child('players/' + newData.val()).exists()"
+        }
+      }
+    },
+    "loans": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+      "$transfer": {
+        ".read": true,
+        ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['date', 'endDate', 'fromClub', 'player', 'toClub'])",
+        "date": {
+          ".validate": "newData.isNumber()"
+        },
         "endDate": {
           ".validate": "newData.isNumber()"
         },

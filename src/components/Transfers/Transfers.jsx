@@ -10,9 +10,16 @@ import { firebaseConnect, isLoaded, populate } from 'react-redux-firebase';
 import DateFormatter from '../DateFormatter/DateFormatter';
 import './Transfers.css';
 
-/**
- * Transfers
- */
+const headCell = [
+  { id: 'license', labelI18nKey: 'Players.table.license' },
+  { id: 'club', labelI18nKey: 'Players.table.club' },
+  { id: 'photo', labelI18nKey: 'Players.table.photo' },
+  { id: 'firstName', labelI18nKey: 'Players.table.firstName' },
+  { id: 'lastName', labelI18nKey: 'Players.table.lastName' },
+  { id: 'gender', labelI18nKey: 'Players.gender.header' },
+  { id: 'age', labelI18nKey: 'Players.table.age' },
+];
+
 class Transfers extends React.Component {
   static defaultProps = {
     bem: new BEM('transfers'),
