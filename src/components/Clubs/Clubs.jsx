@@ -1,7 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
@@ -17,28 +14,29 @@ import Grid from '@material-ui/core/Grid';
 import { pages } from '../../constans/location';
 import { useStyles } from './Clubs.styles';
 
-const populates = [
-  { child: 'photo', root: 'images' },
-];
+import { ref, getDatabase } from 'firebase/database';
+import { useObject } from 'react-firebase-hooks/database';
+import { firebaseApp } from '../../firebaseInit';
 
-const enhance = compose(
-  firebaseConnect([
-    { path: 'clubs', populates },
-  ]),
-  connect(({ firebase }) => ({
-    clubs: populate(firebase, 'clubs', populates),
-  }))
-);
+const database = getDatabase(firebaseApp);
 
-function Clubs(props) {
-  const { clubs } = props;
+function Clubs() {
   const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
+  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
+  const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
 
-  if (!isLoaded(clubs)) {
+  if (loadingClubs || loadingImages) {
     return <LinearProgress/>;
   }
+
+  if (errorClubs || errorImages) {
+    return <div>Error: {errorClubs || errorImages}</div>;
+  }
+
+  const clubs = snapshotClubs.val();
+  const images = snapshotImages.val();
 
   const content = Object
     .entries(clubs)
@@ -48,17 +46,18 @@ function Clubs(props) {
         shortName,
         photo,
       } = club;
+      const logo = images[photo];
 
       return (
         <Grid key={clubId} item xs={12} sm={6} md={4} lg={3} xl={2}>
           <Card onClick={() => history.push(pages.CLUB_INFO.replace(':id', clubId))}>
             <CardActionArea>
-              {photo && (
+              {logo && (
                 <CardMedia
                   component='img'
                   alt={shortNameInt}
                   height='140'
-                  image={photo.downloadURL}
+                  image={logo.downloadURL}
                   title={shortNameInt}
                   className={classes.media}
                 />
@@ -87,4 +86,4 @@ function Clubs(props) {
   );
 }
 
-export default enhance(Clubs);
+export default Clubs;

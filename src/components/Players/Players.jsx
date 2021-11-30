@@ -43,7 +43,6 @@ const NOW = new Date;
 
 const populates = [
   { child: 'photo', root: 'images' },
-  { child: 'lastTransfer', root: 'transfers' },
 ];
 
 const enhance = compose(
@@ -113,7 +112,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
         const {
           license,
           firstClub,
-          lastTransfer,
+          curentClub,
           firstName,
           lastName,
           born,
@@ -124,8 +123,8 @@ const PlayersTableRows = function PlayersTableRows(props) {
 
         let club = firstClub;
 
-        if (lastTransfer) {
-          club = lastTransfer.toClub;
+        if (curentClub) {
+          club = curentClub;
         }
 
         const playersClub = clubs[club];
@@ -456,11 +455,6 @@ const Players = props => {
           handleChangePage={handleChangePage}
           clubs={clubs}
         />
-        <div className={classes.count}>
-          {t('Players.items')}
-          {' '}
-          {playersRows.length}
-        </div>
         <Paper
           className={classes.tableWrapper}
         >
