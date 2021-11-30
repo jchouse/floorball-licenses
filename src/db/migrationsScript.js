@@ -114,21 +114,5 @@ export const migrationScript = function (data) {
     }
   });
 
-  const transfersList = {};
-  const loansList = {};
-
-  Object.keys(data.transfers).forEach(key => {
-    const transfer = data.transfers[key];
-
-    if (transfer.endDate) {
-      loansList[key] = transfer;
-    } else {
-      transfersList[key] = transfer;
-    }
-  });
-
-  data.transfers = transfersList;
-  data.loans = loansList;
-
   return data;
 };
