@@ -1,7 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { useParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -10,35 +7,33 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 
+import { ref, getDatabase } from 'firebase/database';
+import { useObject } from 'react-firebase-hooks/database';
+import { firebaseApp } from '../../../firebaseInit';
+
+const database = getDatabase(firebaseApp);
+
 import { useStyles } from './ClubInfo.styles';
 
-const populates = [
-  { child: 'photo', root: 'images' },
-];
-
-const enhance = compose(
-  firebaseConnect([
-    { path: 'clubs', populates },
-  ]),
-  connect(({ firebase }) => ({
-    clubs: populate(firebase, 'clubs', populates),
-  }))
-);
-
-function ClubInfo(props) {
+function ClubInfo() {
   const { id } = useParams();
-  const { clubs } = props;
   const classes = useStyles();
   const { t } = useTranslation();
+  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
+  const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
 
-  if (!isLoaded(clubs)) {
+  if (loadingClubs || loadingImages) {
     return <LinearProgress/>;
   }
 
+  if (errorClubs || errorImages) {
+    return <div>Error: {errorClubs || errorImages}</div>;
+  }
+
+  const clubs = snapshotClubs.val();
+  const images = snapshotImages.val();
   const {
-    photo: {
-      downloadURL,
-    },
+    photo,
     shortName,
     shortNameInt,
     fullName,
@@ -50,6 +45,7 @@ function ClubInfo(props) {
     postCode,
     country,
   } = clubs[id];
+  const { downloadURL } = images[photo];
 
   return (
     <Grid
@@ -139,4 +135,4 @@ function ClubInfo(props) {
   );
 }
 
-export default enhance(ClubInfo);
+export default ClubInfo;

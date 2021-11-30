@@ -1,8 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { useList } from 'react-firebase-hooks/database';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { useParams, useHistory, generatePath } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -19,37 +15,26 @@ import { bornDateFormate } from '../../../constans/settings';
 
 import { useStyles } from './PlayerInfo.styles';
 
+import { ref, getDatabase } from 'firebase/database';
+import { useObject } from 'react-firebase-hooks/database';
+import { firebaseApp } from '../../../firebaseInit';
+
+const database = getDatabase(firebaseApp);
 const NOW = new Date;
 
-// const populates = [
-//   { child: 'photo', root: 'images' },
-// ];
-
-// const enhance = compose(
-//   firebaseConnect([
-//     { path: 'players', populates },
-//     { path: 'clubs', populates },
-//     { path: 'transfers' },
-//     { path: 'loans' },
-//   ]),
-//   connect(({ firebase }) => ({
-//     players: populate(firebase, 'players', populates),
-//     clubs: populate(firebase, 'clubs', populates),
-//     transfers: firebase.data.transfers,
-//     loans: firebase.data.loans,
-//   }))
-// );
-
-function clubLink(clubId, clubs) {
-  const classes = useStyles();
-  const history = useHistory();
+function ClubLink(props) {
+  const {
+    clubId,
+    clubs,
+    images,
+    classes,
+    history,
+  } = props;
   const { push } = history;
   const club = clubs[clubId];
   const {
     shortName,
-    photo: {
-      downloadURL,
-    },
+    photo,
   } = club;
 
   const handleClubClick = (event, key) => {
@@ -66,257 +51,359 @@ function clubLink(clubId, clubs) {
       <Avatar
         className={classes.clubLogo}
         alt={shortName}
-        src={downloadURL}
+        src={images[photo] && images[photo].downloadURL}
       />
     </div>
   );
 }
 
-function PlayerInfo(props) {
-  const { players, clubs, transfers, loans } = props;
-
-  // if (!isLoaded(players) && !isLoaded('clubs') && !isLoaded('transfers') && !isLoaded('loans')) {
-  //   return <LinearProgress/>;
-  // }
-
+export default function PlayerInfo() {
   const { t } = useTranslation();
   const classes = useStyles();
   const { id } = useParams();
+  const history = useHistory();
+  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
+  const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
+  const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
+  const [snapshotLoans, loadingLoans, errorLoans] = useObject(ref(database, 'loans'));
+  const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
 
-  return (<div>test</div>);
+  if (loadingClubs || loadingPlayers || loadingImages || loadingLoans || loadingTransfers) {
+    return <LinearProgress/>;
+  }
 
-  // const {
-  //   firstName,
-  //   lastName,
-  //   secondName,
-  //   photo,
-  //   license,
-  //   licenseType,
-  //   born,
-  //   citizenship,
-  //   firstNameInt,
-  //   lastNameInt,
-  //   height,
-  //   weight,
-  //   position,
-  //   side,
-  //   gender,
-  //   firstClub,
-  //   registrDate,
-  // } = players[id];
-  // const logo = photo && photo.downloadURL;
+  if (errorClubs || errorPlayers || errorImages || errorLoans || errorTransfers) {
+    return <div>Error: {errorClubs || errorPlayers || errorImages || errorLoans || errorTransfers}</div>;
+  }
 
-  // const playersTransfers = Object.entries(transfers).filter(([, transfer]) => transfer.player === id);
-  // const loansTransfers = Object.entries(loans).filter(([, loan]) => loan.player === id);
+  const clubs = snapshotClubs.val();
+  const players = snapshotPlayers.val();
+  const images = snapshotImages.val();
+  const loans = snapshotLoans.val();
+  const transfers = snapshotTransfers.val();
 
-  // return (
-  //   <Grid
-  //     container
-  //     justifyContent='center'
-  //     spacing={2}
-  //   >
-  //     <Helmet>
-  //       <title>{`${firstName} ${lastName}`}</title>
-  //     </Helmet>
-  //     <Grid
-  //       container
-  //       alignItems='flex-start'
-  //       item
-  //       xs={8}
-  //     >
-  //       <Grid
-  //         item
-  //         xs={4}
-  //         container
-  //         direction='column'
-  //         spacing={1}
-  //         alignContent='flex-start'
-  //       >
-  //         <Grid
-  //           item
-  //         >
-  //           <Grid item className={classes.logoWrapper}>
-  //             <img className={classes.logo} src={logo} alt={`${lastName} ${firstName}`}/>
-  //           </Grid>
-  //         </Grid>
-  //         <Grid
-  //           item
-  //         >
-  //           <Typography variant='h6'>
-  //             {t('Players.homeClub')}
-  //           </Typography>
-  //           <Grid
-  //             container
-  //             spacing={1}
-  //             alignContent='center'
-  //           >
-  //             {clubLink(firstClub, clubs)}
-  //             <Typography variant='body' className={classes.transferText}>
-  //               {format(registrDate, bornDateFormate)}
-  //             </Typography>
-  //           </Grid>
-  //         </Grid>
-  //         {playersTransfers.length > 0 && (
-  //           <Grid item>
-  //             <Typography variant='h6'>
-  //               {t('Players.transfers')}
-  //             </Typography>
-  //             <Grid
-  //               container
-  //               spacing={1}
-  //               alignContent='center'
-  //               justifyContent='space-between'
-  //             >
-  //               {playersTransfers.map(([key, transfer]) => {
-  //                 const {
-  //                   fromClub,
-  //                   toClub,
-  //                   date,
-  //                 } = transfer;
+  const {
+    firstName,
+    lastName,
+    secondName,
+    photo,
+    license,
+    licenseType,
+    born,
+    citizenship,
+    firstNameInt,
+    lastNameInt,
+    height,
+    weight,
+    position,
+    side,
+    gender,
+    firstClub,
+    registrDate,
+  } = players[id];
+  const logo = images[photo] && images[photo].downloadURL;
 
-  //                 return (
-  //                   <Grid
-  //                     key={key}
-  //                     item
-  //                     container
-  //                     spacing={2}
-  //                   >
-  //                     <Grid item>
-  //                       {clubLink(fromClub, clubs)}
-  //                     </Grid>
-  //                     <Grid
-  //                       item
-  //                     >
-  //                       <Typography variant='body' className={classes.transferText}>
-  //                         {t('Players.transfer')}
-  //                       </Typography>
-  //                       <Typography variant='body' className={classes.transferText}>
-  //                         {format(date, bornDateFormate)}
-  //                       </Typography>
-  //                     </Grid>
-  //                     <Grid item>
-  //                       {clubLink(toClub, clubs)}
-  //                     </Grid>
-  //                   </Grid>
-  //                 );
-  //               })}
-  //             </Grid>
-  //           </Grid>
-  //         )}
-  //       </Grid>
-  //       <Grid
-  //         item
-  //         xs={8}
-  //         container
-  //         direction='column'
-  //         spacing={1}
-  //       >
-  //         <Grid item>
-  //           <Typography variant='subtitle1'>
-  //             {t('Players.license.header')}
-  //           </Typography>
-  //           <Typography variant='h6'>
-  //             {license}
-  //           </Typography>
-  //         </Grid>
-  //         <Grid item>
-  //           <Typography variant='subtitle1'>
-  //             {t('Players.license.type')}
-  //           </Typography>
-  //           <Typography variant='h6'>
-  //             {t(`Players.license.${licenseType}`)}
-  //           </Typography>
-  //         </Grid>
-  //         <Grid item>
-  //           <Typography variant='subtitle1'>
-  //             {t('Players.name')}
-  //           </Typography>
-  //           <Typography variant='h6'>
-  //             {t(`${lastName} ${firstName} ${secondName}`)}
-  //           </Typography>
-  //         </Grid>
-  //         <Grid item>
-  //           <Typography variant='subtitle1'>
-  //             {`${t('Players.table.age')} (${t('Players.born.label')})`}
-  //           </Typography>
-  //           <Typography variant='h6'>
-  //             {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
-  //           </Typography>
-  //         </Grid>
-  //         {citizenship && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.citizenship.label')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {citizenship}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {(firstNameInt || lastNameInt) && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.nameEN')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {`${lastNameInt} ${firstNameInt}`}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {height && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.height.header')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {t('Players.height.num', { height })}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {weight && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.weight.header')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {t('Players.weight.num', { weight })}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {position && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.position.header')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {t(`Players.position.${position}`)}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {side && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.side.header')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {t(`Players.side.${side}`)}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //         {gender && (
-  //           <Grid item>
-  //             <Typography variant='subtitle1'>
-  //               {t('Players.gender.header')}
-  //             </Typography>
-  //             <Typography variant='h6'>
-  //               {t(`Players.gender.${gender}`)}
-  //             </Typography>
-  //           </Grid>
-  //         )}
-  //       </Grid>
-  //     </Grid>
-  //   </Grid>
-  // );
+  const playersTransfers = Object.entries(transfers).filter(([, transfer]) => transfer.player === id);
+  const playersLoans = Object.entries(loans).filter(([, loan]) => loan.player === id);
+
+  return (
+    <Grid
+      container
+      justifyContent='center'
+      spacing={2}
+    >
+      <Helmet>
+        <title>{`${firstName} ${lastName}`}</title>
+      </Helmet>
+      <Grid
+        container
+        alignItems='flex-start'
+        item
+        xs={8}
+      >
+        <Grid
+          item
+          xs={4}
+          container
+          direction='column'
+          spacing={1}
+          alignContent='flex-start'
+        >
+          <Grid
+            item
+          >
+            <Grid item className={classes.logoWrapper}>
+              <img className={classes.logo} src={logo} alt={`${lastName} ${firstName}`}/>
+            </Grid>
+          </Grid>
+          <Grid
+            item
+          >
+            <Typography variant='h6'>
+              {t('Players.homeClub')}
+            </Typography>
+            <Grid
+              container
+              spacing={2}
+              alignContent='center'
+            >
+              <Grid item>
+                <ClubLink
+                  clubId={firstClub}
+                  clubs={clubs}
+                  images={images}
+                  classes={classes}
+                  history={history}
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant='body' className={classes.transferText}>
+                  {format(registrDate, bornDateFormate)}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          {playersTransfers.length > 0 && (
+            <Grid item>
+              <Typography variant='h6'>
+                {t('Players.transfers')}
+              </Typography>
+              <Grid
+                container
+                spacing={1}
+                alignContent='center'
+                justifyContent='space-around'
+              >
+                {playersTransfers.map(([key, transfer]) => {
+                  const {
+                    fromClub,
+                    toClub,
+                    date,
+                  } = transfer;
+
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      container
+                      spacing={2}
+                    >
+                      <Grid item>
+                        <ClubLink
+                          clubId={fromClub}
+                          clubs={clubs}
+                          images={images}
+                          classes={classes}
+                          history={history}
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                      >
+                        <Typography variant='body' className={classes.transferText}>
+                          {format(date, bornDateFormate)}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <ClubLink
+                          clubId={toClub}
+                          clubs={clubs}
+                          images={images}
+                          classes={classes}
+                          history={history}
+                        />
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Grid>
+          )}
+          {playersLoans.length > 0 && (
+            <Grid item>
+              <Typography variant='h6'>
+                {t('Players.loans')}
+              </Typography>
+              <Grid
+                container
+                spacing={2}
+                alignContent='center'
+                direction='column'
+              >
+                {playersLoans.map(([key, transfer]) => {
+                  const {
+                    fromClub,
+                    toClub,
+                    date,
+                    endDate,
+                  } = transfer;
+
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      container
+                      spacing={2}
+                    >
+                      <Grid
+                        item
+                      >
+                        <ClubLink
+                          clubId={fromClub}
+                          clubs={clubs}
+                          images={images}
+                          classes={classes}
+                          history={history}
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                      >
+                        <Typography variant='body'>
+                          {t('Players.from')}
+                        </Typography>
+                        {' '}
+                        <Typography variant='body'>
+                          {format(date, bornDateFormate)}
+                        </Typography>
+                        <br/>
+                        <Typography variant='body'>
+                          {t('Players.to')}
+                        </Typography>
+                        {' '}
+                        <Typography variant='body'>
+                          {format(endDate, bornDateFormate)}
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                      >
+                        <ClubLink
+                          clubId={toClub}
+                          clubs={clubs}
+                          images={images}
+                          classes={classes}
+                          history={history}
+                        />
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+        <Grid
+          item
+          xs={8}
+          container
+          direction='column'
+          spacing={1}
+        >
+          <Grid item>
+            <Typography variant='subtitle1'>
+              {t('Players.license.header')}
+            </Typography>
+            <Typography variant='h6'>
+              {license}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1'>
+              {t('Players.license.type')}
+            </Typography>
+            <Typography variant='h6'>
+              {t(`Players.license.${licenseType}`)}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1'>
+              {t('Players.name')}
+            </Typography>
+            <Typography variant='h6'>
+              {t(`${lastName} ${firstName} ${secondName}`)}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1'>
+              {`${t('Players.table.age')} (${t('Players.born.label')})`}
+            </Typography>
+            <Typography variant='h6'>
+              {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
+            </Typography>
+          </Grid>
+          {citizenship && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.citizenship.label')}
+              </Typography>
+              <Typography variant='h6'>
+                {citizenship}
+              </Typography>
+            </Grid>
+          )}
+          {(firstNameInt || lastNameInt) && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.nameEN')}
+              </Typography>
+              <Typography variant='h6'>
+                {`${lastNameInt} ${firstNameInt}`}
+              </Typography>
+            </Grid>
+          )}
+          {height && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.height.header')}
+              </Typography>
+              <Typography variant='h6'>
+                {t('Players.height.num', { height })}
+              </Typography>
+            </Grid>
+          )}
+          {weight && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.weight.header')}
+              </Typography>
+              <Typography variant='h6'>
+                {t('Players.weight.num', { weight })}
+              </Typography>
+            </Grid>
+          )}
+          {position && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.position.header')}
+              </Typography>
+              <Typography variant='h6'>
+                {t(`Players.position.${position}`)}
+              </Typography>
+            </Grid>
+          )}
+          {side && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.side.header')}
+              </Typography>
+              <Typography variant='h6'>
+                {t(`Players.side.${side}`)}
+              </Typography>
+            </Grid>
+          )}
+          {gender && (
+            <Grid item>
+              <Typography variant='subtitle1'>
+                {t('Players.gender.header')}
+              </Typography>
+              <Typography variant='h6'>
+                {t(`Players.gender.${gender}`)}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
+    </Grid>
+  );
 }
-
-export default PlayerInfo;

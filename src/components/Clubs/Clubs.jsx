@@ -12,13 +12,14 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import { pages } from '../../constans/location';
-import { useStyles } from './Clubs.styles';
 
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
 import { firebaseApp } from '../../firebaseInit';
 
 const database = getDatabase(firebaseApp);
+
+import { useStyles } from './Clubs.styles';
 
 function Clubs() {
   const history = useHistory();

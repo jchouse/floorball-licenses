@@ -90,7 +90,8 @@ export const migrationScript = function (data) {
 
     if (Object.prototype.hasOwnProperty.call(player, 'club')) {
       const playerTransfers = Object.entries(data.transfers)
-        .filter(([, transfer]) => transfer.player === key && !transfer.endDate);
+        .filter(([, transfer]) => transfer.player === key && !transfer.endDate)
+        .sort(([, a], [, b]) => a.startDate - b.startDate);
 
       if (playerTransfers.length > 0) {
         playerTransfers.sort((transferA, transferB) => (

@@ -131,10 +131,10 @@ export default function Floorball() {
           </Route>
 
           {/* <Route path='/clubs/:id/edit' component={EditClubCard}/> */}
-          {/* <Route path='/clubs/:id' component={ClubInfo}/> */}
+          <Route path='/clubs/:id' component={ClubInfo}/>
           <Route path='/clubs' component={Clubs}/>
-          {/* <Route path='/players/:id' component={PlayerInfo}/> */}
-          {/* <Route path='/players' component={Players}/> */}
+          <Route path='/players/:id' component={PlayerInfo}/>
+          <Route path='/players' component={Players}/>
 
           {/*
           <Route path='transfers' component={Transfers}>

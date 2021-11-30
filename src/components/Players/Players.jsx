@@ -1,7 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firebaseConnect, populate, isLoaded } from 'react-redux-firebase';
 import { useTranslation } from 'react-i18next';
 import { useHistory, generatePath } from 'react-router-dom';
 import queryString from 'query-string';
@@ -39,26 +36,12 @@ import {
 } from '../../constans/settings';
 import { useStyles } from './Players.styles';
 
+import { ref, getDatabase } from 'firebase/database';
+import { useObject } from 'react-firebase-hooks/database';
+import { firebaseApp } from '../../firebaseInit';
+
+const database = getDatabase(firebaseApp);
 const NOW = new Date;
-
-const populates = [
-  { child: 'photo', root: 'images' },
-];
-
-const enhance = compose(
-  firebaseConnect(() => ([
-    { path: 'players', populates },
-    { path: 'clubs', populates },
-  ])),
-  connect(props => {
-    const { firebase } = props;
-
-    return {
-      players: populate(firebase, 'players', populates),
-      clubs: populate(firebase, 'clubs', populates),
-    };
-  }),
-);
 
 const headCell = [
   { id: 'license', labelI18nKey: 'Players.table.license' },
@@ -91,10 +74,11 @@ export const gendersMap = {
   FEMALE: 'FEMALE',
 };
 
-const PlayersTableRows = function PlayersTableRows(props) {
+function PlayersTableRows(props) {
   const {
     players,
     clubs,
+    images,
     classes,
     handleClick,
     handleClubClick,
@@ -116,7 +100,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
           firstName,
           lastName,
           born,
-          photo: userPhoto,
+          photo: playerPhoto,
           endActivationDate,
           gender,
         } = player;
@@ -130,9 +114,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
         const playersClub = clubs[club];
 
         const {
-          photo: {
-            downloadURL: clubsLogo,
-          },
+          photo: clubsLogo,
           shortName,
         } = playersClub;
         const isExpired = endActivationDate <= activeSeason.startDate;
@@ -152,7 +134,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
                 <Avatar
                   className={classes.clubLogo}
                   alt={shortName}
-                  src={clubsLogo}
+                  src={clubsLogo && images[clubsLogo] && images[clubsLogo].downloadURL}
                 />
                 <Link
                   onClick={event => handleClubClick(event, club)}
@@ -162,7 +144,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
             <TableCell>
               <Avatar
                 alt={`${firstName} ${lastName}`}
-                src={userPhoto && userPhoto.downloadURL}
+                src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
               />
             </TableCell>
             <TableCell>{firstName}</TableCell>
@@ -176,7 +158,7 @@ const PlayersTableRows = function PlayersTableRows(props) {
       })}
     </TableBody>
   );
-};
+}
 
 const filterMap = {
   license: 'license',
@@ -188,7 +170,7 @@ const filterMap = {
   expired: 'expired',
 };
 
-const PlayersFilter = props => {
+function PlayersFilter(props) {
   const {
     translator,
     changeFilterHandler,
@@ -337,7 +319,7 @@ const PlayersFilter = props => {
       </Grid>
     </Grid>
   );
-};
+}
 
 function stableSort(players, comparator) {
   let result = Object.entries(players);
@@ -386,24 +368,31 @@ function stableSort(players, comparator) {
 
 const ROWS_PER_PAGE = [10, 25, 50];
 
-const Players = props => {
-  const {
-    players,
-    clubs,
-  } = props;
+export default function Players() {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
+  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
+  const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
+  const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
+
+  if (loadingClubs || loadingPlayers || loadingImages) {
+    return <LinearProgress/>;
+  }
+
+  if (errorClubs || errorPlayers || errorImages) {
+    return <div>Error: {errorClubs || errorPlayers || errorImages}</div>;
+  }
+
   const { location, replace, push } = history;
 
   let searchParams = queryString.parse(location.search);
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
-
-  if (!isLoaded(players) || !isLoaded(clubs)) {
-    return <LinearProgress/>;
-  }
+  const clubs = snapshotClubs.val();
+  const players = snapshotPlayers.val();
+  const images = snapshotImages.val();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -454,6 +443,7 @@ const Players = props => {
           changeFilterHandler={setFilterLocation}
           handleChangePage={handleChangePage}
           clubs={clubs}
+          images={images}
         />
         <Paper
           className={classes.tableWrapper}
@@ -472,6 +462,7 @@ const Players = props => {
                 }
                 translator={t}
                 clubs={clubs}
+                images={images}
                 classes={classes}
                 handleClubClick={handleClubClick}
                 handleClick={handlePlayerRowClick}
@@ -490,6 +481,4 @@ const Players = props => {
         </Paper>
       </Grid>
   );
-};
-
-export default enhance(Players);
+}
