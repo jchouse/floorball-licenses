@@ -7,25 +7,25 @@ import differenceInYears from 'date-fns/differenceInYears';
 import cn from 'classnames';
 import Helmet from 'react-helmet';
 
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import Avatar from '@material-ui/core/Avatar';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import TablePagination from '@material-ui/core/TablePagination';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
+import Avatar from '@mui/material/Avatar';
+import LinearProgress from '@mui/material/LinearProgress';
+import TablePagination from '@mui/material/TablePagination';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 import { clubsListDropdown } from '../Clubs/ClubsListDropdown/ClubsListDropdown';
 
@@ -52,22 +52,6 @@ const headCell = [
   { id: 'gender', labelI18nKey: 'Players.gender.header' },
   { id: 'age', labelI18nKey: 'Players.table.age' },
 ];
-
-function PlayersTableHead({ translator }) {
-  return (
-    <TableHead>
-      <TableRow>
-        {headCell.map(headCell => (
-          <TableCell
-            key={headCell.id}
-          >
-            {translator(headCell.labelI18nKey)}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
 
 export const gendersMap = {
   MALE: 'MALE',
@@ -202,9 +186,11 @@ function PlayersFilter(props) {
       >
         <TextField
           fullWidth
-          value={searchParams[filterMap.license] || ''}
-          type='number'
           color='primary'
+          type='number'
+          variant='filled'
+          size='small'
+          value={searchParams[filterMap.license] || ''}
           id={filterMap.license}
           label={translator('Players.table.license')}
           onChange={changeInputHandler(filterMap.license)}
@@ -216,6 +202,8 @@ function PlayersFilter(props) {
       >
         <FormControl
           fullWidth
+          variant='filled'
+          size='small'
         >
           <InputLabel id='license-type-select'>{translator('Players.license.type')}</InputLabel>
           <Select
@@ -239,6 +227,8 @@ function PlayersFilter(props) {
       >
         <TextField
           fullWidth
+          variant='filled'
+          size='small'
           value={searchParams[filterMap.name] || ''}
           color='primary'
           id={filterMap.name}
@@ -252,6 +242,8 @@ function PlayersFilter(props) {
       >
         <FormControl
           fullWidth
+          variant='filled'
+          size='small'
         >
           <InputLabel id='club-select'>{translator('Players.enterClub')}</InputLabel>
           <Select
@@ -273,6 +265,8 @@ function PlayersFilter(props) {
       >
         <FormControl
           fullWidth
+          variant='filled'
+          size='small'
         >
           <InputLabel id='gender-select'>{translator('Players.gender.header')}</InputLabel>
           <Select
@@ -294,6 +288,8 @@ function PlayersFilter(props) {
       >
         <TextField
           fullWidth
+          variant='filled'
+          size='small'
           value={searchParams[filterMap.age] || ''}
           type='number'
           id={filterMap.age}
@@ -454,9 +450,17 @@ export default function Players() {
               aria-labelledby='tableTitle'
               aria-label='players table'
             >
-              <PlayersTableHead
-                translator={t}
-              />
+              <TableHead>
+                <TableRow>
+                  {headCell.map(headCell => (
+                    <TableCell
+                      key={headCell.id}
+                    >
+                      {t(headCell.labelI18nKey)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
               <PlayersTableRows
                 players={
                   playersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

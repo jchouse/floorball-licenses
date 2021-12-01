@@ -24,17 +24,19 @@ WebFontLoader.load({
   },
 });
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import theme from './theme';
 
 render(
   <CookiesProvider>
     <Router>
-      <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <Floorball/>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline/>
+          <Floorball/>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Router>
   </CookiesProvider>,
   document.getElementById('root')

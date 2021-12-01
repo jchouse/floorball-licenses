@@ -9,22 +9,22 @@ import {
 } from 'react-router-dom';
 import { pages } from '../../constans/location';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Drawer from '@material-ui/core/Drawer';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Drawer from '@mui/material/Drawer';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import PersonIcon from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
-import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import PersonIcon from '@mui/icons-material/Person';
+import GroupIcon from '@mui/icons-material/Group';
+import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 
 import { useStyles } from './Floorball.styles';
 
@@ -34,7 +34,7 @@ import ClubInfo from '../Clubs/ClubInfo/ClubInfo';
 import Players from '../Players/Players.jsx';
 import PlayerInfo from '../Players/PlayerInfo/PlayerInfo';
 // import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
-// import Transfers from '../Transfers/Transfers.jsx';
+import Transfers from '../Transfers/Transfers.jsx';
 // import TransfersEdit from '../Transfers/Edit/TransfersEdit.jsx';
 // import Account from '../Account/Account.jsx';
 // import Requests from '../Requests/Requests.jsx';
@@ -75,6 +75,7 @@ export default function Floorball() {
             onClick={handleDrawerOpen}
             edge='start'
             className={clsx(classes.menuButton, open && classes.hide)}
+            size='large'
           >
             <MenuIcon/>
           </IconButton>
@@ -93,7 +94,7 @@ export default function Floorball() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} size='large'>
             <ChevronLeftIcon/>
           </IconButton>
         </div>

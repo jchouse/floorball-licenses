@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
-import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
 
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';

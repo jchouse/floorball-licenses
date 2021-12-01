@@ -6,10 +6,10 @@ import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
 import cs from 'classnames';
 
-import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+import Grid from '@mui/material/Grid';
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 
 import { pages } from '../../../constans/location';
 import { dateFormate } from '../../../constans/settings';
