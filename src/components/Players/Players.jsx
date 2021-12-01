@@ -31,7 +31,7 @@ import { clubsListDropdown } from '../Clubs/ClubsListDropdown/ClubsListDropdown'
 
 import { pages } from '../../constans/location';
 import {
-  bornDateFormate,
+  dateFormate,
   activeSeason,
 } from '../../constans/settings';
 import { useStyles } from './Players.styles';
@@ -96,7 +96,7 @@ function PlayersTableRows(props) {
         const {
           license,
           firstClub,
-          curentClub,
+          currentClub,
           firstName,
           lastName,
           born,
@@ -107,8 +107,9 @@ function PlayersTableRows(props) {
 
         let club = firstClub;
 
-        if (curentClub) {
-          club = curentClub;
+        if (currentClub) {
+          club = currentClub;
+
         }
 
         const playersClub = clubs[club];
@@ -151,7 +152,7 @@ function PlayersTableRows(props) {
             <TableCell>{lastName}</TableCell>
             <TableCell>{genderMap[gender]}</TableCell>
             <TableCell>
-              {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
+              {`${differenceInYears(NOW, born)} (${format(born, dateFormate)})`}
             </TableCell>
           </TableRow>
         );
@@ -345,7 +346,7 @@ function stableSort(players, comparator) {
 
   if (comparator[filterMap.club]) {
     result = result
-      .filter(([, player]) => player.club === comparator[filterMap.club]);
+      .filter(([, player]) => player.currentClub === comparator[filterMap.club]);
   }
 
   if (comparator[filterMap.gender]) {

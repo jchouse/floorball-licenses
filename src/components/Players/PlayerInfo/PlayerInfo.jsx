@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
+import cs from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -11,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 import { pages } from '../../../constans/location';
-import { bornDateFormate } from '../../../constans/settings';
+import { dateFormate } from '../../../constans/settings';
 
 import { useStyles } from './PlayerInfo.styles';
 
@@ -62,24 +63,29 @@ export default function PlayerInfo() {
   const classes = useStyles();
   const { id } = useParams();
   const history = useHistory();
+  const { push } = history;
   const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
   const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
   const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
-  const [snapshotLoans, loadingLoans, errorLoans] = useObject(ref(database, 'loans'));
   const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
 
-  if (loadingClubs || loadingPlayers || loadingImages || loadingLoans || loadingTransfers) {
+  const handleClubClick = React.useCallback((event, key) => {
+    event.stopPropagation();
+
+    push(generatePath(pages.CLUB_INFO, { id: key }));
+  }, []);
+
+  if (loadingClubs || loadingPlayers || loadingImages || loadingTransfers) {
     return <LinearProgress/>;
   }
 
-  if (errorClubs || errorPlayers || errorImages || errorLoans || errorTransfers) {
-    return <div>Error: {errorClubs || errorPlayers || errorImages || errorLoans || errorTransfers}</div>;
+  if (errorClubs || errorPlayers || errorImages || errorTransfers) {
+    return <div>Error: {errorClubs || errorPlayers || errorImages || errorTransfers}</div>;
   }
 
   const clubs = snapshotClubs.val();
   const players = snapshotPlayers.val();
   const images = snapshotImages.val();
-  const loans = snapshotLoans.val();
   const transfers = snapshotTransfers.val();
 
   const {
@@ -100,11 +106,18 @@ export default function PlayerInfo() {
     gender,
     firstClub,
     registrDate,
+    currentClub,
   } = players[id];
   const logo = images[photo] && images[photo].downloadURL;
 
-  const playersTransfers = Object.entries(transfers).filter(([, transfer]) => transfer.player === id);
-  const playersLoans = Object.entries(loans).filter(([, loan]) => loan.player === id);
+  const playersTransfers = Object.entries(transfers)
+    .filter(([, transfer]) => transfer.player === id)
+    .sort(([, transferA], [, transferB]) => transferA.date - transferB.date);
+
+  const { photo: currentClubPhoto, shortName: currentClubShortName } = clubs[currentClub];
+  const { photo: firstClubPhoto, shortName: firstClubShortName } = clubs[firstClub];
+
+  console.log(players[id]);
 
   return (
     <Grid
@@ -131,7 +144,18 @@ export default function PlayerInfo() {
         >
           <Grid
             item
+            className={classes.photoWrapper}
           >
+            <div
+              className={cs(classes.clubLogoWrapper, classes.currentClubLogoWrapper)}
+              onClick={event => handleClubClick(event, currentClub)}
+            >
+              <Avatar
+                className={cs(classes.clubLogo, classes.currentClubLogo)}
+                alt={currentClubShortName}
+                src={images[currentClubPhoto] && images[currentClubPhoto].downloadURL}
+              />
+            </div>
             <Grid item className={classes.logoWrapper}>
               <img className={classes.logo} src={logo} alt={`${lastName} ${firstName}`}/>
             </Grid>
@@ -139,158 +163,83 @@ export default function PlayerInfo() {
           <Grid
             item
           >
-            <Typography variant='h6'>
-              {t('Players.homeClub')}
-            </Typography>
-            <Grid
-              container
-              spacing={2}
-              alignContent='center'
-            >
-              <Grid item>
-                <ClubLink
-                  clubId={firstClub}
-                  clubs={clubs}
-                  images={images}
-                  classes={classes}
-                  history={history}
-                />
-              </Grid>
-              <Grid item>
-                <Typography variant='body' className={classes.transferText}>
-                  {format(registrDate, bornDateFormate)}
-                </Typography>
-              </Grid>
+            <Grid>
+              <Typography variant='h6' align='center' className={classes.transferHeader}>
+                {t('Players.homeClub')}
+              </Typography>
             </Grid>
+            <div className={classes.transferRow}>
+              <div
+                className={classes.clubLogoWrapper}
+                onClick={event => handleClubClick(event, firstClub)}
+              >
+                <Avatar
+                  className={classes.clubLogo}
+                  alt={firstClubShortName}
+                  src={images[firstClubPhoto] && images[firstClubPhoto].downloadURL}
+                />
+              </div>
+              <div className={classes.transferText}>
+                <div className={classes.transferTextRow}>
+                  <Typography variant='body1' className={classes.transferText}>
+                    {format(registrDate, dateFormate)}
+                  </Typography>
+                </div>
+              </div>
+            </div>
           </Grid>
           {playersTransfers.length > 0 && (
-            <Grid item>
-              <Typography variant='h6'>
-                {t('Players.transfers')}
+            <div>
+              <Typography variant='h6' align='center' className={classes.transferHeader}>
+                {t('Players.transfersAndLoans')}
               </Typography>
-              <Grid
-                container
-                spacing={1}
-                alignContent='center'
-                justifyContent='space-around'
-              >
-                {playersTransfers.map(([key, transfer]) => {
-                  const {
-                    fromClub,
-                    toClub,
-                    date,
-                  } = transfer;
+              {playersTransfers.map(([key, transfer]) => {
+                const {
+                  fromClub,
+                  toClub,
+                  date,
+                  endDate,
+                } = transfer;
 
-                  return (
-                    <Grid
-                      key={key}
-                      item
-                      container
-                      spacing={2}
-                    >
-                      <Grid item>
-                        <ClubLink
-                          clubId={fromClub}
-                          clubs={clubs}
-                          images={images}
-                          classes={classes}
-                          history={history}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                      >
-                        <Typography variant='body' className={classes.transferText}>
-                          {format(date, bornDateFormate)}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <ClubLink
-                          clubId={toClub}
-                          clubs={clubs}
-                          images={images}
-                          classes={classes}
-                          history={history}
-                        />
-                      </Grid>
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </Grid>
-          )}
-          {playersLoans.length > 0 && (
-            <Grid item>
-              <Typography variant='h6'>
-                {t('Players.loans')}
-              </Typography>
-              <Grid
-                container
-                spacing={2}
-                alignContent='center'
-                direction='column'
-              >
-                {playersLoans.map(([key, transfer]) => {
-                  const {
-                    fromClub,
-                    toClub,
-                    date,
-                    endDate,
-                  } = transfer;
-
-                  return (
-                    <Grid
-                      key={key}
-                      item
-                      container
-                      spacing={2}
-                    >
-                      <Grid
-                        item
-                      >
-                        <ClubLink
-                          clubId={fromClub}
-                          clubs={clubs}
-                          images={images}
-                          classes={classes}
-                          history={history}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                      >
-                        <Typography variant='body'>
-                          {t('Players.from')}
-                        </Typography>
-                        {' '}
-                        <Typography variant='body'>
-                          {format(date, bornDateFormate)}
-                        </Typography>
-                        <br/>
-                        <Typography variant='body'>
-                          {t('Players.to')}
-                        </Typography>
-                        {' '}
-                        <Typography variant='body'>
-                          {format(endDate, bornDateFormate)}
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                      >
-                        <ClubLink
-                          clubId={toClub}
-                          clubs={clubs}
-                          images={images}
-                          classes={classes}
-                          history={history}
-                        />
-                      </Grid>
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </Grid>
+                return (
+                  <div
+                    key={key}
+                    className={classes.transferRow}
+                  >
+                    <ClubLink
+                      clubId={fromClub}
+                      clubs={clubs}
+                      images={images}
+                      classes={classes}
+                      history={history}
+                    />
+                    {endDate ? (
+                      <div className={classes.transferText}>
+                        <div className={classes.transferTextRow}>
+                          {`${t('Players.from')} ${format(date, dateFormate)}`}
+                        </div>
+                        <div className={classes.transferTextRow}>
+                          {`${t('Players.to')} ${format(endDate, dateFormate)}`}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={classes.transferText}>
+                        <div className={classes.transferTextRow}>
+                          {`${t('Players.at')} ${format(date, dateFormate)}`}
+                        </div>
+                      </div>
+                    )}
+                    <ClubLink
+                      clubId={toClub}
+                      clubs={clubs}
+                      images={images}
+                      classes={classes}
+                      history={history}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           )}
         </Grid>
         <Grid
@@ -329,7 +278,7 @@ export default function PlayerInfo() {
               {`${t('Players.table.age')} (${t('Players.born.label')})`}
             </Typography>
             <Typography variant='h6'>
-              {`${differenceInYears(NOW, born)} (${format(born, bornDateFormate)})`}
+              {`${differenceInYears(NOW, born)} (${format(born, dateFormate)})`}
             </Typography>
           </Grid>
           {citizenship && (

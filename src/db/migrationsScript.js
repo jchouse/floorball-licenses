@@ -74,6 +74,20 @@ export const migrationScript = function (data) {
       player.license = parseInt(player.license);
     }
 
+    if (Object.prototype.hasOwnProperty.call(player, 'licenseType')) {
+      const _licenseType = player.licenseType;
+
+      if (_licenseType === 'SENIOR' || _licenseType === 'Adult_A') {
+        player.licenseType = 'Adult_1';
+      } else if (_licenseType === 'JUNIOR' || _licenseType === 'Junior_A') {
+        player.licenseType = 'Junior_1';
+      } else if (_licenseType === 'Junior_B') {
+        player.licenseType = 'Junior_2';
+      } else if (_licenseType === 'Adult_B') {
+        player.licenseType = 'Adult_2';
+      }
+    }
+
     if (Object.prototype.hasOwnProperty.call(player, 'endActivationDate')) {
       player.lastActiveSeason = player.endActivationDate;
 

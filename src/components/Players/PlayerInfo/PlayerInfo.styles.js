@@ -17,11 +17,37 @@ export const useStyles = makeStyles(() => ({
     height: '100%',
     margin: 'auto',
   },
+  photoWrapper: {
+    position: 'relative',
+  },
+  currentClubLogoWrapper: {
+    position: 'absolute',
+    bottom: -25,
+    right: -25,
+  },
+  currentClubLogo: {
+    width: 100,
+    height: 100,
+  },
   clubLogoWrapper: {
     display: 'flex',
     alignItems: 'center',
   },
+  transferHeader: {
+    marginTop: 20,
+  },
+  transferRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
   transferText: {
-    lineHeight: '38px',
+    minWidth: '50%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  transferTextRow: {
+    textAlign: 'center',
   },
 }));
