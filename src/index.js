@@ -3,10 +3,6 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
-// import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-
 import './i18n';
 
 // import { initializeApp } from 'firebase/app';
@@ -14,8 +10,6 @@ import './i18n';
 // import firebaseConfig from './firebaseVars';
 
 import Floorball from './components/Floorball/Floorball.jsx';
-
-// import floorballApp from './reducers/reducers';
 
 import WebFontLoader from 'webfontloader';
 WebFontLoader.load({

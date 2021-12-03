@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
+import format from 'date-fns/format';
+import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -14,19 +16,113 @@ import Avatar from '@mui/material/Avatar';
 import LinearProgress from '@mui/material/LinearProgress';
 import TablePagination from '@mui/material/TablePagination';
 
+import { dateFormate } from '../../constans/settings';
 import { useStyles } from './Transfers.styles';
 
+import { ref, getDatabase } from 'firebase/database';
+import { useObject } from 'react-firebase-hooks/database';
+import { firebaseApp } from '../../firebaseInit';
+
+const database = getDatabase(firebaseApp);
+
 const headCell = [
-  { id: 'date', labelI18nKey: 'Players.table.license' },
-  { id: 'player', labelI18nKey: 'Players.table.club' },
-  { id: 'givingClub', labelI18nKey: 'Players.table.photo' },
-  { id: 'recivingClub', labelI18nKey: 'Players.table.firstName' },
-  { id: 'endDate', labelI18nKey: 'Players.table.lastName' },
+  { id: 'date', labelI18nKey: 'Transfers.tablehead.date' },
+  { id: 'player', labelI18nKey: 'Transfers.tablehead.player' },
+  { id: 'givingClub', labelI18nKey: 'Transfers.tablehead.givingClub' },
+  { id: 'recivingClub', labelI18nKey: 'Transfers.tablehead.recivingClub' },
+  { id: 'endDate', labelI18nKey: 'Transfers.tablehead.endDate' },
 ];
+
+function TransfersTableRows(props) {
+  const {
+    t,
+    transfers,
+    players,
+    images,
+  } = props;
+
+  return (
+    <TableBody>
+      {transfers.map(([ key, transfer ]) => {
+        const {
+          date,
+          player,
+          fromClub,
+          toClub,
+          endDate,
+        } = transfer;
+        const {
+          lastName: playerLastName,
+          photo: playerPhoto,
+        } = players[player];
+
+        return (
+          <TableRow key={key}>
+            <TableCell>
+              {!endDate ? (
+                t('Transfers.tablecell.atDate', { date: format(date, dateFormate) })
+              ) : (
+                t('Transfers.tablecell.fromDate', { date: format(date, dateFormate) })
+              )}
+            </TableCell>
+            <TableCell>
+              <Avatar
+                alt={playerLastName}
+                src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
+              />
+              <Link to='#'>{playerLastName}</Link>
+            </TableCell>
+            <TableCell>{fromClub}</TableCell>
+            <TableCell>{toClub}</TableCell>
+            <TableCell>{endDate}</TableCell>
+          </TableRow>
+        );
+      })}
+    </TableBody>
+  );
+}
+
+function stableSort(obj) {
+  const result = Object.entries(obj);
+
+  return result;
+}
+
+const ROWS_PER_PAGE = [10, 25, 50];
 
 export default function Transfers() {
   const { t } = useTranslation();
   const classes = useStyles();
+  const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
+  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
+  const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
+  const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
+
+  if (loadingTransfers || loadingClubs || loadingPlayers || loadingImages) {
+    return <LinearProgress/>;
+  }
+
+  if (errorTransfers || errorClubs || errorPlayers || errorImages) {
+    return <div>Error: {errorTransfers || errorClubs || errorPlayers || errorImages}</div>;
+  }
+
+  const transfers = snapshotTransfers.val();
+  const clubs = snapshotClubs.val();
+  const players = snapshotPlayers.val();
+  const images = snapshotImages.val();
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const transfersRows = stableSort(transfers);
 
   return (
     <Grid>
@@ -52,165 +148,31 @@ export default function Transfers() {
                 ))}
               </TableRow>
             </TableHead>
-            {/*
-            <PlayersTableRows
-              players={
-                playersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            <TransfersTableRows
+              transfers={
+                transfersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               }
-              translator={t}
               clubs={clubs}
+              players={players}
               images={images}
+              translator={t}
               classes={classes}
-              handleClubClick={handleClubClick}
-              handleClick={handlePlayerRowClick}
-            /> */}
+              t={t}
+              // handleClubClick={handleClubClick}
+              // handleClick={handlePlayerRowClick}
+            />
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={ROWS_PER_PAGE}
+          component='div'
+          count={transfersRows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
     </Grid>
   );
 }
-// class Transfers extends React.Component {
-//   static defaultProps = {
-//     bem: new BEM('transfers'),
-//   };
-
-//   state = {
-//     offset: 0,
-//     itemsOnPage: 10,
-//   };
-
-//   render() {
-//     const { bem, transfersList } = this.props;
-
-//     return <div className={bem.cls()}>
-//       {isLoaded(transfersList) && this.renderContent(transfersList)}
-//     </div>;
-//   }
-
-//   renderContent(transfersList) {
-//     const { bem } = this.props;
-//     const { offset, itemsOnPage } = this.state;
-//     const listSize = Object.keys(transfersList).length;
-//     const size = listSize / itemsOnPage || 0;
-
-//     return [
-//       this.renderTransfersList(),
-//       listSize > itemsOnPage && <div key='transferpagination' className={bem.elem('pager').cls()}>
-//         <Pagination
-//           offset={offset}
-//           size={Math.ceil(size)}
-//           changePage={this.changePage.bind(this)}/>
-//       </div>,
-//     ];
-//   }
-
-//   changePage = (page, inc) => {
-//     this.setState({
-//       offset: page !== null ? page : this.state.offset + inc,
-//     });
-//   };
-
-//   renderTransfersList() {
-//     const { bem, transfersList } = this.props;
-//     const { offset, itemsOnPage } = this.state;
-//     const startItem = offset * itemsOnPage;
-//     const endItem = startItem + itemsOnPage;
-//     const transfersListArray = Object.keys(transfersList).reverse().slice(startItem, endItem);
-
-//     return (transfersListArray.length !== 0 && <ul key='transferlist' className={bem.elem('list').cls()}>
-//       {transfersListArray.map(key => this.renderTransfer(key))}
-//     </ul>);
-//   }
-
-//   renderTransfer = key => {
-//     const { bem, transfersList, user, imagesList } = this.props;
-//     const transfer = transfersList[key];
-//     const { player, fromClub, toClub } = transfer;
-
-//     let playerPhoto;
-
-//     let fromClubPhoto;
-
-//     let toClubPhoto;
-
-//     if (isLoaded(imagesList)) {
-//       playerPhoto = player.photo && imagesList[player.photo].downloadURL;
-//       fromClubPhoto = fromClub.photo && imagesList[fromClub.photo].downloadURL;
-//       toClubPhoto = toClub.photo && imagesList[toClub.photo].downloadURL;
-//     }
-
-//     return <li key={key} className={bem.elem('list-item').cls()}>
-//       <div className={bem.elem('avatar').cls()}>
-//         {playerPhoto && <img
-//           alt={`${player.firstNameUA.slice(0, 1)}${player.lastNameUA.slice(0, 1)}`}
-//           src={playerPhoto}
-//           className={bem.elem('avatar-img').cls()}/>}
-//       </div>
-//       {player && <Link
-//         to={`players/${player.key}`}
-//         className={bem.elem('card-item').cls()}
-//         target='_blank'>
-//         <div className={bem.elem('name').cls()}>{`${player.lastNameUA} ${player.firstNameUA}`}</div>
-//       </Link>}
-//       <div className={bem.elem('card-item').mods('club-info').cls()}>
-//         <Link to={`clubs/${fromClub.key}`} target='_blank'>
-//           {fromClubPhoto && <img
-//             src={fromClubPhoto}
-//             alt={fromClub.shortNameUA}
-//             className={bem.elem('club-logo').cls()}/>}
-//         </Link>
-//       </div>
-//       <div className={bem.elem('card-item').mods('about').cls()}>
-//         <FormattedMessage id={`Transfers.${!transfer.endDate ? 'transfer' : 'loan'}`}/>
-//         <div>
-//           <FormattedMessage id='Transfers.from'/>
-//           {' '}
-//           {DateFormatter.dateForUi(transfer.date)}
-//         </div>
-//         {transfer.endDate && <div>
-//           <FormattedMessage id='Transfers.to'/>
-//           {' '}
-//           {DateFormatter.dateForUi(transfer.endDate)}
-//         </div>}
-//       </div>
-//       <div className={bem.elem('card-item').mods('club-info').cls()}>
-//         <Link to={`clubs/${toClub.key}`} target='_blank'>
-//           {toClubPhoto && <img
-//             src={toClubPhoto}
-//             alt={toClub.shortNameUA}
-//             className={bem.elem('club-logo').cls()}/>}
-//         </Link>
-//       </div>
-//       {user.role && <Link to={`/transfers/${key}/edit`} className={bem.elem('goto').cls()}>
-//         <Button icon primary>open_in_browser</Button>
-//       </Link>}
-//     </li>;
-//   }
-// }
-
-// const populates = [
-//   { child: 'fromClub', root: 'clubs', keyProp: 'key' },
-//   { child: 'player', root: 'players', keyProp: 'key' },
-//   { child: 'toClub', root: 'clubs', keyProp: 'key' },
-
-// ];
-
-// function mapStateToProps(state) {
-//   const { user, firebase, firebase: { data: { images } } } = state;
-
-//   return {
-//     user,
-//     transfersList: populate(firebase, 'transfers', populates),
-//     imagesList: images,
-//   };
-// }
-
-// export default compose(
-//   firebaseConnect([
-//     { path: '/transfers', populates },
-//     'images',
-//   ]),
-//   connect(mapStateToProps),
-//   injectIntl
-// )(Transfers);
