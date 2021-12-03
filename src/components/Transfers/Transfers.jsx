@@ -1,8 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, generatePath, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import format from 'date-fns/format';
-import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+
+import { pages } from '../../constans/location';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -15,13 +18,19 @@ import TableBody from '@mui/material/TableBody';
 import Avatar from '@mui/material/Avatar';
 import LinearProgress from '@mui/material/LinearProgress';
 import TablePagination from '@mui/material/TablePagination';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 
 import { dateFormate } from '../../constans/settings';
 import { useStyles } from './Transfers.styles';
 
-import { ref, getDatabase } from 'firebase/database';
+import { ref, getDatabase, orderByChild } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
 import { firebaseApp } from '../../firebaseInit';
+import { Typography } from '@mui/material';
 
 const database = getDatabase(firebaseApp);
 
@@ -39,6 +48,8 @@ function TransfersTableRows(props) {
     transfers,
     players,
     images,
+    clubs,
+    classes,
   } = props;
 
   return (
@@ -51,10 +62,20 @@ function TransfersTableRows(props) {
           toClub,
           endDate,
         } = transfer;
+
         const {
           lastName: playerLastName,
+          firstName: playerFirstName,
           photo: playerPhoto,
         } = players[player];
+        const {
+          photo: fromClubPhoto,
+          shortName: fromClubShortName,
+        } = clubs[fromClub];
+        const {
+          photo: toClubPhoto,
+          shortName: toClubShortName,
+        } = clubs[toClub];
 
         return (
           <TableRow key={key}>
@@ -66,15 +87,55 @@ function TransfersTableRows(props) {
               )}
             </TableCell>
             <TableCell>
-              <Avatar
-                alt={playerLastName}
-                src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
-              />
-              <Link to='#'>{playerLastName}</Link>
+              <Link
+                to={generatePath(pages.PLAYER_INFO, { id: player })}
+                onClick={e => e.stopPropagation()}
+                className={classes.avatarLink}
+              >
+                <Avatar
+                  alt={playerLastName}
+                  src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
+                />
+                <div>
+                  <Typography variant='body2' component='div'>
+                    {playerFirstName}
+                  </Typography>
+                  <Typography variant='body2' component='div'>
+                    {playerLastName}
+                  </Typography>
+                </div>
+              </Link>
             </TableCell>
-            <TableCell>{fromClub}</TableCell>
-            <TableCell>{toClub}</TableCell>
-            <TableCell>{endDate}</TableCell>
+            <TableCell>
+              <Link
+                to={generatePath(pages.CLUB_INFO, { id: fromClub })}
+                onClick={e => e.stopPropagation()}
+                className={classes.avatarLink}
+              >
+                <Avatar
+                  alt={fromClubShortName}
+                  src={fromClubPhoto && images[fromClubPhoto] && images[fromClubPhoto].downloadURL}
+                />
+                <Typography variant='body2' component='div'>
+                  {fromClubShortName}
+                </Typography>
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Link
+                to={generatePath(pages.CLUB_INFO, { id: toClub })}
+                onClick={e => e.stopPropagation()}
+                className={classes.avatarLink}
+              >
+                <Avatar
+                  alt={toClubShortName}
+                  src={toClubPhoto && images[toClubPhoto] && images[toClubPhoto].downloadURL}
+                />
+                <Typography variant='body2' component='div'>
+                  {toClubShortName}
+                </Typography>
+              </Link></TableCell>
+              <TableCell>{endDate && t('Transfers.tablecell.toDate', { date: format(endDate, dateFormate) })}</TableCell>
           </TableRow>
         );
       })}
@@ -82,18 +143,114 @@ function TransfersTableRows(props) {
   );
 }
 
-function stableSort(obj) {
-  const result = Object.entries(obj);
+const ROWS_PER_PAGE = [10, 25, 50];
+
+const filterMap = {
+  type: 'type',
+  name: 'name',
+};
+const transferTypeMap = {
+  transfer: 'transfer',
+  loan: 'loan',
+};
+
+function stableSort(obj, cmp, players) {
+  let result = Object.entries(obj);
+
+  let defaultCMP = true;
+
+  if (cmp[filterMap.type]) {
+    const shouldBeLoan = cmp[filterMap.type] === transferTypeMap.loan;
+
+    result = result
+      .filter(([, transfer]) => (shouldBeLoan ? !transfer.endDate : transfer.endDate));
+
+    defaultCMP = false;
+  }
+
+  if (cmp[filterMap.name]) {
+    result = result
+      .filter(([, transfer]) => {
+        const player = players[transfer.player];
+        const searchString = `${player.firstName.toLowerCase()}${player.lastName.toLowerCase()}`;
+
+        return searchString.includes(cmp[filterMap.name].toLowerCase());
+      });
+
+    defaultCMP = false;
+  }
+
+  if (defaultCMP) {
+    result = result.reverse();
+  }
 
   return result;
 }
 
-const ROWS_PER_PAGE = [10, 25, 50];
+function TransfersFilter(props) {
+  const {
+    t,
+    searchParams,
+    changeFilterHandler,
+    handleChangePage,
+  } = props;
+  const changeInputHandler = name => event => {
+    changeFilterHandler(name, event.target.value);
+    handleChangePage(event, 0);
+  };
+
+  return (
+    <Grid
+      container
+      alignItems='flex-end'
+      spacing={2}
+    >
+      <Grid
+        md={1}
+        item
+      >
+        <FormControl
+          fullWidth
+          variant='filled'
+          size='small'
+        >
+          <InputLabel id='license-type-select'>{t('Transfers.filter.type')}</InputLabel>
+          <Select
+            labelId='license-type-select'
+            id={filterMap.type}
+            value={searchParams[filterMap.type] || ''}
+            onChange={changeInputHandler(filterMap.type)}
+          >
+            <MenuItem value={''}>{t('Transfers.filter.all')}</MenuItem>,
+            <MenuItem value={transferTypeMap.transfer}>{t('Transfers.filter.loan')}</MenuItem>,
+            <MenuItem value={transferTypeMap.loan}>{t('Transfers.filter.transfer')}</MenuItem>,
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid
+        md={2}
+        item
+      >
+        <TextField
+          fullWidth
+          variant='filled'
+          size='small'
+          value={searchParams[filterMap.name] || ''}
+          color='primary'
+          id={filterMap.name}
+          label={t('Transfers.filter.player')}
+          onChange={changeInputHandler(filterMap.name)}
+        />
+      </Grid>
+    </Grid>
+  );
+}
 
 export default function Transfers() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
+  const history = useHistory();
+  const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'), orderByChild('date'));
   const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
   const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
   const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
@@ -107,6 +264,10 @@ export default function Transfers() {
   if (errorTransfers || errorClubs || errorPlayers || errorImages) {
     return <div>Error: {errorTransfers || errorClubs || errorPlayers || errorImages}</div>;
   }
+
+  const { location, replace } = history;
+
+  let searchParams = queryString.parse(location.search);
 
   const transfers = snapshotTransfers.val();
   const clubs = snapshotClubs.val();
@@ -122,13 +283,34 @@ export default function Transfers() {
     setPage(0);
   };
 
-  const transfersRows = stableSort(transfers);
+  const transfersRows = stableSort(transfers, searchParams, players);
+
+  const setFilterLocation = (name, value) => {
+    if (value) {
+      searchParams = {
+        ...searchParams,
+        [`${name}`]: value,
+      };
+    } else if (searchParams[name]) {
+      delete searchParams[name];
+    }
+
+    const stringified = queryString.stringify(searchParams);
+
+    replace(`${location.pathname}?${stringified}`);
+  };
 
   return (
     <Grid>
       <Helmet>
         <title>{t('Players.list.title')}</title>
       </Helmet>
+      <TransfersFilter
+        t={t}
+        searchParams={searchParams}
+        changeFilterHandler={setFilterLocation}
+        handleChangePage={handleChangePage}
+      />
       <Paper
         className={classes.tableWrapper}
       >

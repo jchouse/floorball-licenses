@@ -13,9 +13,6 @@ export const useStyles = makeStyles(() => ({
       color: '#c6c6c6',
     },
   },
-  tableWrapper: {
-    marginTop: 30,
-  },
   count: {
     marginTop: 10,
   },

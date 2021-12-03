@@ -117,8 +117,6 @@ export default function PlayerInfo() {
   const { photo: currentClubPhoto, shortName: currentClubShortName } = clubs[currentClub];
   const { photo: firstClubPhoto, shortName: firstClubShortName } = clubs[firstClub];
 
-  console.log(players[id]);
-
   return (
     <Grid
       container

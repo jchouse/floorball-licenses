@@ -165,7 +165,6 @@ function PlayersFilter(props) {
   } = props;
   const changeInputHandler = name => event => {
     changeFilterHandler(name, event.target.value);
-    changeFilterHandler(name, event.target.value);
     handleChangePage(event, 0);
   };
   const changeSwitchHandler = name => event => {
@@ -442,9 +441,7 @@ export default function Players() {
           clubs={clubs}
           images={images}
         />
-        <Paper
-          className={classes.tableWrapper}
-        >
+        <Paper>
           <TableContainer>
             <Table
               aria-labelledby='tableTitle'
