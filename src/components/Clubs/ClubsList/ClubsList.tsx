@@ -1,43 +1,29 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
+import { useTranslation } from 'react-i18next';
+import { IClub } from '../Clubs';
+import { useHistory, generatePath } from 'react-router-dom';
 
-import LinearProgress from '@mui/material/LinearProgress';
+import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
-import { pages } from '../../constans/location';
+import { pages } from '../../../constans/location';
 
-import { ref, getDatabase } from 'firebase/database';
-import { useObject } from 'react-firebase-hooks/database';
-import { firebaseApp } from '../../firebaseInit';
+import { useStyles } from './ClubsList.styles';
 
-const database = getDatabase(firebaseApp);
+interface IClubsListProps {
+  clubs: Record<string, IClub>;
+  images: Record<string, { downloadURL: string }>;
+}
 
-import { useStyles } from './Clubs.styles';
-
-function Clubs() {
-  const history = useHistory();
+function ClubsList({ clubs, images }: IClubsListProps) {
   const { t } = useTranslation();
+  const history = useHistory();
   const classes = useStyles();
-  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
-  const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
-
-  if (loadingClubs || loadingImages) {
-    return <LinearProgress/>;
-  }
-
-  if (errorClubs || errorImages) {
-    return <div>Error: {errorClubs || errorImages}</div>;
-  }
-
-  const clubs = snapshotClubs.val();
-  const images = snapshotImages.val();
 
   const content = Object
     .entries(clubs)
@@ -51,7 +37,7 @@ function Clubs() {
 
       return (
         <Grid key={clubId} item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <Card onClick={() => history.push(pages.CLUB_INFO.replace(':id', clubId))}>
+          <Card onClick={() => history.push(generatePath(pages.CLUB_INFO, { id: clubId }))}>
             <CardActionArea>
               {logo && (
                 <CardMedia
@@ -87,4 +73,4 @@ function Clubs() {
   );
 }
 
-export default Clubs;
+export default ClubsList;

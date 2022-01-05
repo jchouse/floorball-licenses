@@ -33,8 +33,6 @@ import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStati
 import { useStyles } from './Floorball.styles';
 
 import Clubs from '../Clubs/Clubs';
-import ClubInfo from '../Clubs/ClubInfo/ClubInfo';
-// import EditClubCard from '../Clubs/Club/Edit/Edit.jsx';
 import Players from '../Players/Players.jsx';
 import PlayerInfo from '../Players/PlayerInfo/PlayerInfo';
 // import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
@@ -46,7 +44,7 @@ import Auth from '../Auth/Auth';
 // import NewRequest from '../Requests/New/NewRequest.jsx';
 
 function NotFound() {
-  return <h2>Воу воу полегче, еще не написали :)</h2>;
+  return <h2>Easy, this page not alowed for now.</h2>;
 }
 
 const suportedLanguagesMap = {
@@ -187,16 +185,11 @@ export default function Floorball() {
       >
         <div className={classes.drawerHeader}/>
         <Switch>
-          <Route exact path='/'>
-            <Redirect to='clubs'/>
-          </Route>
-
-          {/* <Route path='/clubs/:id/edit' component={EditClubCard}/> */}
-          <Route path='/clubs/:id' component={ClubInfo}/>
-          <Route path='/clubs' component={Clubs}/>
-          <Route path='/players/:id' component={PlayerInfo}/>
-          <Route path='/players' component={Players}/>
-          <Route path='/transfers' component={Transfers}/>
+          <Route exact path='/' render={() => <Redirect to='clubs'/>}/>
+          <Route path={pages.CLUBS} component={Clubs}/>
+          <Route path={pages.PLAYER_INFO} component={PlayerInfo}/>
+          <Route path={pages.PLAYERS} component={Players}/>
+          <Route path={pages.TRANSFERS} component={Transfers}/>
 
           {/*
             <Route path=':id/edit' component={TransfersEdit}/>

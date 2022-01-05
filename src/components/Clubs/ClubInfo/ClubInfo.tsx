@@ -1,37 +1,24 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
-import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 
-import { ref, getDatabase } from 'firebase/database';
-import { useObject } from 'react-firebase-hooks/database';
-import { firebaseApp } from '../../../firebaseInit';
-
-const database = getDatabase(firebaseApp);
+import { IClub } from '../Clubs';
 
 import { useStyles } from './ClubInfo.styles';
 
-function ClubInfo() {
-  const { id } = useParams();
+interface IClubInfoProps {
+  clubs: Record<string, IClub>;
+  images: Record<string, { downloadURL: string }>;
+}
+
+function ClubInfo({ clubs, images }: IClubInfoProps) {
+  const { id } = useParams<{ id: string }>();
   const classes = useStyles();
   const { t } = useTranslation();
-  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
-  const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
-
-  if (loadingClubs || loadingImages) {
-    return <LinearProgress/>;
-  }
-
-  if (errorClubs || errorImages) {
-    return <div>Error: {errorClubs || errorImages}</div>;
-  }
-
-  const clubs = snapshotClubs.val();
-  const images = snapshotImages.val();
   const {
     photo,
     shortName,

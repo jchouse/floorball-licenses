@@ -5,6 +5,7 @@ import { intl as i18nFloorballApp } from './components/Floorball/Floorball.i18n'
 import { intl as i18nClubs } from './components/Clubs/Clubs.i18n';
 import { intl as i18nPlayers } from './components/Players/Players.i18n';
 import { intl as i18nTransfers } from './components/Transfers/Transfers.i18n';
+import { intl as i18nAuth } from './components/Auth/Auth.i18n';
 
 // NOTE: temporary solution need move all translations to externale language service
 const resources = {
@@ -14,6 +15,7 @@ const resources = {
       ...i18nClubs.en,
       ...i18nPlayers.en,
       ...i18nTransfers.en,
+      ...i18nAuth.en,
     },
   },
   uk: {
@@ -22,6 +24,7 @@ const resources = {
       ...i18nClubs.uk,
       ...i18nPlayers.uk,
       ...i18nTransfers.uk,
+      ...i18nAuth.uk,
     },
   },
 };

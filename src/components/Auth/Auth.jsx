@@ -1,4 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, generatePath } from 'react-router-dom';
+
+import { pages } from '../../constans/location';
 
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -28,9 +32,7 @@ const database = getDatabase(firebaseApp);
 
 function saveUser(user) {
   set(ref(database, `users/${user.uid}`), {
-    name: user.displayName,
     email: user.email,
-    photoURL: user.photoURL,
   });
 }
 
@@ -66,6 +68,7 @@ function stringAvatar(name) {
 export default function Auth() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const { t } = useTranslation();
   const [user, loadingAuth, errorAuth] = useAuthState(auth);
   const [snapshotUsers, loadingUsers, errorUsers] = useObject(ref(database, 'users'));
 
@@ -117,7 +120,8 @@ export default function Auth() {
 
   let content;
 
-  if (user && user.uid) {
+  if (user && users && users[user.uid]) {
+    const { role } = users[user.uid];
 
     let avatarContent = stringAvatar(user.displayName);
 
@@ -162,15 +166,18 @@ export default function Auth() {
                     id='composition-menu'
                     aria-labelledby='composition-button'
                   >
-                    {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                    {role >= 90 && [
+                      <MenuItem key='create-club' onClick={handleClose}>
+                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Auth.createClub')}</Link>
+                      </MenuItem>,
+                    ]}
                     <MenuItem
                       onClick={event => {
                         handleClose(event);
                         signOut(auth);
                       }}
                     >
-                      Logout
+                      {t('Auth.logout')}
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -178,14 +185,6 @@ export default function Auth() {
             </Grow>
           )}
         </Popper>
-        {/* <Button
-          color='inherit'
-          onClick={() => {
-            signOut(auth);
-          }}
-        >
-          Logout
-        </Button> */}
       </>
     );
   } else {
@@ -194,7 +193,7 @@ export default function Auth() {
         color='inherit'
         onClick={handleLogin}
       >
-        Login
+        {t('Auth.login')}
       </Button>
     );
   }

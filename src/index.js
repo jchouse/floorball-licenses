@@ -5,22 +5,19 @@ import { CookiesProvider } from 'react-cookie';
 
 import './i18n';
 
-// import { initializeApp } from 'firebase/app';
-// import 'firebase/auth';
-// import firebaseConfig from './firebaseVars';
-
 import Floorball from './components/Floorball/Floorball.jsx';
 
 import WebFontLoader from 'webfontloader';
+
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import theme from './theme';
+
 WebFontLoader.load({
   google: {
     families: ['Roboto:300,400,500,700', 'Material Icons'],
   },
 });
-
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import theme from './theme';
 
 render(
   <CookiesProvider>

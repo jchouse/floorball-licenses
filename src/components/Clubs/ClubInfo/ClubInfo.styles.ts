@@ -1,6 +1,7 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles }  from '@mui/styles';
+import { Theme } from '@mui/material/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   photo: {
     width: '100%',
     objectFit: 'contain',
@@ -11,8 +12,4 @@ export const useStyles = makeStyles(theme => ({
   infoTextLabel: {
     color: theme.palette.text.secondary,
   },
-  // infoTextMain: {
-
-  // },
-
 }));
