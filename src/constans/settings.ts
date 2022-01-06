@@ -1,4 +1,4 @@
-export const dateFormate = 'MM.dd.yyyy';
+export const dateFormate = 'dd.MM.yyyy';
 
 export const licensiesTypes = {
   Adult: {

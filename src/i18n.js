@@ -6,6 +6,7 @@ import { intl as i18nClubs } from './components/Clubs/Clubs.i18n';
 import { intl as i18nPlayers } from './components/Players/Players.i18n';
 import { intl as i18nTransfers } from './components/Transfers/Transfers.i18n';
 import { intl as i18nAuth } from './components/Auth/Auth.i18n';
+import { intl as i18nFileUploader } from './components/FileUploader/FileUploader.i18n';
 
 // NOTE: temporary solution need move all translations to externale language service
 const resources = {
@@ -16,6 +17,7 @@ const resources = {
       ...i18nPlayers.en,
       ...i18nTransfers.en,
       ...i18nAuth.en,
+      ...i18nFileUploader.en,
     },
   },
   uk: {
@@ -25,6 +27,7 @@ const resources = {
       ...i18nPlayers.uk,
       ...i18nTransfers.uk,
       ...i18nAuth.uk,
+      ...i18nFileUploader.uk,
     },
   },
 };

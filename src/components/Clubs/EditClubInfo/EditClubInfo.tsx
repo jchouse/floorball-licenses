@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
+import { dateFormate } from '../../../constans/settings';
+
+import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 import { IClub } from '../Clubs';
+import FileUploader from '../../FileUploader/FileUploader';
+import CountrySelect from '../../Countries/CountrySelect';
 
 import { NEW_ENTITY } from '../../../constans/location';
+import { Button } from '@mui/material';
+
+const StyledLogo = styled('img')({
+  maxWidth: '100%',
+});
 
 interface IEditClubInfoProps {
   clubs: Record<string, IClub>;
@@ -30,16 +41,34 @@ const initialValues: IClub = {
   region: '',
   postCode: '',
   country: '',
+  founded: new Date(),
+  added: new Date(),
 };
 
 export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   
-  const defaultValues = id === NEW_ENTITY ? initialValues : clubs[id];
-  const { control, handleSubmit, formState: { errors } } = useForm({ defaultValues });
+  let defaultValues = initialValues;
+  let imageUrl = '';
+  
+  if (id !== NEW_ENTITY) {
+    defaultValues = clubs[id];
+    
+    const photo = images[defaultValues.photo];
+    const { downloadURL = '' } = photo || {};
+    
+    imageUrl = downloadURL;
+  }
+  
+  const [image, setImage] = useState(imageUrl);
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues });
 
   const onSubmit: SubmitHandler<IClub> = data => console.log(data);
+  const uploadImageHandler = useCallback((imageId: string, downloadURL: string) => {
+    setValue('photo', imageId);
+    setImage(downloadURL);
+  }, [setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -57,7 +86,14 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
           md={3}
           lg={3}
         >
-          photo
+          {image && <StyledLogo
+            src={image}
+            alt='clubs logo'
+          />}
+          <FileUploader
+            sizeLimitMB={2}
+            onUploaded={uploadImageHandler}
+          />
         </Grid>
         <Grid
           item
@@ -70,6 +106,20 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
         >
           <Grid item>
             <Controller
+              name='added'
+              control={control}
+              render={({ field }) =>
+                <DesktopDatePicker
+                  label={t('Clubs.added')}
+                  disabled={true}
+                  renderInput={params => <TextField {...params}/>}
+                  {...field}
+                />
+              }
+            />
+          </Grid>
+          <Grid item>
+            <Controller
               name='fullName'
               control={control}
               rules={{
@@ -77,13 +127,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.fullName')}
                   error={Boolean(errors.fullName)}
-                  helperText={errors.fullName && t('Common.required')}
+                  helperText={errors.fullName && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -98,13 +146,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.fullNameInt')}
                   error={Boolean(errors.fullNameInt)}
-                  helperText={errors.fullNameInt && t('Common.required')}
+                  helperText={errors.fullNameInt && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -119,13 +165,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.shortName')}
                   error={Boolean(errors.shortName)}
-                  helperText={errors.shortName && t('Common.required')}
+                  helperText={errors.shortName && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -140,13 +184,24 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.shortNameInt')}
                   error={Boolean(errors.shortNameInt)}
-                  helperText={errors.shortNameInt && t('Common.required')}
+                  helperText={errors.shortNameInt && t('Floorball.form.required')}
+                  {...field}
+                />
+              }
+            />
+          </Grid>
+          <Grid item>
+            <Controller
+              name='founded'
+              control={control}
+              render={({ field }) =>
+                <DesktopDatePicker
+                  label={t('Clubs.founded')}
+                  renderInput={params => <TextField {...params}/>}
                   {...field}
                 />
               }
@@ -158,10 +213,8 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               control={control}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.contactPhone')}
                   {...field}
                 />
@@ -177,13 +230,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.email')}
                   error={Boolean(errors.email)}
-                  helperText={errors.email && t('Common.required')}
+                  helperText={errors.email && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -195,10 +246,8 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               control={control}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.url')}
                   {...field}
                 />
@@ -214,13 +263,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.line')}
                   error={Boolean(errors.line)}
-                  helperText={errors.line && t('Common.required')}
+                  helperText={errors.line && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -235,13 +282,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.city')}
                   error={Boolean(errors.city)}
-                  helperText={errors.city && t('Common.required')}
+                  helperText={errors.city && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -256,13 +301,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.region')}
                   error={Boolean(errors.region)}
-                  helperText={errors.region && t('Common.required')}
+                  helperText={errors.region && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -277,13 +320,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               }}
               render={({ field }) => 
                 <TextField
-                  type='password'
                   variant='outlined'
                   fullWidth
-                  size='small'
                   label={t('Clubs.postCode')}
                   error={Boolean(errors.postCode)}
-                  helperText={errors.postCode && t('Common.required')}
+                  helperText={errors.postCode && t('Floorball.form.required')}
                   {...field}
                 />
               }
@@ -296,19 +337,26 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               rules={{
                 required: true,
               }}
-              render={({ field }) => 
-                <TextField
-                  type='password'
-                  variant='outlined'
-                  fullWidth
-                  size='small'
+              render={({ field: { onChange} }) => 
+                <CountrySelect
                   label={t('Clubs.country')}
-                  error={Boolean(errors.country)}
-                  helperText={errors.country && t('Common.required')}
-                  {...field}
+                  onChange={onChange}
                 />
+                // <TextField
+                //   variant='outlined'
+                //   fullWidth
+                //   label={t('Clubs.country')}
+                //   error={Boolean(errors.country)}
+                //   helperText={errors.country && t('Floorball.form.required')}
+                //   {...field}
+                // />
               }
             />
+          </Grid>
+          <Grid item>
+            <Button type='submit' variant='contained' color='primary'>
+              {t('Floorball.form.save')}
+            </Button>
           </Grid>
         </Grid>
       </Grid>

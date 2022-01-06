@@ -13,6 +13,8 @@ export const intl = {
     'Floorball.newTransfer': 'New Transfer',
     'Floorball.startLicenses': 'Start licenses',
     'Floorball.continueLicenses': 'Continue licenses',
+    'Floorball.form.required': 'This field is required',
+    'Floorball.form.save': 'Save',
   },
   'uk': {
     'Floorball.title': 'Флорбол України',
@@ -28,5 +30,7 @@ export const intl = {
     'Floorball.newTransfer': 'Новий трансфер',
     'Floorball.startLicenses': 'Нові ліцензії',
     'Floorball.continueLicenses': 'Продовжити ліцензії',
+    'Floorball.form.required': 'Це поле обов\'язкове',
+    'Floorball.form.save': 'Зберегти',
   },
 };

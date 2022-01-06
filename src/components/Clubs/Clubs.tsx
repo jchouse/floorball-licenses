@@ -29,6 +29,8 @@ export interface IClub {
   postCode: string;
   country: string;
   region: string;
+  founded: Date;
+  added: Date;
 }
 
 function Clubs() {

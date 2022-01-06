@@ -7,7 +7,7 @@
       "$club": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
-        ".validate": "newData.hasChildren(['email', 'fullNameEN', 'fullNameUA', 'logo', 'shortNameEN', 'shortNameUA', 'region'])",
+        ".validate": "newData.hasChildren(['email', 'fullNameEN', 'fullNameUA', 'logo', 'shortNameEN', 'shortNameUA', 'region', 'country'])",
         "email": {
           ".validate": "newData.isString()"
         },
@@ -43,6 +43,12 @@
         },
         "region": {
           ".validate": "root.child('regions/' + newData.val()).exists()"
+        },
+        "founded": {
+          ".validate": "newData.isString()"
+        },
+        "added": {
+          ".validate": "newData.isString()"
         }
       }
     },

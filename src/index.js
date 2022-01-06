@@ -3,6 +3,9 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 import './i18n';
 
 import Floorball from './components/Floorball/Floorball.jsx';
@@ -24,8 +27,10 @@ render(
     <Router>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <CssBaseline/>
-          <Floorball/>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CssBaseline/>
+            <Floorball/>
+          </LocalizationProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </Router>
