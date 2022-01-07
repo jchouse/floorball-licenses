@@ -42,7 +42,7 @@
           ".validate": "newData.isString()"
         },
         "region": {
-          ".validate": "root.child('regions/' + newData.val()).exists()"
+          ".validate": "newData.isString()"
         },
         "founded": {
           ".validate": "newData.isString()"
