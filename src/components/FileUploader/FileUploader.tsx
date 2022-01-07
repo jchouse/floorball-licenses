@@ -11,7 +11,7 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
-interface IImage {
+export interface IImage {
   name: string;
   downloadURL: string;
 };

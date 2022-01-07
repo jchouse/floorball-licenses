@@ -13,11 +13,12 @@ countries.registerLocale(ukCountries);
 
 interface ICountrySelectProps {
   label: string;
+  value: string;
   onChange: (value: string) => void;
 }
 
 export default function CountrySelect(props: ICountrySelectProps) {
-  const { label, onChange } = props;
+  const { label, value, onChange } = props;
   const { i18n } = useTranslation();
 
   let lang = i18n.language;
@@ -41,9 +42,14 @@ export default function CountrySelect(props: ICountrySelectProps) {
     onChange(value);
   } , [onChange]);
 
+  const _value = useMemo(() => {
+    return options.find(({ value: country }) => country === value);
+  }, [value, options]);
+
   return (
     <Autocomplete
       disablePortal
+      value={_value}
       id="combo-box-demo"
       options={options}
       sx={{ width: 200 }}

@@ -39,9 +39,11 @@ import { useStyles } from './Players.styles';
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
 import { firebaseApp } from '../../firebaseInit';
+import { IClub } from '../Clubs/Clubs';
+import { IImage } from '../FileUploader/FileUploader';
 
 const database = getDatabase(firebaseApp);
-const NOW = new Date;
+const NOW = new Date();
 
 const headCell = [
   { id: 'license', labelI18nKey: 'Players.table.license' },
@@ -58,7 +60,40 @@ export const gendersMap = {
   FEMALE: 'FEMALE',
 };
 
-function PlayersTableRows(props) {
+interface IPlayer {
+  born: number;
+  citizenship: string;
+  firstClub: string;
+  firstNameInt: string;
+  firstName: string;
+  gender: string;
+  height: string;
+  lastNameInt: string;
+  lastName: string;
+  license: number;
+  licenseType: string;
+  photo: string;
+  position: string;
+  registrDate: string;
+  side: string;
+  secondName: string;
+  weight: string;
+  lastTransfer: string;
+  lastActiveSeason: number;
+  currentClub: string;
+}
+
+interface IPlayerTableRowProps {
+  players: [string, IPlayer][];
+  clubs: Record<string, IClub>;
+  images: Record<string, IImage>;
+  handleClick: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, key: string) => void;
+  handleClubClick: (event: React.MouseEvent<HTMLAnchorElement | HTMLSpanElement, MouseEvent>, key: string) => void;
+  translator: (key: string) => string;
+  classes: any,
+};
+
+function PlayersTableRows(props: IPlayerTableRowProps) {
   const {
     players,
     clubs,
@@ -85,7 +120,7 @@ function PlayersTableRows(props) {
           lastName,
           born,
           photo: playerPhoto,
-          endActivationDate,
+          lastActiveSeason,
           gender,
         } = player;
 
@@ -93,7 +128,6 @@ function PlayersTableRows(props) {
 
         if (currentClub) {
           club = currentClub;
-
         }
 
         const playersClub = clubs[club];
@@ -102,7 +136,7 @@ function PlayersTableRows(props) {
           photo: clubsLogo,
           shortName,
         } = playersClub;
-        const isExpired = endActivationDate <= activeSeason.startDate;
+        const isExpired = lastActiveSeason <= activeSeason.startDate;
 
         return (
           <TableRow
@@ -145,17 +179,25 @@ function PlayersTableRows(props) {
   );
 }
 
-const filterMap = {
-  license: 'license',
-  licenseType: 'licenseType',
-  name: 'name',
-  club: 'club',
-  gender: 'gender',
-  age: 'age',
-  expired: 'expired',
+const enum filterMap {
+  license = 'license',
+  licenseType = 'licenseType',
+  name = 'name',
+  club = 'club',
+  gender = 'gender',
+  age = 'age',
+  expired = 'expired',
 };
 
-function PlayersFilter(props) {
+interface IPlayersFilterProps {
+  clubs: Record<string, IClub>;
+  searchParams: queryString.ParsedQuery<string>;
+  changeFilterHandler: (name: string, value: string) => void;
+  handleChangePage: (event: React.ChangeEvent<HTMLInputElement>, page: number) => void;
+  translator: (key: string) => string;
+}
+
+function PlayersFilter(props: IPlayersFilterProps) {
   const {
     translator,
     changeFilterHandler,
@@ -163,12 +205,12 @@ function PlayersFilter(props) {
     handleChangePage,
     clubs,
   } = props;
-  const changeInputHandler = name => event => {
+  const changeInputHandler = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     changeFilterHandler(name, event.target.value);
     handleChangePage(event, 0);
   };
-  const changeSwitchHandler = name => event => {
-    changeFilterHandler(name, event.target.checked);
+  const changeSwitchHandler = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    changeFilterHandler(name, event.target.checked.toString());
     handleChangePage(event, 0);
   };
   const clubsItems = React.useMemo(() => clubsListDropdown(clubs), [clubs]);
@@ -209,7 +251,7 @@ function PlayersFilter(props) {
             labelId='license-type-select'
             id={filterMap.licenseType}
             value={searchParams[filterMap.licenseType] || ''}
-            onChange={changeInputHandler(filterMap.licenseType)}
+            onSelect={changeInputHandler(filterMap.licenseType)}
           >
             {[
               <MenuItem key={-1} value={''}>{translator('Players.filter.all')}</MenuItem>,
@@ -249,7 +291,7 @@ function PlayersFilter(props) {
             labelId='clubs-select'
             id={filterMap.club}
             value={searchParams[filterMap.club] || ''}
-            onChange={changeInputHandler(filterMap.club)}
+            onSelect={changeInputHandler(filterMap.club)}
           >
             <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
             {clubsItems.map(club => (
@@ -272,7 +314,7 @@ function PlayersFilter(props) {
             labelId='gender-select'
             id={filterMap.gender}
             value={searchParams[filterMap.gender] || ''}
-            onChange={changeInputHandler(filterMap.gender)}
+            onSelect={changeInputHandler(filterMap.gender)}
           >
             <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
             {Object.entries(gendersMap).map(([key]) => (
@@ -317,12 +359,14 @@ function PlayersFilter(props) {
   );
 }
 
-function stableSort(players, comparator) {
+function stableSort(players: [any, IPlayer], comparator: queryString.ParsedQuery<string>) {
   let result = Object.entries(players);
 
   if (comparator[filterMap.license]) {
+    const license = comparator[filterMap.license] || '';
+
     result = result
-      .filter(([, player]) => player.license.toString().includes(comparator[filterMap.license].toString()));
+      .filter(([, player]) => player.license.toString().includes(license.toString()));
   }
 
   if (comparator[filterMap.licenseType]) {
@@ -334,8 +378,9 @@ function stableSort(players, comparator) {
     result = result
       .filter(([, player]) => {
         const searchString = `${player.firstName.toLowerCase()}${player.lastName.toLowerCase()}`;
+        const reqString = (comparator[filterMap.name] as string).toLowerCase();
 
-        return searchString.includes(comparator[filterMap.name].toLowerCase());
+        return searchString.includes(reqString);
       });
   }
 
@@ -351,7 +396,7 @@ function stableSort(players, comparator) {
 
   if (comparator[filterMap.age]) {
     result = result
-      .filter(([, player]) => differenceInYears(NOW, parseInt(player.born)) <= parseInt(comparator[filterMap.age]));
+      .filter(([, player]) => differenceInYears(NOW, parseInt(player.born)) <= parseInt(comparator[filterMap.age] as string));
   }
 
   if (!comparator[filterMap.expired]) {
@@ -386,32 +431,32 @@ export default function Players() {
 
   let searchParams = queryString.parse(location.search);
 
-  const clubs = snapshotClubs.val();
-  const players = snapshotPlayers.val();
-  const images = snapshotImages.val();
+  const clubs = snapshotClubs?.val();
+  const players = snapshotPlayers?.val();
+  const images = snapshotImages?.val();
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleClubClick = (event, key) => {
+  const handleClubClick = (event: React.MouseEvent<HTMLTableRowElement | HTMLAnchorElement | HTMLSpanElement, MouseEvent> , key: string) => {
     event.stopPropagation();
 
     push(generatePath(pages.CLUB_INFO, { id: key }));
   };
 
-  const handlePlayerRowClick = (event, key) => {
+  const handlePlayerRowClick = (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, key: string) => {
     event.stopPropagation();
 
     push(generatePath(pages.PLAYER_INFO, { id: key }));
   };
 
-  const setFilterLocation = (name, value) => {
+  const setFilterLocation = (name: string, value: string) => {
     if (value) {
       searchParams = {
         ...searchParams,
@@ -439,7 +484,6 @@ export default function Players() {
           changeFilterHandler={setFilterLocation}
           handleChangePage={handleChangePage}
           clubs={clubs}
-          images={images}
         />
         <Paper>
           <TableContainer>

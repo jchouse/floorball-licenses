@@ -45,10 +45,10 @@
           ".validate": "newData.isString()"
         },
         "founded": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isNumber()"
         },
         "added": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isNumber()"
         }
       }
     },
@@ -88,7 +88,7 @@
       "$player": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
-        ".validate": "newData.hasChildren(['born', 'citizenship', 'club', 'endActivationDate', 'firstNameUA', 'gender', 'lastNameUA', 'license', 'licenseType', 'registrDate'])",
+        ".validate": "newData.hasChildren(['born', 'citizenship', 'firstClub', 'firstName', 'gender', 'lastName', 'license', 'registrDate'])",
         "born": {
           ".validate": "newData.isNumber()"
         },
@@ -96,6 +96,9 @@
           ".validate": "newData.isString() && newData.val().length == 2"
         },
         "firstClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
+        },
+        "currentClub": {
           ".validate": "root.child('clubs/' + newData.val()).exists()"
         },
         "firstNameInt": {

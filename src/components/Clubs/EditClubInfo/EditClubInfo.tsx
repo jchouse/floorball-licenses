@@ -47,8 +47,8 @@ const initialValues: IClub = {
   region: '',
   postCode: '',
   country: '',
-  founded: new Date(),
-  added: new Date(),
+  founded: new Date().valueOf(),
+  added: new Date().valueOf(),
 };
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -91,6 +91,9 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
     }
 
     const updates: Partial<Record<string, IClub>> = {};
+
+    data.added = new Date(data.added).valueOf();
+    data.founded = new Date(data.founded).valueOf();
 
     updates[`/${db_paths.Clubs}/` + clubId] = {
       ...data,
@@ -381,9 +384,10 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange} }) => 
+              render={({ field: { onChange, value } }) => 
                 <CountrySelect
                   label={t('Clubs.country')}
+                  value={value}
                   onChange={onChange}
                 />
               }
