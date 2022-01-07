@@ -4,12 +4,16 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
-import { dateFormate } from '../../../constans/settings';
+import { getDatabase, ref, update, push, child } from "firebase/database";
+import { firebaseApp } from '../../../firebaseInit';
+import { db_paths } from '../../../db/db_constans';
 
 import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import { IClub } from '../Clubs';
 import FileUploader from '../../FileUploader/FileUploader';
@@ -17,6 +21,8 @@ import CountrySelect from '../../Countries/CountrySelect';
 
 import { NEW_ENTITY } from '../../../constans/location';
 import { Button } from '@mui/material';
+
+const database = getDatabase(firebaseApp);
 
 const StyledLogo = styled('img')({
   maxWidth: '100%',
@@ -45,9 +51,17 @@ const initialValues: IClub = {
   added: new Date(),
 };
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
+  const [message, setMessage] = useState<AlertColor | null>(null);
   
   let defaultValues = initialValues;
   let imageUrl = '';
@@ -64,7 +78,37 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
   const [image, setImage] = useState(imageUrl);
   const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues });
 
-  const onSubmit: SubmitHandler<IClub> = data => console.log(data);
+  const onSubmit: SubmitHandler<IClub> = async (data) => {
+    let clubId = id;
+
+    if (clubId === NEW_ENTITY) {
+      clubId = push(child(ref(database), db_paths.Clubs)).key || '';
+    }
+
+    if (!clubId) {
+      setMessage('error');
+      return;
+    }
+
+    const updates: Partial<Record<string, IClub>> = {};
+
+    updates[`/${db_paths.Clubs}/` + clubId] = {
+      ...data,
+    };
+
+    update(ref(database), updates)
+      .then(() => {
+        setMessage('success');
+      })
+      .catch(() => {
+        setMessage('error');
+      });
+  };
+
+  const handleClose = useCallback(() => {
+    setMessage(null);
+  }, []);
+
   const uploadImageHandler = useCallback((imageId: string, downloadURL: string) => {
     setValue('photo', imageId);
     setImage(downloadURL);
@@ -342,14 +386,6 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
                   label={t('Clubs.country')}
                   onChange={onChange}
                 />
-                // <TextField
-                //   variant='outlined'
-                //   fullWidth
-                //   label={t('Clubs.country')}
-                //   error={Boolean(errors.country)}
-                //   helperText={errors.country && t('Floorball.form.required')}
-                //   {...field}
-                // />
               }
             />
           </Grid>
@@ -360,6 +396,11 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar open={Boolean(message)} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={message || 'success'}>
+          {t(`Floorball.form.${message}`)}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }

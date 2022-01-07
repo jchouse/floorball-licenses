@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ref as storageRef, getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getDatabase, ref, update, push, child } from "firebase/database";
 import { firebaseApp } from '../../firebaseInit';
+import { db_paths } from '../../db/db_constans';
 
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
@@ -16,6 +17,7 @@ interface IImage {
 };
 
 const storage = getStorage(firebaseApp);
+const database = getDatabase(firebaseApp);
 
 const StyledFileUploader = styled('div')({
   width: '100%',
@@ -75,16 +77,15 @@ export default function FileUploader(props: IFileUploaderProps) {
 
       const downloadURL = await getDownloadURL(uploadTask.ref);
 
-      const db = getDatabase();
-      const newImageKey = push(child(ref(db), 'images')).key;
+      const newImageKey = push(child(ref(database), db_paths.Images)).key;
       const updates: Partial<Record<string, IImage>> = {};
       
-      updates['/images/' + newImageKey] = {
+      updates[`/${db_paths.Images}/` + newImageKey] = {
         name: fileName,
         downloadURL,
       };
 
-      update(ref(db), updates)
+      update(ref(database), updates)
         .then(() => {
           setLoading(false);
           onUploaded(newImageKey ? newImageKey : '', downloadURL);

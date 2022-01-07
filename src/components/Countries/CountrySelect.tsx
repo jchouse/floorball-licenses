@@ -20,6 +20,12 @@ export default function CountrySelect(props: ICountrySelectProps) {
   const { label, onChange } = props;
   const { i18n } = useTranslation();
 
+  let lang = i18n.language;
+
+  if (lang.includes('-')) {
+    lang = lang.split('-')[0];
+  }
+
   const options = useMemo(() => {
     const names = countries.getNames(i18n.language);
     

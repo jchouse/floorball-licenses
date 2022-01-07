@@ -35,6 +35,14 @@ export const migrationScript = function (data) {
 
       delete club.address;
     }
+
+    if (!club.added) {
+      club.added = new Date();
+    }
+
+    if (!club.founded) {
+      club.founded = new Date();
+    }
   });
 
   Object.keys(data.players).forEach(key => {
