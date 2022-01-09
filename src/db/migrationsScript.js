@@ -134,6 +134,10 @@ export const migrationScript = function (data) {
 
       delete player.club;
     }
+
+    if (Object.prototype.hasOwnProperty.call(player, 'lastTransfer')) {
+      delete player.lastTransfer;
+    }
   });
 
   return data;

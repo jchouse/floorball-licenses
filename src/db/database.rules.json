@@ -143,9 +143,6 @@
         "weight": {
           ".validate": "newData.isString()"
         },
-        "lastTransfer": {
-          ".validate": "root.child('transfers/' + newData.val()).exists()"
-        },
         "lastActiveSeason": {
           ".validate": "newData.isNumber()"
         }
