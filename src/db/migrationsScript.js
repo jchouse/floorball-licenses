@@ -37,11 +37,11 @@ export const migrationScript = function (data) {
     }
 
     if (!club.added) {
-      club.added = new Date();
+      club.added = new Date().valueOf();
     }
 
     if (!club.founded) {
-      club.founded = new Date();
+      club.founded = new Date().valueOf();
     }
   });
 
