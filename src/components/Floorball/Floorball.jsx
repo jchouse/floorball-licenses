@@ -33,7 +33,7 @@ import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStati
 import { useStyles } from './Floorball.styles';
 
 import Clubs from '../Clubs/Clubs';
-import Players from '../Players/Players.jsx';
+import Players from '../Players/Players';
 import PlayerInfo from '../Players/PlayerInfo/PlayerInfo';
 // import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
 import Transfers from '../Transfers/Transfers.jsx';
