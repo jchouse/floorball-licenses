@@ -33,7 +33,7 @@ export interface IClub {
   added: number;
 }
 
-function Clubs() {
+export default function Clubs() {
   const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
   const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
 
@@ -71,5 +71,3 @@ function Clubs() {
     </Switch>
   );
 }
-
-export default Clubs;

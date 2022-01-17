@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { IClub } from '../Clubs';
+import { IImage } from '../../FileUploader/FileUploader';
 import { useHistory, generatePath } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
@@ -17,7 +18,7 @@ import { useStyles } from './ClubsList.styles';
 
 interface IClubsListProps {
   clubs: Record<string, IClub>;
-  images: Record<string, { downloadURL: string }>;
+  images: Record<string, IImage>;
 }
 
 function ClubsList({ clubs, images }: IClubsListProps) {

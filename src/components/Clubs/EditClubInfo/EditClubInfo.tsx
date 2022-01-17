@@ -2,9 +2,9 @@ import React, { useCallback, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
-import { getDatabase, ref, update, push, child } from "firebase/database";
+import { getDatabase, ref, update, push, child } from 'firebase/database';
 import { firebaseApp } from '../../../firebaseInit';
 import { db_paths } from '../../../db/db_constans';
 
@@ -14,13 +14,13 @@ import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
 
 import { IClub } from '../Clubs';
 import FileUploader from '../../FileUploader/FileUploader';
 import CountrySelect from '../../Countries/CountrySelect';
 
 import { NEW_ENTITY } from '../../../constans/location';
-import { Button } from '@mui/material';
 
 const database = getDatabase(firebaseApp);
 

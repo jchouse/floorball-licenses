@@ -7,23 +7,32 @@ import differenceInYears from 'date-fns/differenceInYears';
 import cs from 'classnames';
 
 import Grid from '@mui/material/Grid';
-import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+import SpeedDial from '@mui/material/SpeedDial';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { pages } from '../../../constans/location';
+import { Roles } from '../../../constans/settings';
 import { dateFormate } from '../../../constans/settings';
 
 import { useStyles } from './PlayerInfo.styles';
 
-import { ref, getDatabase } from 'firebase/database';
-import { useObject } from 'react-firebase-hooks/database';
-import { firebaseApp } from '../../../firebaseInit';
+import { IPlayer } from '../Players';
+import { IClub } from '../../Clubs/Clubs';
+import { IImage } from '../../FileUploader/FileUploader';
 
-const database = getDatabase(firebaseApp);
-const NOW = new Date;
+const NOW = new Date();
 
-function ClubLink(props) {
+interface IClubLinkProps {
+  clubId: string;
+  clubs: Record<string, IClub>;
+  images: Record<string, IImage>;
+  classes: ReturnType<typeof useStyles>;
+  history: ReturnType<typeof useHistory>;
+}
+
+function ClubLink(props: IClubLinkProps) {
   const {
     clubId,
     clubs,
@@ -38,7 +47,7 @@ function ClubLink(props) {
     photo,
   } = club;
 
-  const handleClubClick = (event, key) => {
+  const handleClubClick = (event: React.SyntheticEvent, key: string) => {
     event.stopPropagation();
 
     push(generatePath(pages.CLUB_INFO, { id: key }));
@@ -58,35 +67,38 @@ function ClubLink(props) {
   );
 }
 
-export default function PlayerInfo() {
+interface ITransfer {
+  date: number;
+  endDate: number;
+  fromClub: string;
+  toClub: string;
+  player: string;
+}
+
+interface IPlayerInfoProps {
+  clubs: Record<string, IClub>;
+  images: Record<string, IImage>;
+  players: Record<string, IPlayer>;
+  transfers: Record<string, ITransfer>;
+  role: Roles;
+}
+
+export default function PlayerInfo({ clubs, images, players, transfers, role }: IPlayerInfoProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { push } = history;
-  const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
-  const [snapshotPlayers, loadingImages, errorImages] = useObject(ref(database, 'players'));
-  const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
-  const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
 
   const handleClubClick = React.useCallback((event, key) => {
     event.stopPropagation();
 
     push(generatePath(pages.CLUB_INFO, { id: key }));
-  }, []);
+  }, [push]);
 
-  if (loadingClubs || loadingPlayers || loadingImages || loadingTransfers) {
-    return <LinearProgress/>;
-  }
-
-  if (errorClubs || errorPlayers || errorImages || errorTransfers) {
-    return <div>Error: {errorClubs || errorPlayers || errorImages || errorTransfers}</div>;
-  }
-
-  const clubs = snapshotClubs.val();
-  const players = snapshotPlayers.val();
-  const images = snapshotImages.val();
-  const transfers = snapshotTransfers.val();
+  const handleAddPlayerClick  = React.useCallback((event) => {
+    push(generatePath(pages.EDIT_PLAYERS, { id }));
+  } , [push, id]);
 
   const {
     firstName,
@@ -114,7 +126,7 @@ export default function PlayerInfo() {
     .filter(([, transfer]) => transfer.player === id)
     .sort(([, transferA], [, transferB]) => transferA.date - transferB.date);
 
-  const { photo: currentClubPhoto, shortName: currentClubShortName } = clubs[currentClub];
+  const { photo: currentClubPhoto, shortName: currentClubShortName } = clubs[currentClub || firstClub];
   const { photo: firstClubPhoto, shortName: firstClubShortName } = clubs[firstClub];
 
   return (
@@ -149,7 +161,7 @@ export default function PlayerInfo() {
               onClick={event => handleClubClick(event, currentClub)}
             >
               <Avatar
-                className={cs(classes.clubLogo, classes.currentClubLogo)}
+                className={classes.currentClubLogo}
                 alt={currentClubShortName}
                 src={images[currentClubPhoto] && images[currentClubPhoto].downloadURL}
               />
@@ -240,9 +252,10 @@ export default function PlayerInfo() {
             </div>
           )}
         </Grid>
+        <Grid item xs={1}/>
         <Grid
           item
-          xs={8}
+          xs={7}
           container
           direction='column'
           spacing={1}
@@ -351,6 +364,14 @@ export default function PlayerInfo() {
           )}
         </Grid>
       </Grid>
+      {role === Roles.ADMIN && (
+        <SpeedDial
+          onClick={handleAddPlayerClick}
+          ariaLabel={t('Floorball.createPlayer')}
+          sx={{ position: 'absolute', bottom: 16, right: 16 }}
+          icon={<EditIcon/>}
+        />
+      )}
     </Grid>
   );
 }

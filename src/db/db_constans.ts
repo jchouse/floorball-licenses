@@ -3,4 +3,7 @@ export enum db_paths {
   Users = 'users',
   Clubs = 'clubs',
   Players = 'players',
+  Counters = 'counters',
+  Transfers = 'transfers',
+  CountersPlayersID = 'counters/playersID',
 }

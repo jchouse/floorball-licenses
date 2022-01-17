@@ -187,17 +187,8 @@ export default function Floorball() {
         <Switch>
           <Route exact path='/' render={() => <Redirect to='clubs'/>}/>
           <Route path={pages.CLUBS} component={Clubs}/>
-          <Route path={pages.PLAYER_INFO} component={PlayerInfo}/>
           <Route path={pages.PLAYERS} component={Players}/>
           <Route path={pages.TRANSFERS} component={Transfers}/>
-
-          {/*
-            <Route path=':id/edit' component={TransfersEdit}/>
-          </Route>
-          <Route path='your-account' component={Account}/>
-          <Route path='requests' component={Requests}>
-            <Route path='new' component={NewRequest}/>
-          </Route> */}
           <Route path='*'>
             <NotFound/>
           </Route>

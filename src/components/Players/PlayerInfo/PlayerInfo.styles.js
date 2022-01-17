@@ -26,8 +26,12 @@ export const useStyles = makeStyles(() => ({
     right: -25,
   },
   currentClubLogo: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
+  },
+  clubLogo: {
+    width: 60,
+    height: 60,
   },
   clubLogoWrapper: {
     display: 'flex',

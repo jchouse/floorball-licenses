@@ -71,3 +71,9 @@ export const listOfSeasons = {
 };
 
 export const activeSeason = listOfSeasons.key00002;
+
+export enum Roles {
+  ADMIN = 99,
+  GUEST = 0,
+  USER = 1,
+}

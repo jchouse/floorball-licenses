@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, generatePath } from 'react-router-dom';
 
 import { pages } from '../../constans/location';
+import { Roles } from '../../constans/settings';
 
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -86,6 +87,8 @@ export default function Auth() {
     setOpen(prevOpen => !prevOpen);
   };
 
+  const users = snapshotUsers?.val();
+
   const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -93,8 +96,6 @@ export default function Auth() {
 
     setOpen(false);
   };
-
-  const users = snapshotUsers.val();
 
   const handleLogin = () => {
     setPersistence(auth, browserLocalPersistence)
@@ -120,10 +121,13 @@ export default function Auth() {
 
   let content;
 
-  if (user && users && users[user.uid]) {
-    const { role } = users[user.uid];
-
+  if (user) {
     let avatarContent = stringAvatar(user.displayName);
+    let role = Roles.GUEST;
+
+    if (user && users?.[user.uid]) {
+      role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
+    }
 
     if (user.photoURL) {
       avatarContent = {
@@ -166,9 +170,12 @@ export default function Auth() {
                     id='composition-menu'
                     aria-labelledby='composition-button'
                   >
-                    {role >= 90 && [
+                    {role === Roles.ADMIN && [
                       <MenuItem key='create-club' onClick={handleClose}>
-                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Auth.createClub')}</Link>
+                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.createClub')}</Link>
+                      </MenuItem>,
+                      <MenuItem key='create-players' onClick={handleClose}>
+                        <Link to={generatePath(pages.EDIT_PLAYERS, { id: 'new' })}>{t('Floorball.createPlayer')}</Link>
                       </MenuItem>,
                     ]}
                     <MenuItem

@@ -28,13 +28,13 @@ export default function CountrySelect(props: ICountrySelectProps) {
   }
 
   const options = useMemo(() => {
-    const names = countries.getNames(i18n.language);
+    const names = countries.getNames(lang);
     
     return Object.entries(names).map(([key, value]) => ({
       value: key,
       label: value,
     }));
-  }, [i18n.language]);
+  }, [lang]);
 
   const onChangeHandler = useCallback(( event: React.SyntheticEvent<Element, Event>, data: { value: string, label: string } | null ) => {
     const { value = '' } = data || {};

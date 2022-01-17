@@ -9,6 +9,7 @@ const pages = {
   EDIT_CLUB: `${ROOT}clubs/:id/edit`,
   PLAYERS: `${ROOT}players`,
   PLAYER_INFO: `${ROOT}players/:id`,
+  EDIT_PLAYERS: `${ROOT}players/:id/edit`,
   TRANSFERS: `${ROOT}transfers`,
   NEW_PLAYER: `${ROOT}players/new/edit`,
   NEW_TRANSFER: `${ROOT}transfers/new/edit`,
