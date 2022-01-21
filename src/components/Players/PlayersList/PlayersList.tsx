@@ -196,10 +196,10 @@ function PlayersFilter(props: IPlayersFilterProps) {
     <Grid
       container
       alignItems='flex-end'
-      spacing={2}
+      spacing={{xs: 1, md: 2}}
     >
       <Grid
-        xs={10}
+        xs={12}
         md={1}
         item
       >
@@ -216,7 +216,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={1}
         item
       >
@@ -240,7 +240,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={2}
         item
       >
@@ -256,7 +256,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={2}
         item
       >
@@ -280,7 +280,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={1}
         item
       >
@@ -304,7 +304,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={1}
         item
       >
@@ -320,7 +320,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
-        xs={10}
+        xs={12}
         md={2}
         item
       >
