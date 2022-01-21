@@ -34,14 +34,8 @@ import { useStyles } from './Floorball.styles';
 
 import Clubs from '../Clubs/Clubs';
 import Players from '../Players/Players';
-import PlayerInfo from '../Players/PlayerInfo/PlayerInfo';
-// import EditPlayerCard from '../Players/Player/Edit/Edit.jsx';
 import Transfers from '../Transfers/Transfers.jsx';
 import Auth from '../Auth/Auth';
-// import TransfersEdit from '../Transfers/Edit/TransfersEdit.jsx';
-// import Account from '../Account/Account.jsx';
-// import Requests from '../Requests/Requests.jsx';
-// import NewRequest from '../Requests/New/NewRequest.jsx';
 
 function NotFound() {
   return <h2>Easy, this page not alowed for now.</h2>;

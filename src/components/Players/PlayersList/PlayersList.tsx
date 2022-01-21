@@ -7,6 +7,8 @@ import differenceInYears from 'date-fns/differenceInYears';
 import cn from 'classnames';
 import Helmet from 'react-helmet';
 
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -42,13 +44,13 @@ import { IPlayer } from '../../Players/Players';
 const NOW = new Date();
 
 const headCell = [
-  { id: 'license', labelI18nKey: 'Players.table.license' },
-  { id: 'club', labelI18nKey: 'Players.table.club' },
-  { id: 'photo', labelI18nKey: 'Players.table.photo' },
-  { id: 'firstName', labelI18nKey: 'Players.table.firstName' },
-  { id: 'lastName', labelI18nKey: 'Players.table.lastName' },
-  { id: 'gender', labelI18nKey: 'Players.gender.header' },
-  { id: 'age', labelI18nKey: 'Players.table.age' },
+  { id: 'license', labelI18nKey: 'Players.table.license', showMatchesMD: true },
+  { id: 'club', labelI18nKey: 'Players.table.club', showMatchesMD: false },
+  { id: 'photo', labelI18nKey: 'Players.table.photo', showMatchesMD: true },
+  { id: 'firstName', labelI18nKey: 'Players.table.firstName', showMatchesMD: true },
+  { id: 'lastName', labelI18nKey: 'Players.table.lastName', showMatchesMD: true },
+  { id: 'gender', labelI18nKey: 'Players.gender.header', showMatchesMD: false },
+  { id: 'age', labelI18nKey: 'Players.table.age', showMatchesMD: false },
 ];
 
 export const gendersMap = {
@@ -64,6 +66,7 @@ interface IPlayerTableRowProps {
   handleClubClick: (event: React.MouseEvent<HTMLAnchorElement | HTMLSpanElement, MouseEvent>, key: string) => void;
   translator: (key: string) => string;
   classes: any,
+  matchesMD: boolean,
 };
 
 function PlayersTableRows(props: IPlayerTableRowProps) {
@@ -75,6 +78,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
     handleClick,
     handleClubClick,
     translator,
+    matchesMD,
   } = props;
 
   const genderMap = {
@@ -119,7 +123,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
             key={key}
           >
             <TableCell>{license}</TableCell>
-            <TableCell>
+            {matchesMD && <TableCell>
               <div
                 className={classes.clubLogoCell}
               >
@@ -132,7 +136,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
                   onClick={event => handleClubClick(event, club)}
                 >{shortName}</Link>
               </div>
-            </TableCell>
+            </TableCell>}
             <TableCell>
               <Avatar
                 alt={`${firstName} ${lastName}`}
@@ -141,10 +145,10 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
             </TableCell>
             <TableCell>{firstName}</TableCell>
             <TableCell>{lastName}</TableCell>
-            <TableCell>{genderMap[gender]}</TableCell>
-            <TableCell>
+            {matchesMD && <TableCell>{genderMap[gender]}</TableCell>}
+            {matchesMD && <TableCell>
               {`${differenceInYears(NOW, born)} (${format(born, dateFormate)})`}
-            </TableCell>
+            </TableCell>}
           </TableRow>
         );
       })}
@@ -195,6 +199,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
       spacing={2}
     >
       <Grid
+        xs={10}
         md={1}
         item
       >
@@ -211,6 +216,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
+        xs={10}
         md={1}
         item
       >
@@ -234,6 +240,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
+        xs={10}
         md={2}
         item
       >
@@ -249,6 +256,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
+        xs={10}
         md={2}
         item
       >
@@ -272,6 +280,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
+        xs={10}
         md={1}
         item
       >
@@ -295,6 +304,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         </FormControl>
       </Grid>
       <Grid
+        xs={10}
         md={1}
         item
       >
@@ -310,6 +320,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
         />
       </Grid>
       <Grid
+        xs={10}
         md={2}
         item
       >
@@ -434,6 +445,8 @@ export default function PlayersList({ clubs, players, images }: IPlayerListProps
 
   const playersRows = stableSort(players, searchParams);
 
+  const matchesMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
+
   return (
       <Grid>
         <Helmet>
@@ -454,13 +467,19 @@ export default function PlayersList({ clubs, players, images }: IPlayerListProps
             >
               <TableHead>
                 <TableRow>
-                  {headCell.map(headCell => (
-                    <TableCell
-                      key={headCell.id}
-                    >
-                      {t(headCell.labelI18nKey)}
-                    </TableCell>
-                  ))}
+                  {headCell.map(headCell => {
+                    if (!matchesMD && !headCell.showMatchesMD) {
+                      return null;
+                    }
+
+                    return (
+                      <TableCell
+                        key={headCell.id}
+                      >
+                        {t(headCell.labelI18nKey)}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               </TableHead>
               <PlayersTableRows
@@ -471,6 +490,7 @@ export default function PlayersList({ clubs, players, images }: IPlayerListProps
                 clubs={clubs}
                 images={images}
                 classes={classes}
+                matchesMD={matchesMD}
                 handleClubClick={handleClubClick}
                 handleClick={handlePlayerRowClick}
               />

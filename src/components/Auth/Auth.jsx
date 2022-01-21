@@ -172,10 +172,10 @@ export default function Auth() {
                   >
                     {role === Roles.ADMIN && [
                       <MenuItem key='create-club' onClick={handleClose}>
-                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.createClub')}</Link>
+                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.newClub')}</Link>
                       </MenuItem>,
                       <MenuItem key='create-players' onClick={handleClose}>
-                        <Link to={generatePath(pages.EDIT_PLAYERS, { id: 'new' })}>{t('Floorball.createPlayer')}</Link>
+                        <Link to={generatePath(pages.EDIT_PLAYERS, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
                       </MenuItem>,
                     ]}
                     <MenuItem

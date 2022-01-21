@@ -49,7 +49,7 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
     <Grid
       container
       justifyContent='center'
-      spacing={4}
+      spacing={2}
     >
       <Helmet>
         <title>{shortName}</title>
@@ -78,10 +78,10 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
           <Typography gutterBottom variant='body1' className={classes.infoTextLabel}>
             {t('Clubs.fullName')}
           </Typography>
-          <Typography gutterBottom variant='h3'>
+          <Typography gutterBottom variant='h4'>
             {fullName}
           </Typography>
-          <Typography gutterBottom variant='h4'>
+          <Typography gutterBottom variant='h5'>
             {fullNameInt}
           </Typography>
         </div>
