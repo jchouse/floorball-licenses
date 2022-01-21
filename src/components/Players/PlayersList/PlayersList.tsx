@@ -19,7 +19,7 @@ import TableBody from '@mui/material/TableBody';
 import Avatar from '@mui/material/Avatar';
 import TablePagination from '@mui/material/TablePagination';
 import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -166,7 +166,7 @@ interface IPlayersFilterProps {
   clubs: Record<string, IClub>;
   searchParams: queryString.ParsedQuery<string>;
   changeFilterHandler: (name: string, value: string) => void;
-  handleChangePage: (event: React.ChangeEvent<HTMLInputElement>, page: number) => void;
+  handleChangePage: (event: SelectChangeEvent | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, page: number) => void;
   translator: (key: string) => string;
 }
 
@@ -178,7 +178,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
     handleChangePage,
     clubs,
   } = props;
-  const changeInputHandler = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeInputHandler = (name: string) => (event: SelectChangeEvent | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     changeFilterHandler(name, event.target.value);
     handleChangePage(event, 0);
   };
@@ -223,15 +223,13 @@ function PlayersFilter(props: IPlayersFilterProps) {
           <Select
             labelId='license-type-select'
             id={filterMap.licenseType}
-            value={searchParams[filterMap.licenseType] || ''}
-            onSelect={changeInputHandler(filterMap.licenseType)}
+            value={searchParams[filterMap.licenseType] as string || ''}
+            onChange={changeInputHandler(filterMap.licenseType)}
           >
-            {[
-              <MenuItem key={-1} value={''}>{translator('Players.filter.all')}</MenuItem>,
-              activeSeason.possibleLiciensies.map(license => (
-                <MenuItem key={license.value} value={license.value}>{license.name}</MenuItem>
-              )),
-            ]}
+            <MenuItem value=''>{translator('Players.filter.all')}</MenuItem>,
+            {activeSeason.possibleLiciensies.map(license => (
+              <MenuItem key={license.value} value={license.value}>{license.name}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -263,10 +261,10 @@ function PlayersFilter(props: IPlayersFilterProps) {
           <Select
             labelId='clubs-select'
             id={filterMap.club}
-            value={searchParams[filterMap.club] || ''}
-            onSelect={changeInputHandler(filterMap.club)}
+            value={searchParams[filterMap.club] as string || ''}
+            onChange={changeInputHandler(filterMap.club)}
           >
-            <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
+            <MenuItem value=''>{translator('Players.filter.all')}</MenuItem>
             {clubsItems.map(club => (
               <MenuItem key={club.value} value={club.value}>{club.label}</MenuItem>
             ))}
@@ -286,10 +284,10 @@ function PlayersFilter(props: IPlayersFilterProps) {
           <Select
             labelId='gender-select'
             id={filterMap.gender}
-            value={searchParams[filterMap.gender] || ''}
-            onSelect={changeInputHandler(filterMap.gender)}
+            value={searchParams[filterMap.gender] as string || ''}
+            onChange={changeInputHandler(filterMap.gender)}
           >
-            <MenuItem value={''}>{translator('Players.filter.all')}</MenuItem>
+            <MenuItem value=''>{translator('Players.filter.all')}</MenuItem>
             {Object.entries(gendersMap).map(([key]) => (
               <MenuItem key={key} value={key}>{translator(`Players.gender.${key}`)}</MenuItem>
             ))}

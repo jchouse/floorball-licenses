@@ -49,16 +49,8 @@ export default function Players() {
   const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
   const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
   const [snapshotCounters, loadingCounters, errorCounters] = useObject(ref(database, 'counters'));
-  const [user] = useAuthState(auth);
   const [snapshotUsers] = useObject(ref(database, 'users'));
-
-  const users = snapshotUsers?.val();
-
-  let role = Roles.GUEST;
-
-  if (user && users?.[user.uid]) {
-    role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
-  }
+  const [user] = useAuthState(auth);
 
   if (loadingClubs || loadingPlayers || loadingImages || loadingTransfers || loadingCounters) {
     return <LinearProgress/>;
@@ -73,6 +65,13 @@ export default function Players() {
   const images = snapshotImages?.val();
   const transfers = snapshotTransfers?.val();
   const counters = snapshotCounters?.val();
+  const users = snapshotUsers?.val();
+
+  let role = Roles.GUEST;
+
+  if (user && users?.[user.uid]) {
+    role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
+  }
 
   return (
     <Switch>

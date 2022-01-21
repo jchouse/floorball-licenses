@@ -10,9 +10,13 @@ import EditClubInfo from '../Clubs/EditClubInfo/EditClubInfo';
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
 import { firebaseApp } from '../../firebaseInit';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 
 import { pages } from '../../constans/location';
+import { Roles } from '../../constans/settings';
 
+const auth = getAuth(firebaseApp);
 const database = getDatabase(firebaseApp);
 
 export interface IClub {
@@ -36,6 +40,12 @@ export interface IClub {
 export default function Clubs() {
   const [snapshotClubs, loadingClubs, errorClubs] = useObject(ref(database, 'clubs'));
   const [snapshotImages, loadingImages, errorImages] = useObject(ref(database, 'images'));
+  const [snapshotUsers] = useObject(ref(database, 'users'));
+  const [user] = useAuthState(auth);
+
+
+  useObject(ref(database, 'counters'));
+
 
   if (loadingClubs || loadingImages) {
     return <LinearProgress/>;
@@ -47,6 +57,13 @@ export default function Clubs() {
 
   const clubs = snapshotClubs?.val();
   const images = snapshotImages?.val();
+  const users = snapshotUsers?.val();
+
+  let role = Roles.GUEST;
+
+  if (user && users?.[user.uid]) {
+    role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
+  }
 
   return (
     <Switch>
@@ -66,6 +83,7 @@ export default function Clubs() {
         <ClubInfo
           images={images}
           clubs={clubs}
+          role={role}
         />
       </Route>
     </Switch>

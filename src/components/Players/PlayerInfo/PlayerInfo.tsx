@@ -96,7 +96,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
     push(generatePath(pages.CLUB_INFO, { id: key }));
   }, [push]);
 
-  const handleAddPlayerClick  = React.useCallback((event) => {
+  const handleEditPlayerClick  = React.useCallback((event) => {
     push(generatePath(pages.EDIT_PLAYERS, { id }));
   } , [push, id]);
 
@@ -366,8 +366,8 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
       </Grid>
       {role === Roles.ADMIN && (
         <SpeedDial
-          onClick={handleAddPlayerClick}
-          ariaLabel={t('Floorball.createPlayer')}
+          onClick={handleEditPlayerClick}
+          ariaLabel={t('Floorball.editPlayer')}
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={<EditIcon/>}
         />

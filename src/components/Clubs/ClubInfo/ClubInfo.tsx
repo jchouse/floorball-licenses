@@ -1,21 +1,26 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, generatePath } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import SpeedDial from '@mui/material/SpeedDial';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { IClub } from '../Clubs';
 
 import { useStyles } from './ClubInfo.styles';
+import { pages } from '../../../constans/location';
+import { Roles } from '../../../constans/settings';
 
 interface IClubInfoProps {
   clubs: Record<string, IClub>;
   images: Record<string, { downloadURL: string }>;
+  role: Roles;
 }
 
-function ClubInfo({ clubs, images }: IClubInfoProps) {
+function ClubInfo({ clubs, images, role }: IClubInfoProps) {
   const { id } = useParams<{ id: string }>();
   const classes = useStyles();
   const { t } = useTranslation();
@@ -33,6 +38,12 @@ function ClubInfo({ clubs, images }: IClubInfoProps) {
     country,
   } = clubs[id];
   const { downloadURL } = images[photo];
+  const history = useHistory();
+  const { push } = history;
+
+  const handleEditClubClick  = React.useCallback((event) => {
+    push(generatePath(pages.EDIT_CLUB, { id }));
+  } , [push, id]);
 
   return (
     <Grid
@@ -118,6 +129,14 @@ function ClubInfo({ clubs, images }: IClubInfoProps) {
           </div>
         }
       </Grid>
+      {role === Roles.ADMIN && (
+        <SpeedDial
+          onClick={handleEditClubClick}
+          ariaLabel={t('Floorball.editClub')}
+          sx={{ position: 'absolute', bottom: 16, right: 16 }}
+          icon={<EditIcon/>}
+        />
+      )}
     </Grid>
   );
 }

@@ -78,6 +78,7 @@ export const intl = {
     'Players.enterClub': 'Клуб',
     'Players.removePhoto': 'Видалити фото з картки',
     'Players.filter.unactive': 'Показувати неактивні ліцензії',
+    'Players.filter.all': 'Всі',
     'Players.height.header': 'Зріст, см',
     'Players.height.num': '{{height}} см',
     'Players.weight.header': 'Вага, кг',
