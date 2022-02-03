@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, generatePath, Link } from 'react-router-dom';
+import { Switch, Route, useHistory, generatePath, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import format from 'date-fns/format';
 import queryString from 'query-string';
@@ -23,6 +23,8 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { dateFormate } from '../../constans/settings';
 import { useStyles } from './Transfers.styles';
@@ -50,6 +52,7 @@ function TransfersTableRows(props) {
     images,
     clubs,
     classes,
+    history,
   } = props;
 
   return (
@@ -78,7 +81,18 @@ function TransfersTableRows(props) {
         } = clubs[toClub];
 
         return (
-          <TableRow key={key}>
+          <TableRow
+            hover
+            key={key}
+          >
+            <TableCell>
+              <IconButton
+                onClick={() => history.push(generatePath(pages.TRANSFER_INFO, { id: transfer }))}
+                aria-label='edit'
+              >
+                <EditIcon/>
+              </IconButton>
+            </TableCell>
             <TableCell>
               {!endDate ? (
                 t('Transfers.tablecell.atDate', { date: format(date, dateFormate) })
@@ -246,7 +260,7 @@ function TransfersFilter(props) {
   );
 }
 
-export default function Transfers() {
+function TransfersList() {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
@@ -321,6 +335,7 @@ export default function Transfers() {
           >
             <TableHead>
               <TableRow>
+                <TableCell key={-1}/>
                 {headCell.map(headCell => (
                   <TableCell
                     key={headCell.id}
@@ -340,8 +355,7 @@ export default function Transfers() {
               translator={t}
               classes={classes}
               t={t}
-              // handleClubClick={handleClubClick}
-              // handleClick={handlePlayerRowClick}
+              history={history}
             />
           </Table>
         </TableContainer>
@@ -356,5 +370,18 @@ export default function Transfers() {
         />
       </Paper>
     </Grid>
+  );
+}
+
+export default function Transfers() {
+  return (
+    <Switch>
+      <Route exact path={pages.TRANSFERS}>
+        <TransfersList/>
+      </Route>
+      <Route path={pages.TRANSFER_EDIT}>
+        <div>Edit transfer</div>
+      </Route>
+    </Switch>
   );
 }

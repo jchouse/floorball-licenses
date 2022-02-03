@@ -97,7 +97,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
   }, [push]);
 
   const handleEditPlayerClick  = React.useCallback((event) => {
-    push(generatePath(pages.EDIT_PLAYERS, { id }));
+    push(generatePath(pages.EDIT_PLAYER, { id }));
   } , [push, id]);
 
   const {

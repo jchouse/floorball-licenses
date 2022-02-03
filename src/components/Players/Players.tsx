@@ -10,13 +10,10 @@ import EditPlayerInfo from './EditPlayerInfo/EditPlayerInfo';
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
 import { firebaseApp } from '../../firebaseInit';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { getAuth } from 'firebase/auth';
 
 import { pages } from '../../constans/location';
-import { Roles } from '../../constans/settings';
+import { RolesContext } from '../RolesContext/RolesContext';
 
-const auth = getAuth(firebaseApp);
 const database = getDatabase(firebaseApp);
 
 export interface IPlayer {
@@ -49,8 +46,7 @@ export default function Players() {
   const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
   const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
   const [snapshotCounters, loadingCounters, errorCounters] = useObject(ref(database, 'counters'));
-  const [snapshotUsers] = useObject(ref(database, 'users'));
-  const [user] = useAuthState(auth);
+  const { role } = React.useContext(RolesContext);
 
   if (loadingClubs || loadingPlayers || loadingImages || loadingTransfers || loadingCounters) {
     return <LinearProgress/>;
@@ -65,13 +61,6 @@ export default function Players() {
   const images = snapshotImages?.val();
   const transfers = snapshotTransfers?.val();
   const counters = snapshotCounters?.val();
-  const users = snapshotUsers?.val();
-
-  let role = Roles.GUEST;
-
-  if (user && users?.[user.uid]) {
-    role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
-  }
 
   return (
     <Switch>
@@ -82,7 +71,7 @@ export default function Players() {
           clubs={clubs}
         />
       </Route>
-      <Route path={pages.EDIT_PLAYERS}>
+      <Route path={pages.EDIT_PLAYER}>
         <EditPlayerInfo
           players={players}
           images={images}

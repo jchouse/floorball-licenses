@@ -4,6 +4,7 @@ import { Link, generatePath } from 'react-router-dom';
 
 import { pages } from '../../constans/location';
 import { Roles } from '../../constans/settings';
+import { RolesContext } from '../RolesContext/RolesContext';
 
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -72,6 +73,18 @@ export default function Auth() {
   const { t } = useTranslation();
   const [user, loadingAuth, errorAuth] = useAuthState(auth);
   const [snapshotUsers, loadingUsers, errorUsers] = useObject(ref(database, 'users'));
+  const { role, setRole } = React.useContext(RolesContext);
+
+  React.useEffect(() => {
+    let role = Roles.GUEST;
+    const users = snapshotUsers?.val();
+
+    if (user && users?.[user.uid]) {
+      role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
+    }
+
+    setRole(role);
+  }, [user, snapshotUsers, setRole]);
 
   if (errorUsers || errorAuth) {
     console.log('errorUsers', errorUsers);
@@ -123,11 +136,6 @@ export default function Auth() {
 
   if (user) {
     let avatarContent = stringAvatar(user.displayName);
-    let role = Roles.GUEST;
-
-    if (user && users?.[user.uid]) {
-      role = users[user.uid].role > 90 ? Roles.ADMIN : Roles.USER;
-    }
 
     if (user.photoURL) {
       avatarContent = {
@@ -175,7 +183,7 @@ export default function Auth() {
                         <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.newClub')}</Link>
                       </MenuItem>,
                       <MenuItem key='create-players' onClick={handleClose}>
-                        <Link to={generatePath(pages.EDIT_PLAYERS, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
+                        <Link to={generatePath(pages.EDIT_PLAYER, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
                       </MenuItem>,
                     ]}
                     <MenuItem
