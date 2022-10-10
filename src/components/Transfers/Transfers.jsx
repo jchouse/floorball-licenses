@@ -87,7 +87,7 @@ function TransfersTableRows(props) {
           >
             <TableCell>
               <IconButton
-                onClick={() => history.push(generatePath(pages.TRANSFER_INFO, { id: transfer }))}
+                onClick={() => history.push(generatePath(pages.TRANSFER_EDIT, { id: key }))}
                 aria-label='edit'
               >
                 <EditIcon/>

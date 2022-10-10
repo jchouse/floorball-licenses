@@ -45,12 +45,12 @@ const NOW = new Date();
 
 const headCell = [
   { id: 'license', labelI18nKey: 'Players.table.license', showMatchesMD: true },
-  { id: 'club', labelI18nKey: 'Players.table.club', showMatchesMD: false },
   { id: 'photo', labelI18nKey: 'Players.table.photo', showMatchesMD: true },
   { id: 'firstName', labelI18nKey: 'Players.table.firstName', showMatchesMD: true },
   { id: 'lastName', labelI18nKey: 'Players.table.lastName', showMatchesMD: true },
   { id: 'gender', labelI18nKey: 'Players.gender.header', showMatchesMD: false },
   { id: 'age', labelI18nKey: 'Players.table.age', showMatchesMD: false },
+  { id: 'club', labelI18nKey: 'Players.table.club', showMatchesMD: false },
 ];
 
 export const gendersMap = {
@@ -123,6 +123,18 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
             key={key}
           >
             <TableCell>{license}</TableCell>
+            <TableCell>
+              <Avatar
+                alt={`${firstName} ${lastName}`}
+                src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
+              />
+            </TableCell>
+            <TableCell>{firstName}</TableCell>
+            <TableCell>{lastName}</TableCell>
+            {matchesMD && <TableCell>{genderMap[gender]}</TableCell>}
+            {matchesMD && <TableCell>
+              {`${differenceInYears(NOW, born)} (${format(born, dateFormate)})`}
+            </TableCell>}
             {matchesMD && <TableCell>
               <div
                 className={classes.clubLogoCell}
@@ -136,18 +148,6 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
                   onClick={event => handleClubClick(event, club)}
                 >{shortName}</Link>
               </div>
-            </TableCell>}
-            <TableCell>
-              <Avatar
-                alt={`${firstName} ${lastName}`}
-                src={playerPhoto && images[playerPhoto] && images[playerPhoto].downloadURL}
-              />
-            </TableCell>
-            <TableCell>{firstName}</TableCell>
-            <TableCell>{lastName}</TableCell>
-            {matchesMD && <TableCell>{genderMap[gender]}</TableCell>}
-            {matchesMD && <TableCell>
-              {`${differenceInYears(NOW, born)} (${format(born, dateFormate)})`}
             </TableCell>}
           </TableRow>
         );
