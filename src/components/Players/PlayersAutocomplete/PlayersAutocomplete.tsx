@@ -24,7 +24,7 @@ export default function PlayersAutocomplete(props: PlayersAutocompleteProps) {
   const options = React.useMemo(() => (
     Object.keys(players).map((key) => ({
         value: key,
-        label: players[key].firstName + ' ' + players[key].lastName,
+        label: `${players[key].firstName} ${players[key].lastName} (${players[key].license})`,
       }
     )
   )), [players]);
@@ -32,7 +32,7 @@ export default function PlayersAutocomplete(props: PlayersAutocompleteProps) {
   if (player) {
     predifinedPlayer = {
       value: player,
-      label: players[player].firstName + ' ' + players[player].lastName,
+      label: `${players[player].firstName} ${players[player].lastName} (${players[player].license})`,
     };
   }
 
