@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TextField from '@mui/material/TextField';
-import Autocomplete, {  } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';

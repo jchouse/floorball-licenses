@@ -82,14 +82,11 @@ const initialValues: IPlayer = {
   uniqueExternId: '',
 };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function EditPlayerInfo({ players, images, clubs, counter }: IEditPlayerInfoProps) {
+export default function PlayerInfoEdit({ players, images, clubs, counter }: IEditPlayerInfoProps) {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -121,7 +118,6 @@ export default function EditPlayerInfo({ players, images, clubs, counter }: IEdi
       playerId = push(child(ref(database), db_paths.Players)).key || '';
       updates[`/${db_paths.CountersPlayersID}/`] = data.license;
     }
-
 
     if (!playerId) {
       setMessage('error');

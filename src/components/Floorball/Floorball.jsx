@@ -34,7 +34,7 @@ import { useStyles } from './Floorball.styles';
 
 import Clubs from '../Clubs/Clubs';
 import Players from '../Players/Players';
-import Transfers from '../Transfers/Transfers.jsx';
+import Transfers from '../Transfers/Transfers';
 import Auth from '../Auth/Auth';
 
 function NotFound() {

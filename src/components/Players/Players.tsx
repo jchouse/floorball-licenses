@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import LinearProgress from '@mui/material/LinearProgress';
 
 import PlayersList from './PlayersList/PlayersList';
 import PlayerInfo from './PlayerInfo/PlayerInfo';
-import EditPlayerInfo from './EditPlayerInfo/EditPlayerInfo';
+import PlayerInfoEdit from './PlayerInfoEdit/PlayerInfoEdit';
 
 import { ref, getDatabase } from 'firebase/database';
 import { useObject } from 'react-firebase-hooks/database';
@@ -46,7 +46,7 @@ export default function Players() {
   const [snapshotImages, loadingPlayers, errorPlayers] = useObject(ref(database, 'images'));
   const [snapshotTransfers, loadingTransfers, errorTransfers] = useObject(ref(database, 'transfers'));
   const [snapshotCounters, loadingCounters, errorCounters] = useObject(ref(database, 'counters'));
-  const { role } = React.useContext(RolesContext);
+  const { role } = useContext(RolesContext);
 
   if (loadingClubs || loadingPlayers || loadingImages || loadingTransfers || loadingCounters) {
     return <LinearProgress/>;
@@ -72,7 +72,7 @@ export default function Players() {
         />
       </Route>
       <Route path={pages.EDIT_PLAYER}>
-        <EditPlayerInfo
+        <PlayerInfoEdit
           players={players}
           images={images}
           clubs={clubs}

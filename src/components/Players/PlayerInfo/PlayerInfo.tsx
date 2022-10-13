@@ -12,9 +12,10 @@ import Avatar from '@mui/material/Avatar';
 import SpeedDial from '@mui/material/SpeedDial';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { ITransfer } from '../../Transfers/Transfers';
+
 import { pages } from '../../../constans/location';
-import { Roles } from '../../../constans/settings';
-import { dateFormate } from '../../../constans/settings';
+import { Roles, dateFormate } from '../../../constans/settings';
 
 import { useStyles } from './PlayerInfo.styles';
 
@@ -65,14 +66,6 @@ function ClubLink(props: IClubLinkProps) {
       />
     </div>
   );
-}
-
-interface ITransfer {
-  date: number;
-  endDate: number;
-  fromClub: string;
-  toClub: string;
-  player: string;
 }
 
 interface IPlayerInfoProps {

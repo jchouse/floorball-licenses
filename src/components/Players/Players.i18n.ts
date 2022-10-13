@@ -66,6 +66,7 @@ export const intl = {
     'Players.at': '→',
     'Players.firstClub': 'First Club',
     'Players.uniqueExternId': 'Unique external ID (tax number)',
+    'Players.autocomplite': 'Player',
   },
   'uk': {
     'Players.list.title': 'Гравці',
@@ -134,5 +135,6 @@ export const intl = {
     'Players.at': '→',
     'Players.firstClub': 'Перший клуб',
     'Players.uniqueExternId': 'Унікальний звнішній IД (IНН)',
+    'Players.autocomplite': 'Гравець',
   },
 };
