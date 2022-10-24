@@ -1,6 +1,6 @@
 import { migrationScript } from '../migrationsScript';
-import { mockSourcedDB } from '../__mocks__/mockSourceDB';
-import { mockResultdDB } from '../__mocks__/mockResultDB';
+import { mockSourcedDB } from '../DB_mocks/mockSourceDB';
+import { mockResultdDB } from '../DB_mocks/mockResultDB';
 
 it('migration sript converted input data in needed formation', () => {
   const resultData = migrationScript(mockSourcedDB);

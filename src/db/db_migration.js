@@ -1,6 +1,3 @@
-/* eslint-disable one-var */
-'use strict';
-
 import fs from 'fs';
 import { migrationScript } from './migrationsScript.js';
 

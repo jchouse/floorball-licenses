@@ -144,6 +144,9 @@
           ".validate": "newData.isString()"
         },
         "lastActiveSeason": {
+          ".validate": "newData.isString()"
+        },
+        "endActivationDate": {
           ".validate": "newData.isNumber()"
         },
         "uniqueExternId": {

@@ -11,24 +11,24 @@ export const licensiesTypes = {
     value: 'Junior',
     ageLimit: 18,
   },
-  Adult_1: {
-    name: 'A1',
-    value: 'Adult_1',
+  Adult_A: {
+    name: 'AB',
+    value: 'Adult_A',
     ageLimit: 0,
   },
-  Adult_2: {
-    name: 'A2',
-    value: 'Adult_2',
+  Adult_B: {
+    name: 'AB',
+    value: 'Adult_B',
     ageLimit: 0,
   },
-  Junior_1: {
-    name: 'J1',
-    value: 'Junior_1',
+  Junior_A: {
+    name: 'JA',
+    value: 'Junior_A',
     ageLimit: 18,
   },
-  Junior_2: {
-    name: 'J2',
-    value: 'Junior_2',
+  Junior_B: {
+    name: 'JB',
+    value: 'Junior_B',
     ageLimit: 18,
   },
 };
@@ -50,10 +50,10 @@ export const listOfSeasons = {
     endDate: 1630368000000, // 2021-08-31
     active: false,
     possibleLiciensies: [
-      licensiesTypes.Junior_1,
-      licensiesTypes.Junior_2,
-      licensiesTypes.Adult_1,
-      licensiesTypes.Adult_2,
+      licensiesTypes.Junior_A,
+      licensiesTypes.Junior_B,
+      licensiesTypes.Adult_A,
+      licensiesTypes.Adult_B,
     ],
   },
   key00002: {
@@ -62,10 +62,10 @@ export const listOfSeasons = {
     endDate: 1661904000000, // 2022-08-31
     active: true,
     possibleLiciensies: [
-      licensiesTypes.Junior_1,
-      licensiesTypes.Junior_2,
-      licensiesTypes.Adult_1,
-      licensiesTypes.Adult_2,
+      licensiesTypes.Junior_A,
+      licensiesTypes.Junior_B,
+      licensiesTypes.Adult_A,
+      licensiesTypes.Adult_B,
     ],
   },
 };

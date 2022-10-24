@@ -100,7 +100,7 @@ export const mockResultdDB = {
       'side' : 'L',
       'uniqueExternId' : '1231231231',
       'weight' : '79',
-      'lastActiveSeason': 1656540000000,
+      'endActivationDate': 1656540000000,
     },
     'player-key-2' : {
       'born' : 904424400000,
@@ -114,7 +114,7 @@ export const mockResultdDB = {
       'lastNameInt' : '',
       'lastName' : 'NameName',
       'license' : 2,
-      'licenseType' : 'SENIOR',
+      'licenseType' : 'Adult_A',
       'photo' : 'photo-key-5',
       'position' : 'FORWARD',
       'registrDate' : 1486245600000,
@@ -122,7 +122,7 @@ export const mockResultdDB = {
       'side' : 'R',
       'uniqueExternId' : '1231231231',
       'weight' : '55',
-      'lastActiveSeason': 1625004000000,
+      'endActivationDate': 1625004000000,
     },
     'player-key-3' : {
       'born' : 981496800000,
@@ -136,7 +136,7 @@ export const mockResultdDB = {
       'lastNameInt' : '',
       'lastName' : 'NoName',
       'license' : 3,
-      'licenseType' : 'JUNIOR',
+      'licenseType' : 'Junior_A',
       'photo' : 'photo-key-6',
       'position' : '',
       'registrDate' : 1486245600000,
@@ -144,7 +144,7 @@ export const mockResultdDB = {
       'side' : 'R',
       'uniqueExternId' : '0000000000',
       'weight' : '178',
-      'lastActiveSeason': 1535673600000,
+      'endActivationDate': 1535673600000,
     },
     'player-key-4' : {
       'born' : 981496800000,
@@ -158,7 +158,7 @@ export const mockResultdDB = {
       'lastNameInt' : '',
       'lastName' : 'NoName',
       'license' : 3,
-      'licenseType' : 'JUNIOR',
+      'licenseType' : 'Junior_A',
       'photo' : 'photo-key-6',
       'position' : '',
       'registrDate' : 1486245600000,
@@ -166,10 +166,17 @@ export const mockResultdDB = {
       'side' : 'R',
       'uniqueExternId' : '0000000000',
       'weight' : '178',
-      'lastActiveSeason': 1535673600000,
+      'endActivationDate': 1535673600000,
     },
   },
   'transfers' : {
+    'transfer-key-1' : {
+      'date' : 1485907200000,
+      'endDate' : 1496188800000,
+      'fromClub' : 'club-key-1',
+      'player' : 'player-key-1',
+      'toClub' : 'club-key-2',
+    },
     'transfer-key-2' : {
       'date' : 1495929600000,
       'fromClub' : 'club-key-1',
@@ -186,15 +193,6 @@ export const mockResultdDB = {
       'date' : 1495929600000,
       'fromClub' : 'club-key-1',
       'player' : 'player-key-4',
-      'toClub' : 'club-key-2',
-    },
-  },
-  'loans' : {
-    'transfer-key-1' : {
-      'date' : 1485907200000,
-      'endDate' : 1496188800000,
-      'fromClub' : 'club-key-1',
-      'player' : 'player-key-1',
       'toClub' : 'club-key-2',
     },
     'transfer-key-5' : {

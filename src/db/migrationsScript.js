@@ -36,13 +36,13 @@ export const migrationScript = function (data) {
       delete club.address;
     }
 
-    if (!club.added) {
-      club.added = new Date().valueOf();
-    }
+    // if (!club.added) {
+    //   club.added = new Date().valueOf();
+    // }
 
-    if (!club.founded) {
-      club.founded = new Date().valueOf();
-    }
+    // if (!club.founded) {
+    //   club.founded = new Date().valueOf();
+    // }
   });
 
   Object.keys(data.players).forEach(key => {
@@ -86,21 +86,21 @@ export const migrationScript = function (data) {
       const _licenseType = player.licenseType;
 
       if (_licenseType === 'SENIOR' || _licenseType === 'Adult_A') {
-        player.licenseType = 'Adult_1';
+        player.licenseType = 'Adult_A';
       } else if (_licenseType === 'JUNIOR' || _licenseType === 'Junior_A') {
-        player.licenseType = 'Junior_1';
+        player.licenseType = 'Junior_A';
       } else if (_licenseType === 'Junior_B') {
-        player.licenseType = 'Junior_2';
+        player.licenseType = 'Junior_B';
       } else if (_licenseType === 'Adult_B') {
-        player.licenseType = 'Adult_2';
+        player.licenseType = 'Adult_B';
       }
     }
 
-    if (Object.prototype.hasOwnProperty.call(player, 'endActivationDate')) {
-      player.lastActiveSeason = player.endActivationDate;
+    // if (Object.prototype.hasOwnProperty.call(player, 'endActivationDate')) {
+    //   player.lastActiveSeason = player.endActivationDate;
 
-      delete player.endActivationDate;
-    }
+    //   delete player.endActivationDate;
+    // }
 
     if (Object.prototype.hasOwnProperty.call(player, 'taxnumber')) {
       player.uniqueExternId = player.taxnumber;

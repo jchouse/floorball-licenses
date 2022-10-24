@@ -112,6 +112,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
     firstClub,
     registrDate,
     currentClub,
+    endActivationDate,
   } = players[id];
   const logo = images[photo] && images[photo].downloadURL;
 
