@@ -329,7 +329,7 @@ function PlayersFilter(props: IPlayersFilterProps) {
             <Switch
               name={filterMap.expired}
               color='primary'
-              checked={!!searchParams[filterMap.expired]}
+              checked={searchParams[filterMap.expired] === 'true'}
               value={searchParams[filterMap.expired]}
               onChange={changeSwitchHandler(filterMap.expired)}
             />
@@ -381,7 +381,7 @@ function stableSort(players: Record<string, IPlayer>, comparator: queryString.Pa
       .filter(([, player]) => differenceInYears(NOW, player.born) <= parseInt(comparator[filterMap.age] as string));
   }
 
-  if (!comparator[filterMap.expired]) {
+  if (comparator[filterMap.expired] !== 'true') {
     result = result
       .filter(([, player]) => player.lastActiveSeason >= activeSeason.startDate && player.lastActiveSeason <= activeSeason.endDate);
   }
