@@ -12,7 +12,7 @@ export const licensiesTypes = {
     ageLimit: 18,
   },
   Adult_A: {
-    name: 'AB',
+    name: 'AA',
     value: 'Adult_A',
     ageLimit: 0,
   },
