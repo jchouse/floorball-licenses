@@ -97,7 +97,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
           lastName,
           born,
           photo: playerPhoto,
-          lastActiveSeason,
+          endActivationDate,
           gender,
         } = player;
 
@@ -113,7 +113,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
           photo: clubsLogo,
           shortName,
         } = playersClub;
-        const isExpired = lastActiveSeason <= activeSeason.startDate;
+        const isExpired = endActivationDate <= activeSeason.startDate;
 
         return (
           <TableRow
@@ -139,7 +139,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
               <div
                 className={classes.clubLogoCell}
               >
-                <Avatar
+                <img
                   className={classes.clubLogo}
                   alt={shortName}
                   src={clubsLogo && images[clubsLogo] && images[clubsLogo].downloadURL}
@@ -383,7 +383,7 @@ function stableSort(players: Record<string, IPlayer>, comparator: queryString.Pa
 
   if (comparator[filterMap.expired] !== 'true') {
     result = result
-      .filter(([, player]) => player.lastActiveSeason >= activeSeason.startDate && player.lastActiveSeason <= activeSeason.endDate);
+      .filter(([, player]) => player.endActivationDate >= activeSeason.startDate && player.endActivationDate <= activeSeason.endDate);
   }
 
   return result;

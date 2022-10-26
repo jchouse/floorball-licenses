@@ -28,10 +28,16 @@ export const useStyles = makeStyles(() => ({
   currentClubLogo: {
     width: 80,
     height: 80,
+    objectFit: 'scale-down',
+    background: '#fff',
+    borderRadius: '50%',
   },
   clubLogo: {
     width: 60,
     height: 60,
+    objectFit: 'scale-down',
+    background: '#fff',
+    borderRadius: '50%',
   },
   clubLogoWrapper: {
     display: 'flex',

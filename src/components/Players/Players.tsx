@@ -35,8 +35,8 @@ export interface IPlayer {
   secondName: string;
   weight: string;
   lastTransfer: string;
-  endActivationDate?: number;
-  lastActiveSeason: number;
+  endActivationDate: number;
+  lastActiveSeason?: string;
   currentClub: string;
   uniqueExternId: string;
 }

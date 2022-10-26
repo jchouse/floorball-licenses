@@ -77,7 +77,7 @@ const initialValues: IPlayer = {
   secondName: '',
   weight: '',
   lastTransfer: '',
-  lastActiveSeason: new Date().valueOf(),
+  endActivationDate: new Date().valueOf(),
   currentClub: '',
   uniqueExternId: '',
 };
@@ -219,7 +219,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
           </Grid>
           <Grid item>
             <Controller
-              name='lastActiveSeason'
+              name='endActivationDate'
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker

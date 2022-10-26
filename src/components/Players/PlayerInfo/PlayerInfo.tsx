@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory, generatePath } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
@@ -8,7 +7,6 @@ import cs from 'classnames';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import SpeedDial from '@mui/material/SpeedDial';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -59,7 +57,7 @@ function ClubLink(props: IClubLinkProps) {
       className={classes.clubLogoWrapper}
       onClick={event => handleClubClick(event, clubId)}
     >
-      <Avatar
+      <img
         className={classes.clubLogo}
         alt={shortName}
         src={images[photo] && images[photo].downloadURL}
@@ -82,6 +80,10 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { push } = history;
+
+  useEffect(() => {
+    document.title = t('Players.headtitle', { name: `${players[id].firstName} ${players[id].lastName}` });
+  }, [id, players, t]);
 
   const handleClubClick = React.useCallback((event, key) => {
     event.stopPropagation();
@@ -127,11 +129,8 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
     <Grid
       container
       justifyContent='center'
-      spacing={2}
+      spacing={12}
     >
-      <Helmet>
-        <title>{`${firstName} ${lastName}`}</title>
-      </Helmet>
       <Grid
         item
         xs={10}
@@ -150,7 +149,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
             className={cs(classes.clubLogoWrapper, classes.currentClubLogoWrapper)}
             onClick={event => handleClubClick(event, currentClub)}
           >
-            <Avatar
+            <img
               className={classes.currentClubLogo}
               alt={currentClubShortName}
               src={images[currentClubPhoto] && images[currentClubPhoto].downloadURL}
@@ -173,7 +172,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
               className={classes.clubLogoWrapper}
               onClick={event => handleClubClick(event, firstClub)}
             >
-              <Avatar
+              <img
                 className={classes.clubLogo}
                 alt={firstClubShortName}
                 src={images[firstClubPhoto] && images[firstClubPhoto].downloadURL}
@@ -265,6 +264,14 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
           </Typography>
           <Typography variant='h6'>
             {t(`Players.license.${licenseType}`)}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='subtitle1'>
+            {t('Players.endActivationDate.label')}
+          </Typography>
+          <Typography variant='h6'>
+            {format(endActivationDate, dateFormate)}
           </Typography>
         </Grid>
         <Grid item>

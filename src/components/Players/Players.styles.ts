@@ -7,6 +7,11 @@ export const useStyles = makeStyles(() => ({
   },
   clubLogo: {
     marginRight: 20,
+    width: 35,
+    height: 35,
+    objectFit: 'scale-down',
+    background: '#fff',
+    borderRadius: '50%',
   },
   disabledRow: {
     '& td': {
