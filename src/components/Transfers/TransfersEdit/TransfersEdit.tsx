@@ -1,13 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import { useParams, useHistory, generatePath } from 'react-router-dom';
+import { useHistory, generatePath, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { getDatabase, ref, update, push, child } from 'firebase/database';
-import { useObject } from 'react-firebase-hooks/database';
+import { getDatabase, ref, set, push, child } from 'firebase/database';
 
 import Grid from '@mui/material/Grid';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
-import LinearProgress from '@mui/material/LinearProgress';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 import PlayersAutocomplete from '../../Players/PlayersAutocomplete/PlayersAutocomplete';
@@ -18,6 +23,7 @@ import TextField from '@mui/material/TextField';
 import { ITransfer } from '../Transfers';
 import { IPlayer } from '../../Players/Players';
 import { IClub } from '../../Clubs/Clubs';
+import { clubsListDropdown } from '../../Clubs/ClubsListDropdown/ClubsListDropdown';
 
 const database = getDatabase(firebaseApp);
 
@@ -26,10 +32,11 @@ const initialValues: ITransfer = {
   fromClub: '',
   player: '',
   toClub: '',
+  endDate: 0,
 };
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 
 interface ITransfersEditProps {
@@ -39,30 +46,62 @@ interface ITransfersEditProps {
 }
 
 export default function TransfersEdit(props: ITransfersEditProps) {
+  const { transfers, players, clubs } = props;
   const [message, setMessage] = useState<AlertColor | null>(null);
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const isNew = id === NEW_ENTITY;
+  const history = useHistory();
 
-  const { transfers, players, clubs } = props;
-
-  let defaultValues = initialValues;
+  let defaultValues = { ...initialValues };
 
   if (!isNew) {
     defaultValues = transfers[id];
   }
 
+  console.log('defaultValues', defaultValues);
   const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues });
 
   const handleClose = useCallback(() => {
     setMessage(null);
   }, []);
 
+  const clubsItems = React.useMemo(() => clubsListDropdown(clubs), [clubs]);
+
   const onSubmit: SubmitHandler<ITransfer> = async (data) => {
+    let transferId = id;
+    const updates: Partial<Record<string, ITransfer | number>> = {};
+
+    if (isNew) {
+      transferId = push(child(ref(database), db_paths.Transfers)).key || '';
+    }
+
+    if (data.date) {
+      data.date = new Date(data.date).valueOf();
+    }
+
+    if (data.endDate) {
+      data.endDate = new Date(data.endDate).valueOf();
+    } else {
+      delete data.endDate;
+    }
+
+    updates[`/${db_paths.Transfers}/` + transferId] = {
+      ...data,
+    };
+
+    set(ref(database, `/${db_paths.Transfers}/` + transferId), data)
+      .then(() => {
+        setMessage('success');
+        history.push(generatePath(pages.TRANSFER_EDIT, { id: transferId }));
+      })
+      .catch(() => {
+        setMessage('error');
+      });
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} key={id}>
       <Grid
         container
         justifyContent='center'
@@ -79,12 +118,21 @@ export default function TransfersEdit(props: ITransfersEditProps) {
             <Controller
               name='date'
               control={control}
+              rules={{
+                required: true,
+              }}
               render={({ field }) =>
-                <DesktopDatePicker
-                  label={t('Transfers.tablecell.date')}
-                  renderInput={params => <TextField {...params}/>}
-                  {...field}
-                />
+                <FormControl
+                  fullWidth
+                  variant='outlined'
+                  error={Boolean(errors.date)}
+                >
+                  <DesktopDatePicker
+                    label={t('Transfers.tablecell.date')}
+                    renderInput={params => <TextField {...params}/>}
+                    {...field}
+                  />
+                </FormControl>
               }
             />
           </Grid>
@@ -98,9 +146,61 @@ export default function TransfersEdit(props: ITransfersEditProps) {
                   player={field.value}
                   onChange={(player: string) => {
                     setValue('player', player);
+                    console.log(players[player]);
+                    setValue('fromClub', players[player].currentClub);
                   }}
                 />
               )}
+            />
+          </Grid>
+          <Grid item>
+            <Controller
+              name='fromClub'
+              control={control}
+              render={({ field }) => 
+                <FormControl
+                  fullWidth
+                  variant='outlined'
+                  disabled
+                >
+                  <InputLabel id='givingClub'>{t('Transfers.tablehead.givingClub')}</InputLabel>
+                  <Select
+                    {...field}
+                    label={t('Transfers.tablehead.givingClub')}
+                    labelId='givingClub'
+                    disabled
+                  >
+                    <MenuItem value={''}>{' '}</MenuItem>
+                    {clubsItems.map(club => (
+                      <MenuItem key={club.value} value={club.value}>{club.label}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
+            />
+          </Grid>
+          <Grid item>
+            <Controller
+              name='toClub'
+              control={control}
+              render={({ field }) => 
+                <FormControl
+                  fullWidth
+                  variant='outlined'
+                >
+                  <InputLabel id='recivingClub'>{t('Transfers.tablehead.recivingClub')}</InputLabel>
+                  <Select
+                    {...field}
+                    label={t('Transfers.tablehead.recivingClub')}
+                    labelId='recivingClub'
+                  >
+                    <MenuItem value={''}>{' '}</MenuItem>
+                    {clubsItems.map(club => (
+                      <MenuItem key={club.value} value={club.value}>{club.label}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
             />
           </Grid>
           <Grid item>
@@ -116,8 +216,18 @@ export default function TransfersEdit(props: ITransfersEditProps) {
               }
             />
           </Grid>
+          <Grid item>
+            <Button type='submit' variant='contained' color='primary'>
+              {t('Floorball.form.save')}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
+      <Snackbar open={!!message} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={message || 'success'} sx={{ width: '100%' }}>
+          {t(`Floorball.form.${message}`)}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }

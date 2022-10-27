@@ -17,6 +17,7 @@ export const intl = {
     'Floorball.continueLicenses': 'Continue licenses',
     'Floorball.form.required': 'This field is required',
     'Floorball.form.save': 'Save',
+    'Floorball.form.success': 'Done!',
   },
   'uk': {
     'Floorball.title': 'Флорбол України',
@@ -36,5 +37,6 @@ export const intl = {
     'Floorball.continueLicenses': 'Продовжити ліцензії',
     'Floorball.form.required': 'Це поле обов\'язкове',
     'Floorball.form.save': 'Зберегти',
+    'Floorball.form.success': 'Готово!',
   },
 };

@@ -104,6 +104,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
     
     imageUrl = downloadURL;
   } else {
+    // FIXME: must recieve in moment when saving
     defaultValues.license = ++counter;
   }
 

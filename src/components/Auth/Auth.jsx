@@ -185,6 +185,9 @@ export default function Auth() {
                       <MenuItem key='create-players' onClick={handleClose}>
                         <Link to={generatePath(pages.EDIT_PLAYER, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
                       </MenuItem>,
+                      <MenuItem key='create-transfer' onClick={handleClose}>
+                        <Link to={generatePath(pages.TRANSFER_EDIT, { id: 'new' })}>{t('Floorball.newTransfer')}</Link>
+                      </MenuItem>,
                     ]}
                     <MenuItem
                       onClick={event => {
