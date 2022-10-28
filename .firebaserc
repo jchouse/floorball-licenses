@@ -1,6 +1,7 @@
 {
   "projects": {
     "local": "floorball-b5840",
-    "prod": "floorball-prod"
+    "prod": "floorball-prod",
+    "prod_eu": "floorball-prod-eu"
   }
 }
