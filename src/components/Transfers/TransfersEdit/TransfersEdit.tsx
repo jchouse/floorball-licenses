@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, generatePath, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -53,14 +53,17 @@ export default function TransfersEdit(props: ITransfersEditProps) {
   const isNew = id === NEW_ENTITY;
   const history = useHistory();
 
-  let defaultValues = { ...initialValues };
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: initialValues });
 
-  if (!isNew) {
-    defaultValues = transfers[id];
-  }
+  useEffect(() => {
+    const transfer = transfers[id];
 
-  console.log('defaultValues', defaultValues);
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues });
+    setValue('date', transfer.date);
+    setValue('fromClub', transfer.fromClub);
+    setValue('player', transfer.player);
+    setValue('toClub', transfer.toClub);
+    setValue('endDate', transfer.endDate);
+  }, [setValue, id, transfers]);
 
   const handleClose = useCallback(() => {
     setMessage(null);

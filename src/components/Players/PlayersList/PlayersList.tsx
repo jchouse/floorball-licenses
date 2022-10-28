@@ -113,7 +113,7 @@ function PlayersTableRows(props: IPlayerTableRowProps) {
           photo: clubsLogo,
           shortName,
         } = playersClub;
-        const isExpired = endActivationDate <= activeSeason.startDate;
+        const isExpired = endActivationDate < NOW.valueOf();
 
         return (
           <TableRow
@@ -383,7 +383,7 @@ function stableSort(players: Record<string, IPlayer>, comparator: queryString.Pa
 
   if (comparator[filterMap.expired] !== 'true') {
     result = result
-      .filter(([, player]) => player.endActivationDate >= activeSeason.startDate && player.endActivationDate <= activeSeason.endDate);
+      .filter(([, player]) => player.endActivationDate >= NOW.valueOf());
   }
 
   return result;
