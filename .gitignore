@@ -30,3 +30,5 @@ src/**/*.css
 .firebase/*
 .idea
 *.log
+src/db/*-export.json
+src/db/db_converted.json

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Grid, Cell } from 'react-md';
+import { withRouter } from 'react-router-dom';
+import { Grid, GridCell } from 'react-md';
 import BEM from '../../BEM/BEM';
 import Form from '../../Form/Form.jsx';
 import { compose } from 'redux';
@@ -72,8 +72,8 @@ class TransfersEdit extends React.Component {
   }
 
   render() {
-    const { bem, clubsList } = this.props,
-      { transferData } = this.state;
+    const { bem, clubsList } = this.props;
+    const { transferData } = this.state;
 
     let { transfersEditSchema } = this;
 
@@ -83,12 +83,12 @@ class TransfersEdit extends React.Component {
 
     return (
       <Grid className={bem.cls()}>
-        <Cell size={8} offset={2} className={bem.elem('main').cls()}>
+        <GridCell size={8} offset={2} className={bem.elem('main').cls()}>
           <Form
             data={transferData}
             schema={transfersEditSchema}
             submit={this.submit}/>
-        </Cell>
+        </GridCell>
       </Grid>
     );
   }
@@ -111,10 +111,10 @@ class TransfersEdit extends React.Component {
       firebase: { push, update },
       players,
       transfersData, params: { id },
-    } = this.props,
-      savedData = { ...transfersData, ...data },
-      playerId = savedData.player,
-      player = { ...players[playerId] };
+    } = this.props;
+    const savedData = { ...transfersData, ...data };
+    const playerId = savedData.player;
+    const player = { ...players[playerId] };
 
     if (id === 'new') {
       const data = await push('transfers', savedData);
