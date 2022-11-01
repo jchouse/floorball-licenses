@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Cell, Grid, Button } from 'react-md';
+import { GridCell, Grid, Button } from 'react-md';
 import { FormattedMessage } from 'react-intl';
 import BEM from '../BEM/BEM';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 class Requests extends Component {
   static defaultProps = {
@@ -21,22 +21,22 @@ class Requests extends Component {
 
     return [
       <Grid key='header'>
-        <Cell size={12}>
+        <GridCell size={12}>
           <h2 className={bem.elem('header').cls('md-title')}>
             <FormattedMessage id='Requests.mainHeader'/>
           </h2>
           {isLoaded(requests) && this.renderControls()}
-        </Cell>
+        </GridCell>
       </Grid>,
       isLoaded(requests) && <Grid key='new-request-list'>
-        <Cell size={12}>
+        <GridCell size={12}>
           {this.renderNewRequestList()}
-        </Cell>
+        </GridCell>
       </Grid>,
       isLoaded(requests) && <Grid key='closed-request-list'>
-        <Cell size={12}>
+        <GridCell size={12}>
           {this.renderClosedRequestList()}
-        </Cell>
+        </GridCell>
       </Grid>,
     ];
   }
@@ -102,10 +102,10 @@ class Requests extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user, locale, firebase: { data: { requests } } } = state,
-    clubsPlayers = [],
-    inProgressRequests = [],
-    closedRequests = [];
+  const { user, locale, firebase: { data: { requests } } } = state;
+  const clubsPlayers = [];
+  const inProgressRequests = [];
+  const closedRequests = [];
 
   // if (requests && user && user.clubId) {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
-import { Autocomplete, SelectField, Button } from 'react-md';
+import { AutoComplete, NativeSelect, Button } from 'react-md';
 import { FormattedMessage } from 'react-intl';
 import { ClubsListDropdown } from '../../Clubs/ClubsListDropdown/ClubsListDropdown';
 import BEM from '../../BEM/BEM';
@@ -80,8 +80,8 @@ class AccountRole extends Component {
   }
 
   renderClubRepresentative() {
-    const { bem } = this.props,
-      { selectedClub, viewChooseUserDialogue, chosedUser } = this.state;
+    const { bem } = this.props;
+    const { selectedClub, viewChooseUserDialogue, chosedUser } = this.state;
 
     return (
       <div className={bem.elem('item').mods('repr').cls()} key='clubs-representative'>
@@ -116,17 +116,18 @@ class AccountRole extends Component {
   showChooseUserDialogue = () => {
     this.setState({
       viewChooseUserDialogue: true,
-      autocompleteHandler: this.selectClubAdminAutocompleteHandler,
+      autocompleteHandler: this.selectClubAdminAutoCompleteHandler,
       confirmHandler: this.clubAdminModalConfirmHandler,
     });
   };
 
   findClubAdmin() {
-    const { users } = this.props,
-      { selectedClub } = this.state;
+    const { users } = this.props;
+    const { selectedClub } = this.state;
 
-    let admin = <FormattedMessage id='Account.selectClubFirst'/>,
-      user;
+    let admin = <FormattedMessage id='Account.selectClubFirst'/>;
+
+    let user;
 
     if (selectedClub) {
       user = Object.values(users).find(user => {
@@ -165,8 +166,8 @@ class AccountRole extends Component {
   }
 
   renderClubDropdown() {
-    const { bem, clubs } = this.props,
-      { selectedClub } = this.state;
+    const { bem, clubs } = this.props;
+    const { selectedClub } = this.state;
 
     let clubsList = [];
 
@@ -175,7 +176,7 @@ class AccountRole extends Component {
     }
 
     return (
-      <SelectField
+      <NativeSelect
         value={selectedClub}
         label='Select club'
         id='club-selector'
@@ -192,12 +193,13 @@ class AccountRole extends Component {
   };
 
   renderChooseUserDialogue() {
-    const { chosedUser } = this.state,
-      { bem, users } = this.props,
-      selectedUser = chosedUser && users[chosedUser.data];
+    const { chosedUser } = this.state;
+    const { bem, users } = this.props;
+    const selectedUser = chosedUser && users[chosedUser.data];
 
-    let usersForSelect = [],
-      chosedUserInfo = {};
+    let usersForSelect = [];
+
+    let chosedUserInfo = {};
 
     if (isLoaded(users)) {
       usersForSelect = Object.entries(users).map(([userKey, user]) => ({
@@ -212,21 +214,21 @@ class AccountRole extends Component {
 
     return (
       <div className={bem.elem('input').cls()}>
-        <Autocomplete
+        <AutoComplete
           id='clubs-players'
           label='Users email'
           placeholder='Please type email'
           autocompleteWithLabel={true}
           data={usersForSelect}
           listHeightRestricted={true}
-          onAutocomplete={this.state.autocompleteHandler}/>
+          onAutoComplete={this.state.autocompleteHandler}/>
         {selectedUser && this.renderUserInfo(chosedUserInfo.displayName, chosedUserInfo.email)}
         {this.renderChooseUserModalActions()}
       </div>
     );
   }
 
-  selectClubAdminAutocompleteHandler = (suggestion, suggestionIndex, matches) => {
+  selectClubAdminAutoCompleteHandler = (suggestion, suggestionIndex, matches) => {
     this.setState({
       chosedUser: matches[suggestionIndex],
     });
@@ -246,11 +248,11 @@ class AccountRole extends Component {
   }
 
   clubAdminModalConfirmHandler = async () => {
-    const { users, firebase: { update } } = this.props,
-      { selectedClub, chosedUser: { data: chosedUserId } } = this.state,
-      [currentClubAdminKey, { clubId, role, ...oldAdminDataWithoutRole }] = Object.entries(users)
-        .find(([, data]) => selectedClub === data.clubId),
-      newClubAdmin = users[chosedUserId];
+    const { users, firebase: { update } } = this.props;
+    const { selectedClub, chosedUser: { data: chosedUserId } } = this.state;
+    const [currentClubAdminKey, { clubId, role, ...oldAdminDataWithoutRole }] = Object.entries(users)
+      .find(([, data]) => selectedClub === data.clubId);
+    const newClubAdmin = users[chosedUserId];
 
     await update('users', {
       [`${currentClubAdminKey}`]: oldAdminDataWithoutRole,

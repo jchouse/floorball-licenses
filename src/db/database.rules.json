@@ -7,25 +7,26 @@
       "$club": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['email', 'fullNameInt', 'fullName', 'photo', 'shortNameInt', 'shortName', 'region', 'country'])",
         "email": {
           ".validate": "newData.isString()"
         },
-        "fullNameEN": {
+        "fullNameInt": {
           ".validate": "newData.isString()"
         },
-        "fullNameUA": {
+        "fullName": {
           ".validate": "newData.isString()"
         },
         "phone": {
           ".validate": "newData.isString()"
         },
-        "logo": {
+        "photo": {
           ".validate": "root.child('images/' + newData.val()).exists()"
         },
-        "shortNameEN": {
+        "shortNameInt": {
           ".validate": "newData.isString()"
         },
-        "shortNameUA": {
+        "shortName": {
           ".validate": "newData.isString()"
         },
         "url": {
@@ -41,12 +42,18 @@
           ".validate": "newData.isString()"
         },
         "region": {
-          ".validate": "root.child('regions/' + newData.val()).exists()"
+          ".validate": "newData.isString()"
+        },
+        "founded": {
+          ".validate": "newData.isNumber()"
+        },
+        "added": {
+          ".validate": "newData.isNumber()"
         }
       }
     },
     "counters": {
-      ".read": "root.child('users').child(auth.uid).child('role').val() > 20",
+      ".read": true,
       ".write": "root.child('users').child(auth.uid).child('role').val() > 20"
     },
     "images": {
@@ -78,31 +85,26 @@
     "players": {
       ".read": true,
       ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
-      ".indexOn": [
-        "club",
-        "firstNameUA",
-        "lastNameUA",
-        "registrDate"
-      ],
       "$player": {
         ".read": true,
         ".write": "root.child('users').child(auth.uid).child('role').val() > 20",
+        ".validate": "newData.hasChildren(['born', 'citizenship', 'firstClub', 'firstName', 'gender', 'lastName', 'license', 'registrDate', 'uniqueExternId'])",
         "born": {
           ".validate": "newData.isNumber()"
         },
         "citizenship": {
           ".validate": "newData.isString() && newData.val().length == 2"
         },
-        "club": {
+        "firstClub": {
           ".validate": "root.child('clubs/' + newData.val()).exists()"
         },
-        "endActivationDate": {
-          ".validate": "newData.isNumber()"
+        "currentClub": {
+          ".validate": "root.child('clubs/' + newData.val()).exists()"
         },
-        "firstNameEN": {
+        "firstNameInt": {
           ".validate": "newData.isString()"
         },
-        "firstNameUA": {
+        "firstName": {
           ".validate": "newData.isString()"
         },
         "gender": {
@@ -111,14 +113,14 @@
         "height": {
           ".validate": "newData.isString()"
         },
-        "lastNameEA": {
+        "lastNameInt": {
           ".validate": "newData.isString()"
         },
-        "lastNameUA": {
+        "lastName": {
           ".validate": "newData.isString()"
         },
         "license": {
-          ".validate": "newData.isNumber() || newData.isString()"
+          ".validate": "newData.isNumber()"
         },
         "licenseType": {
           ".validate": "newData.isString()"
@@ -135,13 +137,19 @@
         "side": {
           ".validate": "newData.isString()"
         },
-        "taxnumber": {
-          ".validate": "newData.isNumber() || newData.isString()"
-        },
-        "secondNameUA": {
+        "secondName": {
           ".validate": "newData.isString()"
         },
         "weight": {
+          ".validate": "newData.isString()"
+        },
+        "lastActiveSeason": {
+          ".validate": "newData.isString()"
+        },
+        "endActivationDate": {
+          ".validate": "newData.isNumber()"
+        },
+        "uniqueExternId": {
           ".validate": "newData.isString()"
         }
       }

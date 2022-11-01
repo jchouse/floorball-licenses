@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Cell, Grid, TabsContainer, Tabs, Tab } from 'react-md';
+import { GridCell, Grid, TabsManager, Tabs, Tab } from 'react-md';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -21,15 +21,15 @@ class Account extends Component {
   };
 
   render() {
-    const { user: { role } } = this.props,
-      tabsList = [];
+    const { user: { role } } = this.props;
+    const tabsList = [];
 
     tabsList.push(
       <Tab key='title' label={<FormattedMessage id='Account.title'/>}>
         <Grid>
-          <Cell size={12}>
+          <GridCell size={12}>
             {role ? this.renderUser() : this.renderGuest()}
-          </Cell>
+          </GridCell>
         </Grid>
       </Tab>
     );
@@ -38,20 +38,20 @@ class Account extends Component {
       tabsList.push(
         <Tab key='roles' label={<FormattedMessage id='Account.roles'/>}>
           <Grid>
-            <Cell size={12}>
+            <GridCell size={12}>
               <AccountRole/>
-            </Cell>
+            </GridCell>
           </Grid>
         </Tab>
       );
     }
 
     return (
-      <TabsContainer colored>
+      <TabsManager colored>
         <Tabs tabId='account'>
           {tabsList}
         </Tabs>
-      </TabsContainer>
+      </TabsManager>
     );
   }
 
