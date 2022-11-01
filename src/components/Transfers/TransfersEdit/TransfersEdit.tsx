@@ -28,11 +28,10 @@ import { clubsListDropdown } from '../../Clubs/ClubsListDropdown/ClubsListDropdo
 const database = getDatabase(firebaseApp);
 
 const initialValues: ITransfer = {
-  date: 0,
+  date: new Date().valueOf(),
   fromClub: '',
   player: '',
   toClub: '',
-  endDate: 0,
 };
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
@@ -58,11 +57,16 @@ export default function TransfersEdit(props: ITransfersEditProps) {
   useEffect(() => {
     const transfer = transfers[id];
 
-    setValue('date', transfer.date);
-    setValue('fromClub', transfer.fromClub);
-    setValue('player', transfer.player);
-    setValue('toClub', transfer.toClub);
-    setValue('endDate', transfer.endDate);
+    if (transfer) {
+      setValue('date', transfer.date);
+      setValue('fromClub', transfer.fromClub);
+      setValue('player', transfer.player);
+      setValue('toClub', transfer.toClub);
+
+      if (transfer.endDate) {
+        setValue('endDate', transfer.endDate);
+      }
+    }
   }, [setValue, id, transfers]);
 
   const handleClose = useCallback(() => {
@@ -131,6 +135,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
                   error={Boolean(errors.date)}
                 >
                   <DesktopDatePicker
+                    inputFormat='dd/MM/yyyy'
                     label={t('Transfers.tablecell.date')}
                     renderInput={params => <TextField {...params}/>}
                     {...field}
@@ -212,6 +217,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Transfers.tablecell.date')}
                   renderInput={params => <TextField {...params}/>}
                   {...field}

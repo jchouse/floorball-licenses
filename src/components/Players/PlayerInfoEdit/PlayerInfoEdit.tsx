@@ -210,6 +210,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Players.registrDate')}
                   disabled={true}
                   renderInput={params => <TextField {...params}/>}
@@ -224,6 +225,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Players.endActivationDate.label')}
                   renderInput={params => <TextField {...params}/>}
                   {...field}
@@ -344,6 +346,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Players.born.label')}
                   renderInput={params => <TextField {...params}/>}
                   {...field}

@@ -157,6 +157,7 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Clubs.added')}
                   disabled={true}
                   renderInput={params => <TextField {...params}/>}
@@ -247,6 +248,7 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               control={control}
               render={({ field }) =>
                 <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
                   label={t('Clubs.founded')}
                   renderInput={params => <TextField {...params}/>}
                   {...field}
