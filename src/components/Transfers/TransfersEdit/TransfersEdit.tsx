@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
@@ -48,7 +47,8 @@ interface ITransfersEditProps {
 
 export default function TransfersEdit(props: ITransfersEditProps) {
   const { transfers, players, clubs } = props;
-  const [message, setMessage] = useState<AlertColor | null>(null);
+  const [transferSaveMessage, setTransferSaveMessage] = useState<AlertColor | null>(null);
+  const [playerSaveMessage, setPlayerSaveMessage] = useState<AlertColor | null>(null);
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const isNew = id === NEW_ENTITY;
@@ -73,8 +73,12 @@ export default function TransfersEdit(props: ITransfersEditProps) {
     }
   }, [setValue, id, transfers]);
 
-  const handleClose = useCallback(() => {
-    setMessage(null);
+  const handleCloseTransferMessage = useCallback(() => {
+    setTransferSaveMessage(null);
+  }, []);
+
+  const handleClosePlayerMessage = useCallback(() => {
+    setPlayerSaveMessage(null);
   }, []);
 
   const handleChangeIsLoan = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +89,9 @@ export default function TransfersEdit(props: ITransfersEditProps) {
 
   const onSubmit: SubmitHandler<ITransfer> = async (data) => {
     let transferId = id;
-    const updates: Partial<Record<string, ITransfer | number>> = {};
+
+    const playerId = data.player;
+    const player = { ...players[playerId] };
 
     if (isNew) {
       transferId = push(child(ref(database), db_paths.Transfers)).key || '';
@@ -98,21 +104,28 @@ export default function TransfersEdit(props: ITransfersEditProps) {
     if (isLoan && data.endDate) {
       data.endDate = new Date(data.endDate).valueOf();
     } else {
+      player.currentClub = data.toClub;
       delete data.endDate;
     }
 
-    updates[`/${db_paths.Transfers}/` + transferId] = {
-      ...data,
-    };
-
-    set(ref(database, `/${db_paths.Transfers}/` + transferId), data)
+    await set(ref(database, `/${db_paths.Transfers}/` + transferId), data)
       .then(() => {
-        setMessage('success');
+        setTransferSaveMessage('success');
         history.push(generatePath(pages.TRANSFER_EDIT, { id: transferId }));
       })
       .catch(() => {
-        setMessage('error');
+        setTransferSaveMessage('error');
       });
+
+    if (!isLoan) {
+      await set(ref(database, `/${db_paths.Players}/` + playerId), player)
+        .then(() => {
+          setPlayerSaveMessage('success');
+        })
+        .catch(() => {
+          setPlayerSaveMessage('error');
+        });
+    }
   }
 
   return (
@@ -258,13 +271,26 @@ export default function TransfersEdit(props: ITransfersEditProps) {
               {t('Floorball.form.save')}
             </Button>
           </Grid>
+          <Grid item>
+            {transferSaveMessage && <Alert
+              onClose={handleCloseTransferMessage}
+              severity={transferSaveMessage === 'success' || playerSaveMessage === 'success' ? 'success' : 'error'}
+              sx={{ width: '100%' }}
+            >
+              {t(`Transfers.saving.${transferSaveMessage}`)}
+            </Alert>}
+          </Grid>
+          <Grid item>
+            {playerSaveMessage && <Alert
+              onClose={handleClosePlayerMessage}
+              severity={playerSaveMessage || undefined}
+              sx={{ width: '100%' }}
+            >
+              {t(`Transfers.savingPlayer.${playerSaveMessage}`)}
+            </Alert>}
+          </Grid>
         </Grid>
       </Grid>
-      <Snackbar open={!!message} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={message || 'success'} sx={{ width: '100%' }}>
-          {t(`Floorball.form.${message}`)}
-        </Alert>
-      </Snackbar>
     </form>
   );
 }

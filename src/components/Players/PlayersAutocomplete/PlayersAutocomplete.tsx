@@ -34,8 +34,15 @@ export default function PlayersAutocomplete(props: PlayersAutocompleteProps) {
     playerObj = options.find((option) => option.id === player) || options[0];
   }
 
-  const [value, setValue] = React.useState<IOption | null>(playerObj);
-  const [inputValue, setInputValue] = React.useState(playerObj.label);
+  const [value, setValue] = React.useState<IOption | null>(null);
+  const [inputValue, setInputValue] = React.useState('');
+
+  React.useEffect(() => {
+    if (playerObj) {
+      setValue(playerObj);
+      setInputValue(playerObj.label);
+    }
+  }, [playerObj]);
 
   return (
     <Autocomplete
@@ -44,6 +51,7 @@ export default function PlayersAutocomplete(props: PlayersAutocompleteProps) {
         onChange(newValue?.id || '');
         setValue(newValue);
       }}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
