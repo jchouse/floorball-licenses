@@ -13,6 +13,7 @@ export const intl = {
     'Transfers.filter.transfer': 'Transfer',
     'Transfers.filter.loan': 'Loan',
     'Transfers.filter.player': 'Player',
+    'Transfers.isLoan': 'Loan',
   },
   'uk': {
     'Transfers.tablehead.date': 'Дата',
@@ -28,5 +29,6 @@ export const intl = {
     'Transfers.filter.transfer': 'Трансфер',
     'Transfers.filter.loan': 'Оренда',
     'Transfers.filter.player': 'Гравець',
+    'Transfers.isLoan': 'Оренда',
   },
 };

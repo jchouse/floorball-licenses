@@ -132,6 +132,10 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
     if (data.registrDate) {
       data.registrDate = new Date(data.registrDate).valueOf();
     }
+    
+    if (data.endActivationDate) {
+      data.endActivationDate = new Date(data.endActivationDate).valueOf();
+    }
 
     updates[`/${db_paths.Players}/` + playerId] = {
       ...data,

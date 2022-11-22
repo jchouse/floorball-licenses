@@ -13,37 +13,35 @@ interface PlayersAutocompleteProps {
 
 interface IOption {
   label: string;
-  value: string;
+  id: string;
 }
 
 export default function PlayersAutocomplete(props: PlayersAutocompleteProps) {
   const { players, player, onChange } = props;
-  let predifinedPlayer: IOption | null = null;
   const { t } = useTranslation();
 
   const options = React.useMemo(() => (
     Object.keys(players).map((key) => ({
-        value: key,
+        id: key,
         label: `${players[key].firstName} ${players[key].lastName} (${players[key].license})`,
       }
     )
   )), [players]);
 
+  let playerObj = options[0];
+
   if (player) {
-    predifinedPlayer = {
-      value: player,
-      label: `${players[player].firstName} ${players[player].lastName} (${players[player].license})`,
-    };
+    playerObj = options.find((option) => option.id === player) || options[0];
   }
 
-  const [value, setValue] = React.useState<IOption | null>(predifinedPlayer);
-  const [inputValue, setInputValue] = React.useState('');
+  const [value, setValue] = React.useState<IOption | null>(playerObj);
+  const [inputValue, setInputValue] = React.useState(playerObj.label);
 
   return (
     <Autocomplete
       value={value}
       onChange={(event: any, newValue: IOption | null) => {
-        onChange(newValue?.value || '');
+        onChange(newValue?.id || '');
         setValue(newValue);
       }}
       inputValue={inputValue}

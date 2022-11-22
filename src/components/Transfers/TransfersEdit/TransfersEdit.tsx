@@ -12,6 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
@@ -51,6 +53,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
   const { id } = useParams<{ id: string }>();
   const isNew = id === NEW_ENTITY;
   const history = useHistory();
+  const [isLoan, setIsLoan] = useState(false);
 
   const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: initialValues });
 
@@ -64,6 +67,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
       setValue('toClub', transfer.toClub);
 
       if (transfer.endDate) {
+        setIsLoan(true);
         setValue('endDate', transfer.endDate);
       }
     }
@@ -72,6 +76,10 @@ export default function TransfersEdit(props: ITransfersEditProps) {
   const handleClose = useCallback(() => {
     setMessage(null);
   }, []);
+
+  const handleChangeIsLoan = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoan(event.target.checked);
+  };
 
   const clubsItems = React.useMemo(() => clubsListDropdown(clubs), [clubs]);
 
@@ -87,7 +95,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
       data.date = new Date(data.date).valueOf();
     }
 
-    if (data.endDate) {
+    if (isLoan && data.endDate) {
       data.endDate = new Date(data.endDate).valueOf();
     } else {
       delete data.endDate;
@@ -128,20 +136,20 @@ export default function TransfersEdit(props: ITransfersEditProps) {
               rules={{
                 required: true,
               }}
-              render={({ field }) =>
-                <FormControl
-                  fullWidth
-                  variant='outlined'
-                  error={Boolean(errors.date)}
-                >
-                  <DesktopDatePicker
-                    inputFormat='dd/MM/yyyy'
-                    label={t('Transfers.tablecell.date')}
-                    renderInput={params => <TextField {...params}/>}
-                    {...field}
-                  />
-                </FormControl>
-              }
+              render={({ field }) => (
+                <DesktopDatePicker
+                  inputFormat='dd/MM/yyyy'
+                  label={t('Transfers.tablecell.fromDate')}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      error={Boolean(errors.date)}
+                      helperText={errors.date && t('Transfers.form.dateRequired')}
+                    />
+                  )}
+                  {...field}
+                />
+              )}
             />
           </Grid>
           <Grid item>
@@ -154,8 +162,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
                   player={field.value}
                   onChange={(player: string) => {
                     setValue('player', player);
-                    console.log(players[player]);
-                    setValue('fromClub', players[player].currentClub);
+                    setValue('fromClub', players[player]?.currentClub || '');
                   }}
                 />
               )}
@@ -212,19 +219,40 @@ export default function TransfersEdit(props: ITransfersEditProps) {
             />
           </Grid>
           <Grid item>
+            <FormControlLabel
+              value="start"
+              control={
+                <Switch
+                  checked={isLoan}
+                  onChange={handleChangeIsLoan}
+                />
+              }
+              label={t('Transfers.isLoan') as string}
+            />
+          </Grid>
+          {isLoan && <Grid item>
             <Controller
               name='endDate'
               control={control}
+              rules={{
+                required: isLoan,
+              }}
               render={({ field }) =>
                 <DesktopDatePicker
                   inputFormat='dd/MM/yyyy'
-                  label={t('Transfers.tablecell.date')}
-                  renderInput={params => <TextField {...params}/>}
+                  label={t('Transfers.tablecell.toDate')}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      error={Boolean(errors.endDate)}
+                      helperText={errors.endDate && t('Transfers.form.dateRequired')}
+                    />
+                  )}
                   {...field}
                 />
               }
             />
-          </Grid>
+          </Grid>}
           <Grid item>
             <Button type='submit' variant='contained' color='primary'>
               {t('Floorball.form.save')}

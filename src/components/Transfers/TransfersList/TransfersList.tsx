@@ -65,12 +65,8 @@ function stableSort(obj: Record<string, ITransfer>, cmp: URLSearchParams, player
   let defaultCMP = true;
 
   if (cmp.get(ETransferFiltersTypes.type)) {
-    console.log('type');
-
     result = result
       .filter(([, transfer]) => (cmp.get(ETransferFiltersTypes.type) === ETransferTypes.loan ? transfer.endDate : !transfer.endDate));
-
-    console.log()
 
     defaultCMP = false;
   }
