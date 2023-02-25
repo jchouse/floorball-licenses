@@ -1,1 +1,1 @@
-/home/jchouse/projects/firebaseVars.js
+../../firebaseVars/firebaseVars.js

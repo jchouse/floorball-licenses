@@ -8,7 +8,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import './i18n';
 
-import Floorball from './components/Floorball/Floorball.jsx';
+import Floorball from './components/Floorball/Floorball';
 import { RolesContext } from './components/RolesContext/RolesContext';
 
 import WebFontLoader from 'webfontloader';

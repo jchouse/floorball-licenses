@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import {
@@ -19,6 +19,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -51,32 +52,33 @@ export default function Floorball() {
   const classes = useStyles();
   const { t, i18n } = useTranslation();
   const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
   const openTransltor = Boolean(anchorEl);
-  const handleClose = event => {
+  const handleClose = (event: React.KeyboardEvent | React.MouseEvent) => {
     event.stopPropagation();
     setAnchorEl(null);
   };
 
-  const handleTranslateClick = event => {
+  const handleTranslateClick = useCallback((event: React.KeyboardEvent | React.MouseEvent) => {
     event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleDrawerOpen = event => {
+    setAnchorEl(event.currentTarget);
+  }, [setAnchorEl]);
+
+  const handleDrawerOpen = useCallback((event) => {
     event.stopPropagation();
     setOpen(true);
-  };
+  }, [setOpen]);
 
-  const handleDrawerClose = event => {
+  const handleDrawerClose = useCallback((event) => {
     event.stopPropagation();
     setOpen(false);
-  };
+  }, [setOpen]);
 
-  const handleMenuItemClick = path => () => history.push(path);
+  const handleMenuItemClick = (path: string) => () => history.push(path);
 
-  const handleLanguageChange = value => () => {
+  const handleLanguageChange = (value: string) => () => {
     i18n.changeLanguage(value);
     setAnchorEl(null);
   };
@@ -152,24 +154,24 @@ export default function Floorball() {
         </div>
         <Divider/>
         <List>
-          <ListItem button onClick={handleMenuItemClick(`${pages.CLUBS}`)}>
+          <ListItemButton onClick={handleMenuItemClick(`${pages.CLUBS}`)}>
             <ListItemIcon>
               <GroupIcon/>
             </ListItemIcon>
             <ListItemText primary={t('Floorball.clubs')}/>
-          </ListItem>
-          <ListItem button onClick={handleMenuItemClick(`${pages.PLAYERS}`)}>
+          </ListItemButton>
+          <ListItemButton onClick={handleMenuItemClick(`${pages.PLAYERS}`)}>
             <ListItemIcon>
               <PersonIcon/>
             </ListItemIcon>
             <ListItemText primary={t('Floorball.players')}/>
-          </ListItem>
-          <ListItem button onClick={handleMenuItemClick(`${pages.TRANSFERS}`)}>
+          </ListItemButton>
+          <ListItemButton onClick={handleMenuItemClick(`${pages.TRANSFERS}`)}>
             <ListItemIcon>
               <TransferWithinAStationIcon/>
             </ListItemIcon>
             <ListItemText primary={t('Floorball.transfers')}/>
-          </ListItem>
+          </ListItemButton>
         </List>
       </Drawer>
       <main

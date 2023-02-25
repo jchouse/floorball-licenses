@@ -1,6 +1,12 @@
 export const dateFormate = 'dd.MM.yyyy';
 
-export const licensiesTypes = {
+interface LicensiesTypes {
+  name: string;
+  value: string;
+  ageLimit: number;
+};
+
+export const licensiesTypes: Record<string, LicensiesTypes> = {
   Adult: {
     name: 'Adult',
     value: 'Adult',

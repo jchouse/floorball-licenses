@@ -8,7 +8,7 @@ import { RolesContext } from '../RolesContext/RolesContext';
 
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import Avatar from '@mui/material/Avatar';
+import Avatar, { AvatarProps } from '@mui/material/Avatar';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
@@ -26,25 +26,27 @@ import {
   GoogleAuthProvider,
   browserLocalPersistence,
   signOut,
+  UserCredential,
+  User,
 } from 'firebase/auth';
 import { firebaseApp } from '../../firebaseInit';
 
 const auth = getAuth(firebaseApp);
 const database = getDatabase(firebaseApp);
 
-function saveUser(user) {
+function saveUser(user: User) {
   set(ref(database, `users/${user.uid}`), {
     email: user.email,
   });
 }
 
-function stringToColor(string) {
+function stringToColor(str: string) {
   let hash = 0;
 
   let i;
 
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  for (i = 0; i < str.length; i += 1) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
 
   let color = '#';
@@ -58,13 +60,22 @@ function stringToColor(string) {
   return color;
 }
 
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-  };
+function stringAvatar(name: string | null) {
+  if (!name) {
+    return {
+      sx: {
+        bgcolor: '#000',
+      },
+      children: '?',
+    };
+  } else {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+  }
 }
 
 export default function Auth() {
@@ -102,11 +113,7 @@ export default function Auth() {
 
   const users = snapshotUsers?.val();
 
-  const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
+  const handleClose = (event: React.MouseEvent<HTMLLIElement> | MouseEvent | TouchEvent) => {
     setOpen(false);
   };
 
@@ -117,7 +124,7 @@ export default function Auth() {
 
         return signInWithPopup(auth, provider);
       })
-      .then(result => {
+      .then((result: UserCredential) => {
         const { user } = result;
 
         if (!users || !(users && users[user.uid])) {
@@ -135,11 +142,11 @@ export default function Auth() {
   let content;
 
   if (user) {
-    let avatarContent = stringAvatar(user.displayName);
+    let avatarContent: Partial<AvatarProps> = stringAvatar(user.displayName);
 
     if (user.photoURL) {
       avatarContent = {
-        alt: user.displayName,
+        alt: user.displayName || '',
         src: user.photoURL,
       };
     }
@@ -179,13 +186,22 @@ export default function Auth() {
                     aria-labelledby='composition-button'
                   >
                     {role === Roles.ADMIN && [
-                      <MenuItem key='create-club' onClick={handleClose}>
+                      <MenuItem
+                        key='create-club'
+                        onClick={handleClose}
+                      >
                         <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.newClub')}</Link>
                       </MenuItem>,
-                      <MenuItem key='create-players' onClick={handleClose}>
+                      <MenuItem
+                        key='create-players'
+                        onClick={handleClose}
+                      >
                         <Link to={generatePath(pages.EDIT_PLAYER, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
                       </MenuItem>,
-                      <MenuItem key='create-transfer' onClick={handleClose}>
+                      <MenuItem
+                        key='create-transfer'
+                        onClick={handleClose}
+                      >
                         <Link to={generatePath(pages.TRANSFER_EDIT, { id: 'new' })}>{t('Floorball.newTransfer')}</Link>
                       </MenuItem>,
                     ]}
