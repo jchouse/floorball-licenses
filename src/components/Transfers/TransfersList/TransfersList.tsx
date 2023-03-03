@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, generatePath, Link } from 'react-router-dom';
+import { useNavigate, generatePath, Link, useLocation } from 'react-router-dom';
 import format from 'date-fns/format';
 
 import Grid from '@mui/material/Grid';
@@ -106,8 +106,8 @@ interface ITransfersListProps {
 
 export default function TransfersList(props: ITransfersListProps) {
   const { t } = useTranslation();
-  const history = useHistory();
-  const { location, replace } = history;
+  const navigate = useNavigate();
+  const location = useLocation();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
   const { role } = useContext(RolesContext);
@@ -129,9 +129,9 @@ export default function TransfersList(props: ITransfersListProps) {
 
       const stringified = searchParams.toString();
 
-      replace(`${location.pathname}?${stringified}`);
+      navigate(`${location.pathname}?${stringified}`, { replace: true });
     },
-    [location, replace, searchParams]
+    [location, navigate, searchParams]
   );
 
   const changeInputFilterHandler = useCallback(
@@ -262,7 +262,7 @@ export default function TransfersList(props: ITransfersListProps) {
                     >
                       {role === Roles.ADMIN && <TableCell>
                         <IconButton
-                          onClick={() => history.push(generatePath(pages.TRANSFER_EDIT, { id: key }))}
+                          onClick={() => navigate(generatePath(`${pages.TRANSFERS}/${pages.TRANSFER_EDIT}`, { id: key }))}
                           aria-label='edit'
                         >
                           <EditIcon/>
@@ -277,7 +277,7 @@ export default function TransfersList(props: ITransfersListProps) {
                       </TableCell>
                       <TableCell>
                         <StyledAvatarLink
-                          to={generatePath(pages.PLAYER_INFO, { id: player })}
+                          to={generatePath(`${pages.PLAYERS}/${pages.PLAYER_INFO}`, { id: player })}
                           onClick={e => e.stopPropagation()}
                         >
                           <Avatar
@@ -296,7 +296,7 @@ export default function TransfersList(props: ITransfersListProps) {
                       </TableCell>
                       <TableCell>
                         <StyledAvatarLink
-                          to={generatePath(pages.CLUB_INFO, { id: fromClub })}
+                          to={generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: fromClub })}
                           onClick={e => e.stopPropagation()}
                         >
                           <Avatar
@@ -310,7 +310,7 @@ export default function TransfersList(props: ITransfersListProps) {
                       </TableCell>
                       <TableCell>
                         <StyledAvatarLink
-                          to={generatePath(pages.CLUB_INFO, { id: toClub })}
+                          to={generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: toClub })}
                           onClick={e => e.stopPropagation()}
                         >
                           <Avatar

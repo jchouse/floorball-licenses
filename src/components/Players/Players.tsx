@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -64,31 +64,34 @@ export default function Players() {
   const counters = snapshotCounters?.val();
 
   return (
-    <Switch>
-      <Route exact path={pages.PLAYERS}>
-        <PlayersList
-          players={players}
-          images={images}
-          clubs={clubs}
-        />
-      </Route>
-      <Route path={pages.EDIT_PLAYER}>
-        <PlayerInfoEdit
-          players={players}
-          images={images}
-          clubs={clubs}
-          counter={counters.playerID}
-        />
-      </Route>
-      <Route path={pages.PLAYER_INFO}>
-        <PlayerInfo
-          players={players}
-          images={images}
-          clubs={clubs}
-          transfers={transfers}
-          role={role}
-        />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        index
+        element={<PlayersList players={players} images={images} clubs={clubs}/>}
+      />
+      <Route
+        path={pages.EDIT_PLAYER}
+        element={
+          <PlayerInfoEdit
+            players={players}
+            images={images}
+            clubs={clubs}
+            counter={counters.playerID}
+          />
+        }
+      />
+      <Route 
+        path={pages.PLAYER_INFO}
+        element={
+          <PlayerInfo
+            players={players}
+            images={images}
+            clubs={clubs}
+            transfers={transfers}
+            role={role}
+          />
+        }
+      />
+    </Routes>
   );
 }

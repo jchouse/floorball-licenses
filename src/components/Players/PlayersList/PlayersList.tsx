@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, generatePath } from 'react-router-dom';
+import { useNavigate, generatePath, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
@@ -400,10 +400,10 @@ interface IPlayerListProps {
 export default function PlayersList({ clubs, players, images }: IPlayerListProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
-  const { location, replace, push } = history;
 
   let searchParams = queryString.parse(location.search);
 
@@ -419,13 +419,13 @@ export default function PlayersList({ clubs, players, images }: IPlayerListProps
   const handleClubClick = (event: React.MouseEvent<HTMLTableRowElement | HTMLAnchorElement | HTMLSpanElement, MouseEvent> , key: string) => {
     event.stopPropagation();
 
-    push(generatePath(pages.CLUB_INFO, { id: key }));
+    navigate(generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: key }));
   };
 
   const handlePlayerRowClick = (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, key: string) => {
     event.stopPropagation();
 
-    push(generatePath(pages.PLAYER_INFO, { id: key }));
+    navigate(generatePath(`${pages.PLAYERS}/${pages.PLAYER_INFO}`, { id: key }));
   };
 
   const setFilterLocation = (name: string, value: string) => {
@@ -440,7 +440,7 @@ export default function PlayersList({ clubs, players, images }: IPlayerListProps
 
     const stringified = queryString.stringify(searchParams);
 
-    replace(`${location.pathname}?${stringified}`);
+    navigate(`${location.pathname}?${stringified}`, { replace: true });
   };
 
   const playersRows = stableSort(players, searchParams);

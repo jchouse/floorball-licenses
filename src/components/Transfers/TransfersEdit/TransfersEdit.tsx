@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, generatePath, useParams } from 'react-router-dom';
+import { useNavigate, generatePath, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { getDatabase, ref, set, push, child } from 'firebase/database';
@@ -50,9 +50,9 @@ export default function TransfersEdit(props: ITransfersEditProps) {
   const [transferSaveMessage, setTransferSaveMessage] = useState<AlertColor | null>(null);
   const [playerSaveMessage, setPlayerSaveMessage] = useState<AlertColor | null>(null);
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams() as { id: string };
   const isNew = id === NEW_ENTITY;
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isLoan, setIsLoan] = useState(false);
 
   const { control, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: initialValues });
@@ -111,7 +111,7 @@ export default function TransfersEdit(props: ITransfersEditProps) {
     await set(ref(database, `/${db_paths.Transfers}/` + transferId), data)
       .then(() => {
         setTransferSaveMessage('success');
-        history.push(generatePath(pages.TRANSFER_EDIT, { id: transferId }));
+        navigate(generatePath(`${pages.TRANSFERS}/${pages.TRANSFER_EDIT}`, { id: transferId }));
       })
       .catch(() => {
         setTransferSaveMessage('error');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -41,7 +41,6 @@ export default function Clubs() {
 
   useObject(ref(database, 'counters'));
 
-
   if (loadingClubs || loadingImages) {
     return <LinearProgress/>;
   }
@@ -54,26 +53,19 @@ export default function Clubs() {
   const images = snapshotImages?.val();
 
   return (
-    <Switch>
-      <Route exact path={pages.CLUBS}>
-        <ClubsList
-          images={images}
-          clubs={clubs}
-        />
-      </Route>
-      <Route path={pages.EDIT_CLUB}>
-        <EditClubInfo
-          images={images}
-          clubs={clubs}
-        />
-      </Route>
-      <Route path={pages.CLUB_INFO}>
-        <ClubInfo
-          images={images}
-          clubs={clubs}
-          role={role}
-        />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        index
+        element={<ClubsList images={images} clubs={clubs}/>}
+      />
+      <Route
+        path={':id'}
+        element={<ClubInfo images={images} clubs={clubs} role={role}/>}
+      />
+      <Route 
+        path={':id/edit'}
+        element={<EditClubInfo images={images} clubs={clubs}/>}
+      />
+    </Routes>
   );
 }

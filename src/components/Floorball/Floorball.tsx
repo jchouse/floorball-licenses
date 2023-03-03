@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import {
-  Switch,
+  Routes,
   Route,
-  Redirect,
-  useHistory,
+  useNavigate,
+  redirect,
 } from 'react-router-dom';
 import { pages } from '../../constans/location';
 
@@ -36,6 +36,7 @@ import Clubs from '../Clubs/Clubs';
 import Players from '../Players/Players';
 import Transfers from '../Transfers/Transfers';
 import Auth from '../Auth/Auth';
+import Info from '../Info/Info';
 
 function NotFound() {
   return <h2>Easy, this page not alowed for now.</h2>;
@@ -46,8 +47,16 @@ const suportedLanguagesMap = {
   uk: 'uk',
 };
 
+function Root(): JSX.Element {
+  const navigate = useNavigate();
+
+  navigate(pages.CLUBS);
+
+  return <></>;
+}
+
 export default function Floorball() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const { t, i18n } = useTranslation();
   const [open, setOpen] = React.useState(false);
@@ -75,7 +84,7 @@ export default function Floorball() {
     setOpen(false);
   }, [setOpen]);
 
-  const handleMenuItemClick = (path: string) => () => history.push(path);
+  const handleMenuItemClick = (path: string) => () => navigate(path);
 
   const handleLanguageChange = (value: string) => () => {
     i18n.changeLanguage(value);
@@ -179,15 +188,14 @@ export default function Floorball() {
         })}
       >
         <div className={classes.drawerHeader}/>
-        <Switch>
-          <Route exact path='/' render={() => <Redirect to='clubs'/>}/>
-          <Route path={pages.CLUBS} component={Clubs}/>
-          <Route path={pages.PLAYERS} component={Players}/>
-          <Route path={pages.TRANSFERS} component={Transfers}/>
-          <Route path='*'>
-            <NotFound/>
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path='/*' element={<Clubs/>}/>
+          <Route path={`${pages.CLUBS}//*`} element={<Clubs/>}/>
+          <Route path={`${pages.PLAYERS}//*`} element={<Players/>}/>
+          <Route path={`${pages.TRANSFERS}//*`} element={<Transfers/>}/>
+          <Route path={pages.INFO} element={<Info/>}/>
+          <Route path='*' element={<NotFound/>}/>
+        </Routes>
       </main>
     </div>
   );

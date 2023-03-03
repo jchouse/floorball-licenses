@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { useParams, useHistory, generatePath } from 'react-router-dom';
+import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
@@ -21,7 +21,7 @@ interface IClubInfoProps {
 }
 
 function ClubInfo({ clubs, images, role }: IClubInfoProps) {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams() as { id: string };
   const classes = useStyles();
   const { t } = useTranslation();
   const {
@@ -38,12 +38,11 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
     country,
   } = clubs[id];
   const { downloadURL } = images[photo];
-  const history = useHistory();
-  const { push } = history;
+  const navigate = useNavigate();
 
   const handleEditClubClick  = React.useCallback((event) => {
-    push(generatePath(pages.EDIT_CLUB, { id }));
-  } , [push, id]);
+    navigate(generatePath(`${pages.CLUBS}/${pages.EDIT_CLUB}`, { id }));
+  } , [navigate, id]);
 
   return (
     <Grid

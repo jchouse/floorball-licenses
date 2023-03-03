@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { pages } from '../../constans/location';
 
@@ -44,22 +44,28 @@ export default function Transfers() {
   const images = snapshotImages?.val();
 
   return (
-    <Switch>
-      <Route exact path={pages.TRANSFERS}>
-        <TransfersList
-          transfers={transfers}
-          clubs={clubs}
-          players={players}
-          images={images}
-        />
-      </Route>
-      <Route path={pages.TRANSFER_EDIT}>
-        <TransfersEdit
-          transfers={transfers}
-          clubs={clubs}
-          players={players}
-        />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route
+        index
+        element={
+          <TransfersList
+            transfers={transfers}
+            clubs={clubs}
+            players={players}
+            images={images}
+          />
+        }
+      />
+      <Route
+        path={pages.TRANSFER_EDIT}
+        element={
+          <TransfersEdit
+            transfers={transfers}
+            clubs={clubs}
+            players={players}
+          />
+        }
+      />
+    </Routes>
   );
 }

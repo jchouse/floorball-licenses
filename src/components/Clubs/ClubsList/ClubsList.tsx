@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { IClub } from '../Clubs';
 import { IImage } from '../../FileUploader/FileUploader';
-import { useHistory, generatePath } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -23,7 +23,7 @@ interface IClubsListProps {
 
 function ClubsList({ clubs, images }: IClubsListProps) {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const content = Object
@@ -38,7 +38,7 @@ function ClubsList({ clubs, images }: IClubsListProps) {
 
       return (
         <Grid key={clubId} item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <Card onClick={() => history.push(generatePath(pages.CLUB_INFO, { id: clubId }))}>
+          <Card onClick={() => navigate(generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: clubId }))}>
             <CardActionArea>
               {logo && (
                 <CardMedia

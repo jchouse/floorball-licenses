@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import { IClub } from '../Clubs';
 import FileUploader from '../../FileUploader/FileUploader';
 import CountrySelect from '../../Countries/CountrySelect';
+// import { RolesContext } from '../../RolesContext/RolesContext';
 
 import { NEW_ENTITY } from '../../../constans/location';
 
@@ -60,8 +61,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams() as { id: string };
   const [message, setMessage] = useState<AlertColor | null>(null);
+  // const { role } = React.useContext(RolesContext);
   
   let defaultValues = initialValues;
   let imageUrl = '';

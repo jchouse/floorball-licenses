@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Helmet from 'react-helmet';
-import { useParams, useHistory, generatePath } from 'react-router-dom';
+import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
@@ -88,8 +88,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 
 export default function PlayerInfoEdit({ players, images, clubs, counter }: IEditPlayerInfoProps) {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const { id } = useParams() as { id: string };
+  const navigate = useNavigate();
   const [message, setMessage] = useState<AlertColor | null>(null);
   const isNew = id === NEW_ENTITY;
 
@@ -144,7 +144,7 @@ export default function PlayerInfoEdit({ players, images, clubs, counter }: IEdi
     update(ref(database), updates)
       .then(() => {
         setMessage('success');
-        history.push(generatePath(pages.PLAYER_INFO, { id: playerId }));
+        navigate(generatePath(`${pages.PLAYERS}/${pages.PLAYER_INFO}`, { id: playerId }));
       })
       .catch(() => {
         setMessage('error');

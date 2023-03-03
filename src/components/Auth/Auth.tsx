@@ -190,19 +190,19 @@ export default function Auth() {
                         key='create-club'
                         onClick={handleClose}
                       >
-                        <Link to={generatePath(pages.EDIT_CLUB, { id: 'new' })}>{t('Floorball.newClub')}</Link>
+                        <Link to={generatePath(`${pages.CLUBS}/${pages.EDIT_CLUB}`, { id: 'new' })}>{t('Floorball.newClub')}</Link>
                       </MenuItem>,
                       <MenuItem
                         key='create-players'
                         onClick={handleClose}
                       >
-                        <Link to={generatePath(pages.EDIT_PLAYER, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
+                        <Link to={generatePath(`${pages.PLAYERS}/${pages.EDIT_PLAYER}`, { id: 'new' })}>{t('Floorball.newPlayer')}</Link>
                       </MenuItem>,
                       <MenuItem
                         key='create-transfer'
                         onClick={handleClose}
                       >
-                        <Link to={generatePath(pages.TRANSFER_EDIT, { id: 'new' })}>{t('Floorball.newTransfer')}</Link>
+                        <Link to={generatePath(`${pages.TRANSFERS}/${pages.TRANSFER_EDIT}`, { id: 'new' })}>{t('Floorball.newTransfer')}</Link>
                       </MenuItem>,
                     ]}
                     <MenuItem

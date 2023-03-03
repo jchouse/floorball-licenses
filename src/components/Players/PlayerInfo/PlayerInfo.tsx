@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory, generatePath } from 'react-router-dom';
+import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 import differenceInYears from 'date-fns/differenceInYears';
@@ -28,7 +28,7 @@ interface IClubLinkProps {
   clubs: Record<string, IClub>;
   images: Record<string, IImage>;
   classes: ReturnType<typeof useStyles>;
-  history: ReturnType<typeof useHistory>;
+  navigate: ReturnType<typeof useNavigate>;
 }
 
 function ClubLink(props: IClubLinkProps) {
@@ -37,9 +37,8 @@ function ClubLink(props: IClubLinkProps) {
     clubs,
     images,
     classes,
-    history,
+    navigate,
   } = props;
-  const { push } = history;
   const club = clubs[clubId];
   const {
     shortName,
@@ -49,7 +48,7 @@ function ClubLink(props: IClubLinkProps) {
   const handleClubClick = (event: React.SyntheticEvent, key: string) => {
     event.stopPropagation();
 
-    push(generatePath(pages.CLUB_INFO, { id: key }));
+    navigate(generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: key }));
   };
 
   return (
@@ -77,9 +76,8 @@ interface IPlayerInfoProps {
 export default function PlayerInfo({ clubs, images, players, transfers, role }: IPlayerInfoProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { id } = useParams<{ id: string }>();
-  const history = useHistory();
-  const { push } = history;
+  const { id } = useParams() as { id: string };
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = t('Players.headtitle', { name: `${players[id].firstName} ${players[id].lastName}` });
@@ -88,12 +86,12 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
   const handleClubClick = React.useCallback((event, key) => {
     event.stopPropagation();
 
-    push(generatePath(pages.CLUB_INFO, { id: key }));
-  }, [push]);
+    navigate(generatePath(`${pages.CLUBS}/${pages.CLUB_INFO}`, { id: key }));
+  }, [navigate]);
 
   const handleEditPlayerClick  = React.useCallback((event) => {
-    push(generatePath(pages.EDIT_PLAYER, { id }));
-  } , [push, id]);
+    navigate(generatePath(`${pages.PLAYERS}/${pages.EDIT_PLAYER}`, { id }));
+  } , [navigate, id]);
 
   const {
     firstName,
@@ -210,7 +208,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
                     clubs={clubs}
                     images={images}
                     classes={classes}
-                    history={history}
+                    navigate={navigate}
                   />
                   {endDate ? (
                     <div className={classes.transferText}>
@@ -233,7 +231,7 @@ export default function PlayerInfo({ clubs, images, players, transfers, role }: 
                     clubs={clubs}
                     images={images}
                     classes={classes}
-                    history={history}
+                    navigate={navigate}
                   />
                 </div>
               );
