@@ -18,6 +18,7 @@ export const intl = {
     'Transfers.saving.success': 'Transfer saved successfully',
     'Transfers.savingPlayer.error': 'Error while saving player',
     'Transfers.savingPlayer.success': 'Player saved successfully',
+    'Transfers.title': 'Transfers',
   },
   'uk': {
     'Transfers.tablehead.date': 'Дата',
@@ -38,5 +39,6 @@ export const intl = {
     'Transfers.saving.success': 'Трансфер збережено успішно',
     'Transfers.savingPlayer.error': 'Помилка при збереженні гравця',
     'Transfers.savingPlayer.success': 'Гравець збережено успішно',
+    'Transfers.title': 'Трансфери',
   },
 };
