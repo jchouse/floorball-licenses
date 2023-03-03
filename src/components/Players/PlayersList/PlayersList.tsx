@@ -368,7 +368,7 @@ function stableSort(players: Record<string, IPlayer>, comparator: queryString.Pa
 
   if (comparator[filterMap.club]) {
     result = result
-      .filter(([, player]) => player.currentClub === comparator[filterMap.club]);
+      .filter(([, player]) => player.currentClub ? player.currentClub === comparator[filterMap.club] : player.firstClub === comparator[filterMap.club]);
   }
 
   if (comparator[filterMap.gender]) {
