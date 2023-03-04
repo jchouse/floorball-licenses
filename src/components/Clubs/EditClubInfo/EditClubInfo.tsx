@@ -162,7 +162,7 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
                 <DesktopDatePicker
                   inputFormat='dd/MM/yyyy'
                   label={t('Clubs.added')}
-                  // disabled={true}
+                  disabled={true}
                   renderInput={params => <TextField {...params}/>}
                   {...field}
                 />

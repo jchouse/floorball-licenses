@@ -39,13 +39,14 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
     postCode,
     region,
     country,
+    founded,
   } = clubs[id];
   const { downloadURL } = images[photo];
   const navigate = useNavigate();
 
   const handleEditClubClick  = React.useCallback((event) => {
     navigate(generatePath(`${pages.CLUBS}/${pages.EDIT_CLUB}`, { id }));
-  } , [navigate, id]);
+  }, [navigate, id]);
 
   const lang = i18n.language === 'en' ? 'en' : 'uk';
 
@@ -102,6 +103,14 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
           </Typography>
           <Typography variant='h5'>
             {shortNameInt}
+          </Typography>
+        </div>
+        <div className={classes.info}>
+          <Typography gutterBottom variant='body1' className={classes.infoTextLabel}>
+            {t('Clubs.est')}
+          </Typography>
+          <Typography variant='h5'>
+            {new Date(founded).getFullYear()}
           </Typography>
         </div>
         {phone &&
