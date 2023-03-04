@@ -30,29 +30,35 @@ export default function CountrySelect(props: ICountrySelectProps) {
   const options = useMemo(() => {
     const names = countries.getNames(lang);
     
-    return Object.entries(names).map(([key, value]) => ({
-      value: key,
-      label: value,
-    }));
+    return [
+      { id: '', label: ''},
+      ...Object.entries(names).map(([key, value]) => ({
+        id: key,
+        label: value,
+      }))
+    ];
   }, [lang]);
 
-  const onChangeHandler = useCallback(( event: React.SyntheticEvent<Element, Event>, data: { value: string, label: string } | null ) => {
-    const { value = '' } = data || {};
+  const onChangeHandler = useCallback(( event: React.SyntheticEvent<Element, Event>, data: { id: string, label: string } | null ) => {
+    const { id = '' } = data || {};
 
-    onChange(value);
+    onChange(id);
   } , [onChange]);
 
-  const _value = useMemo(() => {
-    return options.find(({ value: country }) => country === value);
+  let _value = useMemo(() => {
+    return options.find(({ id: country }) => country === value);
   }, [value, options]);
+
+  if (!_value) {
+    _value = options[0];
+  }
 
   return (
     <Autocomplete
       disablePortal
       value={_value}
-      id="combo-box-demo"
+      id='country-select'
       options={options}
-      sx={{ width: 200 }}
       onChange={onChangeHandler}
       renderInput={(params) => <TextField {...params} label={label}/>}
     />

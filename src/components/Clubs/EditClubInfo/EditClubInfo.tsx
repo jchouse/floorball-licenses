@@ -16,6 +16,7 @@ import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
 
+import RegionSelector from '../../RegionSelector/RegionSelector';
 import { IClub } from '../Clubs';
 import FileUploader from '../../FileUploader/FileUploader';
 import CountrySelect from '../../Countries/CountrySelect';
@@ -94,8 +95,8 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
 
     const updates: Partial<Record<string, IClub>> = {};
 
-    data.added = new Date(data.added).valueOf();
-    data.founded = new Date(data.founded).valueOf();
+    data.added = data.added ? new Date(data.added).valueOf() : new Date().valueOf();
+    data.founded = data.founded ? new Date(data.founded).valueOf() : new Date().valueOf();
 
     updates[`/${db_paths.Clubs}/` + clubId] = {
       ...data,
@@ -161,7 +162,7 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
                 <DesktopDatePicker
                   inputFormat='dd/MM/yyyy'
                   label={t('Clubs.added')}
-                  disabled={true}
+                  // disabled={true}
                   renderInput={params => <TextField {...params}/>}
                   {...field}
                 />
@@ -350,14 +351,13 @@ export default function EditClubInfo({ clubs, images }: IEditClubInfoProps) {
               rules={{
                 required: true,
               }}
-              render={({ field }) => 
-                <TextField
-                  variant='outlined'
-                  fullWidth
+              render={({ field: { onChange, value } }) => 
+                <RegionSelector
                   label={t('Clubs.region')}
                   error={Boolean(errors.region)}
                   helperText={errors.region && t('Floorball.form.required')}
-                  {...field}
+                  value={value}
+                  onChange={onChange}
                 />
               }
             />

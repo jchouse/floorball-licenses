@@ -59,11 +59,11 @@ export default function Clubs() {
         element={<ClubsList images={images} clubs={clubs}/>}
       />
       <Route
-        path={':id'}
+        path={pages.CLUB_INFO}
         element={<ClubInfo images={images} clubs={clubs} role={role}/>}
       />
       <Route 
-        path={':id/edit'}
+        path={pages.EDIT_CLUB}
         element={<EditClubInfo images={images} clubs={clubs}/>}
       />
     </Routes>
