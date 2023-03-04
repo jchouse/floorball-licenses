@@ -48,7 +48,7 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
     navigate(generatePath(`${pages.CLUBS}/${pages.EDIT_CLUB}`, { id }));
   }, [navigate, id]);
 
-  const lang = i18n.language === 'en' ? 'en' : 'uk';
+  const lang = i18n.languages[1] === 'en' ? 'en' : 'uk';
 
   const regionObj = regions.find(reg => reg.id === region);
   const regionString = regionObj ? regionObj[lang] : '';

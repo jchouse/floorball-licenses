@@ -27,13 +27,7 @@ export default function RegionSelector(props: IRegionSelectorProps) {
     },
   } = props;
 
-  let language = i18n.language;
-
-  if (language.includes('-')) {
-    language = language.split('-')[0];
-  }
-
-  const lang = language === 'uk' ? 'uk' : 'en';
+  const lang = i18n.languages[1] === 'uk' ? 'uk' : 'en';
 
   const options = useMemo(() => {
     return [
