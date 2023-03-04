@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import countries from 'i18n-iso-countries';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -13,6 +14,7 @@ import { IClub } from '../Clubs';
 import { useStyles } from './ClubInfo.styles';
 import { pages } from '../../../constans/location';
 import { Roles } from '../../../constans/settings';
+import { regions } from '../../RegionSelector/Regions';
 
 interface IClubInfoProps {
   clubs: Record<string, IClub>;
@@ -23,7 +25,7 @@ interface IClubInfoProps {
 function ClubInfo({ clubs, images, role }: IClubInfoProps) {
   const { id } = useParams() as { id: string };
   const classes = useStyles();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     photo,
     shortName,
@@ -35,6 +37,7 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
     line,
     city,
     postCode,
+    region,
     country,
   } = clubs[id];
   const { downloadURL } = images[photo];
@@ -43,6 +46,12 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
   const handleEditClubClick  = React.useCallback((event) => {
     navigate(generatePath(`${pages.CLUBS}/${pages.EDIT_CLUB}`, { id }));
   } , [navigate, id]);
+
+  const lang = i18n.language === 'en' ? 'en' : 'uk';
+
+  const regionObj = regions.find(reg => reg.id === region);
+  const regionString = regionObj ? regionObj[lang] : '';
+  const countryString = countries.getName(country, lang);
 
   return (
     <Grid
@@ -123,7 +132,7 @@ function ClubInfo({ clubs, images, role }: IClubInfoProps) {
               {t('Clubs.address')}
             </Typography>
             <Typography variant='h6'>
-              {[line, city, postCode, country].join(', ')}
+              {[line, city, regionString, postCode, countryString].join(', ')}
             </Typography>
           </div>
         }
